@@ -1,1 +1,22 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #faffc5;
+  --foreground: #ffe99a;
+  --foregroundClicked: #ffe483;
+
+  --primaryText: #383838;
+  --font-sans: inter;
+}
+
+.dark {
+  --background: #202020;
+  --foreground: #555241;
+}
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foregroundClicked: var(--foregroundClicked);
+  --color-primaryText: var(--primaryText);
+}
