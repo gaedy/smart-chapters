@@ -8,6 +8,7 @@
 
   --primaryText: #383838;
   --font-sans: inter;
+
 }
 
 .dark {
@@ -19,4 +20,5 @@
   --color-foreground: var(--foreground);
   --color-foregroundClicked: var(--foregroundClicked);
   --color-primaryText: var(--primaryText);
+  --font-libre: var(--font-libre);
 }
