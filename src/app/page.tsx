@@ -1,6 +1,9 @@
 import BookCard from "@/components/BookCard";
+import { getBooks } from "@/lib/actions/book.actions";
 
-export default function Home() {
+export default async function Home() {
+  const books = await getBooks();
+
   return (
     <>
       <div className="flex flex-col w-full h-full gap-10">
@@ -13,8 +16,18 @@ export default function Home() {
           <p>Currently Reading</p>
 
           <div className="flex gap-4 ">
-            <BookCard />
-            <BookCard />
+            {books.map((book) => (
+              <div key={book.id}>
+                {book.isFeatured && (
+                  <BookCard
+                    key={book.id}
+                    title={book.title}
+                    author={book.author}
+                    coverUrl={book.coverUrl}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -22,8 +35,14 @@ export default function Home() {
           <p>Books You Might Like</p>
 
           <div className="flex gap-4 ">
-            <BookCard />
-            <BookCard />
+            {books.map((book) => (
+              <BookCard
+                key={book.id}
+                title={book.title}
+                author={book.author}
+                coverUrl={book.coverUrl}
+              />
+            ))}
           </div>
         </div>
       </div>

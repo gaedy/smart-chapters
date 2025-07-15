@@ -73,7 +73,7 @@ export default function Sidebar() {
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            {isCollapsed ? "Close Sidebar" : "Open Sidebar"}
+            {isCollapsed ? "Open Sidebar" : "Close Sidebar"}
           </TooltipContent>
         </Tooltip>
       </div>

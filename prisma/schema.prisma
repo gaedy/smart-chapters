@@ -1,0 +1,83 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String // store hashed passwords if using credentials auth
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  bookTrackings BookTracking[]
+  Review        Review[]
+}
+
+model Book {
+  id          String    @id @default(cuid())
+  title       String
+  author      String
+  coverUrl    String? // URL to cover image
+  description String? // Optional description or blurb
+  pageCount   Int? // Total pages
+  publishedAt DateTime? // Publish date
+  genre       String? // Optional genre/category
+  isFeatured  Boolean?
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  bookTrackings BookTracking[]
+  Review        Review[]
+}
+
+model BookTracking {
+  id     String @id @default(cuid())
+  userId String
+  bookId String
+
+  status      TrackingStatus @default(WANT_TO_READ)
+  currentPage Int            @default(0)
+  rating      Int? // 1–5 star rating
+  notes       String?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId]) // one tracking per user per book
+}
+
+model Review {
+  id     String @id @default(cuid())
+  userId String
+  bookId String
+
+  rating    Int? // 1-5 stars for this review
+  content   String // review text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId]) // each user can leave one review per book
+}
+
+enum TrackingStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+}
