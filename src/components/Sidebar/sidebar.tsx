@@ -7,9 +7,14 @@ import {
   LibraryBig,
   NotepadText,
   Settings,
-  ChevronLeft,
-  ChevronRight,
+  PanelRightOpen,
+  PanelRightClose,
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Search from "../search";
 import SidebarLink from "./SidebarLink";
 import { usePathname } from "next/navigation";
@@ -41,42 +46,49 @@ export default function Sidebar() {
 
   return (
     <div
-      className={`flex flex-col ${
+      className={`sm:flex flex-col hidden ${
         isCollapsed ? "items-center" : ""
-      } h-full bg-background  transition-all duration-300 ease-in-out relative`}
-      style={{ width: isCollapsed ? "4.5rem " : "16rem" }}
+      } h-full bg-background  relative`}
+      style={{ width: isCollapsed ? "3.5rem " : "16rem" }}
     >
       {/* Title and Toggle Button */}
       <div className="flex items-center justify-between mb-4 min-h-[2rem]">
-        <div
-          className={`transition-all duration-300 ease-in-out overflow-hidden ${
-            isCollapsed ? "w-0 opacity-0" : "w-full opacity-100"
-          }`}
-        >
+        <div className={` overflow-hidden ${isCollapsed ? "hidden " : "flex"}`}>
           <p className="font-bold font-libre text-lg whitespace-nowrap">
             Smart Chapters
           </p>
         </div>
 
-        <button
-          onClick={toggleSidebar}
-          className="flex-shrink-0 p-1 rounded hover:bg-foreground transition-colors duration-200 ml-auto"
-        >
-          {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-        </button>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              onClick={toggleSidebar}
+              className="flex-shrink-0 p-2 cursor-pointer active:scale-95 rounded-lg hover:bg-foreground transition-colors duration-200 ml-auto"
+            >
+              {isCollapsed ? (
+                <PanelRightClose size={20} />
+              ) : (
+                <PanelRightOpen size={20} />
+              )}
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            {isCollapsed ? "Close Sidebar" : "Open Sidebar"}
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       {/* Search */}
       <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          isCollapsed ? "max-h-0 opacity-0 mb-0" : "max-h-20 opacity-100 mb-4"
+        className={` overflow-hidden ${
+          isCollapsed ? " mb-4" : "max-h-20 opacity-100 mb-4"
         }`}
       >
-        <Search />
+        <Search isIcon={isCollapsed ? true : false} />
       </div>
 
       {/* Navigation Links */}
-      <div className="flex flex-col text-sm flex-1">
+      <div className="flex flex-col  text-sm flex-1  overflow-y-auto">
         <div className="flex gap-1 flex-col font-medium">
           <SidebarLink
             href="/"
@@ -152,8 +164,8 @@ export default function Sidebar() {
 
       {/* Profile Section */}
       <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden mt-auto ${
-          isCollapsed ? "max-h-0 opacity-0" : "max-h-20 opacity-100"
+        className={`overflow-hidden mt-auto ${
+          isCollapsed ? "opacity-0" : " opacity-100 "
         }`}
       >
         <Profile />
