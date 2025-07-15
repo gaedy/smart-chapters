@@ -15,7 +15,6 @@ interface BookCardProps {
 export default function BookCard({ title, author, coverUrl }: BookCardProps) {
   const imageSrc = coverUrl || fg; // fallback
 
-  
   return (
     <div className="flex flex-col w-fit gap-2  rounded-3xl group cursor-pointer">
       <div
@@ -26,7 +25,7 @@ export default function BookCard({ title, author, coverUrl }: BookCardProps) {
           src={imageSrc}
           alt="Book Cover"
           fill
-          className="rounded-3xl object-contain"
+          className="rounded-3xl object-cover" // object-cover to cover entire or object-contain to respect ratio
         />
         <div className="p-2">
           <div

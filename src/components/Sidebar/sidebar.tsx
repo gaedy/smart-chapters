@@ -118,7 +118,7 @@ export default function Sidebar() {
               isCollapsed ? "mx-2 my-1" : "mx-5 my-2"
             }`}
           >
-            <hr className="opacity-20" />
+            <hr className="opacity-40" />
           </div>
 
           <SidebarLink
@@ -149,7 +149,7 @@ export default function Sidebar() {
               isCollapsed ? "mx-2 my-1" : "mx-5 my-2"
             }`}
           >
-            <hr className="opacity-20" />
+            <hr className="opacity-40" />
           </div>
 
           <SidebarLink
