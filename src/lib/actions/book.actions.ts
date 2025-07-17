@@ -18,4 +18,3 @@ export async function getBooks() {
 
   return convertToPlainObject(books);
 }
-

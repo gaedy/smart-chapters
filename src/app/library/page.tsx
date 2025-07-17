@@ -12,7 +12,12 @@ async function page() {
           <p>Bookshelves</p>
           <div className=" text-sm gap-2 flex w-fit ">
             <p className="bg-background p-2 rounded-full px-2.5">All Books</p>
-            <p className="bg-green-300 p-2 rounded-full px-2.5">Want to Read</p>
+            <p
+              className="bg-green-300 p-2 rounded-full px-2.5 cursor-pointer 
+            hover:bg-green-400 transition-colors duration-300"
+            >
+              Want to Read
+            </p>
             <p className="bg-blue-300 p-2 rounded-full px-2.5">
               Currently Reading
             </p>

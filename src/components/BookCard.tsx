@@ -2,9 +2,6 @@
 
 import fg from "/public/h.jpg";
 import Image from "next/image";
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent } from "@/components/ui/card";
-// import { Bookmark, BookOpen } from "lucide-react";
 
 interface BookCardProps {
   title: string;
@@ -18,7 +15,7 @@ export default function BookCard({ title, author, coverUrl }: BookCardProps) {
   return (
     <div className="flex flex-col w-fit gap-2  rounded-3xl group cursor-pointer">
       <div
-        className="flex w-40 shadow-lg transition-transform duration-300
+        className="flex w-40 shadow-md hover:shadow-xl transition-all duration-300
         relative h-60 rounded-3xl overflow-hidden group-hover:scale-105"
       >
         <Image
