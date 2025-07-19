@@ -1,10 +1,5 @@
-import { PrismaClient } from "../src/generated/prisma"; // adjust if needed
-import {
-  usersData,
-  booksData,
-  bookTrackingsData,
-  reviewsData,
-} from "./simpleData";
+import { PrismaClient } from "@prisma/client";
+import { usersData, booksData, reviewsData } from "./simpleData";
 
 const prisma = new PrismaClient();
 
@@ -42,13 +37,6 @@ async function main() {
         genre: book.genre,
         isFeatured: book.isFeatured,
       },
-    });
-  }
-
-  // Create BookTrackings
-  for (const tracking of bookTrackingsData) {
-    await prisma.bookTracking.create({
-      data: tracking,
     });
   }
 

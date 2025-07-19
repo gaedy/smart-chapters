@@ -20,6 +20,7 @@ import SidebarLink from "./SidebarLink";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import Profile from "../profile";
+import { Separator } from "../ui/separator";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -118,7 +119,7 @@ export default function Sidebar() {
               isCollapsed ? "mx-2 my-1" : "mx-5 my-2"
             }`}
           >
-            <hr className="opacity-40" />
+           <Separator />
           </div>
 
           <SidebarLink
@@ -149,7 +150,8 @@ export default function Sidebar() {
               isCollapsed ? "mx-2 my-1" : "mx-5 my-2"
             }`}
           >
-            <hr className="opacity-40" />
+           
+            <Separator />
           </div>
 
           <SidebarLink
