@@ -1,58 +1,59 @@
-import { PrismaClient } from "@prisma/client";
-import { usersData, booksData, reviewsData } from "./simpleData";
-
-const prisma = new PrismaClient();
+import { PrismaClient } from "@/generated/prisma";
+import { simpleData } from "./simpleData";
 
 async function main() {
-  console.log("🌱 Seeding database with all models...");
+  const prisma = new PrismaClient();
+  console.log("🌱 Starting database seeding...");
 
-  // Clean tables (order matters to respect FK constraints)
+  // Clean tables respecting FK dependencies
+  await prisma.verificationToken.deleteMany();
+  await prisma.session.deleteMany();
+  await prisma.account.deleteMany();
   await prisma.review.deleteMany();
   await prisma.bookTracking.deleteMany();
   await prisma.book.deleteMany();
   await prisma.user.deleteMany();
 
-  // Create Users
-  for (const user of usersData) {
-    await prisma.user.create({
-      data: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        passwordHash: user.passwordHash,
-      },
-    });
-  }
+  // Seed Users
+  await prisma.user.createMany({
+    data: simpleData.users,
+  });
 
-  // Create Books
-  for (const book of booksData) {
-    await prisma.book.create({
-      data: {
-        id: book.id,
-        title: book.title,
-        author: book.author,
-        description: book.description,
-        coverUrl: book.coverUrl,
-        pageCount: book.pageCount,
-        genre: book.genre,
-        isFeatured: book.isFeatured,
-      },
-    });
-  }
+  // Seed Books
+  await prisma.book.createMany({
+    data: simpleData.books,
+  });
 
-  // Create Reviews
-  for (const review of reviewsData) {
-    await prisma.review.create({
-      data: review,
-    });
-  }
+  // Seed Accounts
+  await prisma.account.createMany({
+    data: simpleData.accounts,
+  });
+
+  // Seed Sessions
+  await prisma.session.createMany({
+    data: simpleData.sessions,
+  });
+
+  // Seed VerificationTokens
+  await prisma.verificationToken.createMany({
+    data: simpleData.verificationTokens,
+  });
+
+  // Seed BookTrackings
+  await prisma.bookTracking.createMany({
+    data: simpleData.bookTrackings,
+  });
+
+  // Seed Reviews
+  await prisma.review.createMany({
+    data: simpleData.reviews,
+  });
 
   console.log("✅ Seeding completed successfully.");
+  await prisma.$disconnect();
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(() => prisma.$disconnect());
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
