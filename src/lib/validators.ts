@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { email, z } from "zod";
 
 /**
  * Schema for inserting a new book
@@ -27,3 +27,8 @@ export const updateBookSchema = insertBookSchema
   .refine((data) => Object.keys(data).length > 0, {
     message: "At least one field must be provided for update",
   });
+
+export const signInSchema = z.object({
+  email: z.string().email("invalid mail"),
+  password: z.string().min(6, "password must be at least 6 characters"),
+});

@@ -1,5 +1,6 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import { simpleData } from "./simpleData";
+import { hashSync } from "bcrypt-ts";
 
 async function main() {
   const prisma = new PrismaClient();
@@ -50,6 +51,10 @@ async function main() {
   });
 
   console.log("✅ Seeding completed successfully.");
+
+  const hash = hashSync("123456", 10);
+  console.log(hash);
+
   await prisma.$disconnect();
 }
 
