@@ -1,3 +1,4 @@
+"use client";
 import { ChevronDown, CircleUser } from "lucide-react";
 
 function Profile() {
@@ -8,13 +9,12 @@ function Profile() {
       </div>
 
       <div className="flex flex-col">
-        <p className="text-sm font-medium">Ahmed Elgaedy</p>
+        <p className="text-sm font-medium">Ahmed</p>
         <p className="text-xs opacity-80">aelgaedy@gmail.com</p>
       </div>
 
-      
       <div className="ml-auto">
-      <ChevronDown />
+        <ChevronDown />
       </div>
     </div>
   );
