@@ -14,7 +14,7 @@ export default function LibraryLayout({
         <div className="flex flex-col gap-2">
           <p>Bookshelves</p>
           <div className=" text-sm gap-2 flex w-full flex-wrap ">
-            <ActionButton label="All Books" href="/library" />
+            <ActionButton label="All" href="/library" />
             <ActionButton label="Want to Read" href="/library/want-to-read" />
             <ActionButton
               label="Currently Reading"

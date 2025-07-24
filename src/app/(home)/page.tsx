@@ -26,16 +26,12 @@ export default async function Home() {
 
   const books = await getReadingBooks(session.user.id);
 
-  if (books.length === 0) {
-    return <p className="text-center">No books added to this list yet.</p>;
-  }
-
   return (
     <>
       <div className="flex flex-col w-full h-full gap-10">
         <div className="flex flex-col gap-4 ">
           {session && (
-            <p className="text-2xl font-medium">{`Welcome Back, ${
+            <p className="text-2xl font-medium">{`Welcome, ${
               session?.user?.name?.split(" ")[0]
             }!`}</p>
           )}
@@ -43,21 +39,32 @@ export default async function Home() {
           <p className="">Ready to continue your reading journey?</p>
         </div>
 
-        <div className="flex flex-col gap-4">
-          <p>Currently Reading</p>
+        {books.length === 0 ? (
+          <>
+            <p className="">
+              Start adding books to your library, track your progress, and share
+              your thoughts with the community.
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="flex flex-col gap-4">
+              <p>Currently Reading</p>
 
-          <div className="flex gap-4 ">
-            {books.map((book) => (
-              <Link href={`/book/${book.id}`} key={book.id}>
-                <BookCard
-                  title={book.title}
-                  author={book.author}
-                  coverUrl={book.coverUrl}
-                />
-              </Link>
-            ))}
-          </div>
-        </div>
+              <div className="flex gap-4 ">
+                {books.map((book) => (
+                  <Link href={`/book/${book.id}`} key={book.id}>
+                    <BookCard
+                      title={book.title}
+                      author={book.author}
+                      coverUrl={book.coverUrl}
+                    />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

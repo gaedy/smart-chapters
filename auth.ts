@@ -34,14 +34,10 @@ export const config = {
         });
 
         if (user && user.passwordHash) {
-          console.log("🔍 Provided password:", credentials.password);
-          console.log("🔍 Stored hash from DB:", user.passwordHash);
           const isMatch = await compare(
             credentials.password as string,
             user.passwordHash
           );
-
-          console.log("🔍 Comparison result:", isMatch);
 
           if (isMatch) {
             return {

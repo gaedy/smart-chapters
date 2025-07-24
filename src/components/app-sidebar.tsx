@@ -53,7 +53,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Explore",
         url: "/explore",
         icon: Earth,
-        isActive: pathname === "/explore",
+        isActive: pathname.startsWith("/explore"),
+        items: [
+          {
+            title: "Browse",
+            url: "/explore",
+            icon: Earth,
+            
+          },
+        ],
       },
 
       {

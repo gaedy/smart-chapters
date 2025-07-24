@@ -1,13 +1,8 @@
 "use server";
-
-// import { PrismaClient } from "@prisma/client";
-
 import { prisma } from "../prisma";
 import { convertToPlainObject } from "../utils";
 
 export async function getBooks() {
-  // const prisma = new PrismaClient();
-
   const books = await prisma.book.findMany({
     select: {
       id: true,
@@ -113,6 +108,30 @@ export async function getFinishedBooks(userId: string) {
     },
     orderBy: {
       createdAt: "asc",
+    },
+  });
+
+  return convertToPlainObject(books);
+}
+
+export async function getAllTrackedBooks(userId: string) {
+  const books = await prisma.book.findMany({
+    where: {
+      bookTrackings: {
+        some: {
+          userId: userId,
+        },
+      },
+    },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      coverUrl: true,
+      bookTrackings: {
+        where: { userId },
+        select: { status: true },
+      },
     },
   });
 

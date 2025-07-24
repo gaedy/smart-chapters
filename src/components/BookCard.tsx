@@ -6,11 +6,32 @@ import Image from "next/image";
 interface BookCardProps {
   title: string;
   author: string;
-  coverUrl?: string | null; // Optional coverUrl to allow for static images
+  coverUrl?: string | null;
+  status?: string | null; // Optional coverUrl to allow for static images
 }
 
-export default function BookCard({ title, author, coverUrl }: BookCardProps) {
+export default function BookCard({
+  title,
+  author,
+  coverUrl,
+  status,
+}: BookCardProps) {
   const imageSrc = coverUrl || fg; // fallback
+  type TrackingStatus = "FINISHED" | "READING" | "WANT_TO_READ" | "DEFAULT";
+  type TrackingStatusWithDefault = TrackingStatus | "DEFAULT";
+
+  const statusConfig: Record<
+    TrackingStatusWithDefault,
+    { color: string; label: string }
+  > = {
+    FINISHED: { color: "bg-green-500/70 text-white", label: "Finished" },
+    READING: { color: "bg-yellow-500/70 text-white", label: "Currently Reading" },
+    WANT_TO_READ: { color: "bg-blue-500/70 text-white", label: "Want to Read" },
+    DEFAULT: { color: "bg-gray-400/70 text-white", label: "Not Tracked" },
+  };
+
+  const key = (status ?? "DEFAULT") as TrackingStatusWithDefault;
+  const { color, label } = statusConfig[key];
 
   return (
     <div className="flex flex-col w-fit gap-2  rounded-3xl group cursor-pointer">
@@ -24,14 +45,17 @@ export default function BookCard({ title, author, coverUrl }: BookCardProps) {
           fill
           className="rounded-3xl object-cover" // object-cover to cover entire or object-contain to respect ratio
         />
-        {/* <div className="p-2">
-          <div
-            className="absolute p-2 px-2.5 text-xs rounded-full backdrop-blur-xs bg-green-500/20 
-          backdrop-brightness-40 text-amber-50"
-          >
-            Want to Read
+
+        {status && (
+          <div className="p-2">
+            <div
+              className={`absolute p-2 px-2.5 text-xs rounded-full backdrop-blur-xs
+              backdrop-brightness-80 ${color}`}
+            >
+              {label}
+            </div>
           </div>
-        </div> */}
+        )}
       </div>
 
       <div className="flex flex-col gap-1">

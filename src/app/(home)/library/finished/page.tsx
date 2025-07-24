@@ -3,17 +3,12 @@ import { getFinishedBooks } from "@/lib/actions/book.actions";
 import Link from "next/link";
 import { auth } from "../../../../../auth";
 
-
-
-
 export default async function FinishedPage() {
   const session = await auth();
 
   if (!session || !session.user?.id) {
     return (
-      <p className="text-center">
-        Please sign in to view your Finished books.
-      </p>
+      <p className="text-center">Please sign in to view your Finished books.</p>
     );
   }
 
