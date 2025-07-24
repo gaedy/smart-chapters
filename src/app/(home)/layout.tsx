@@ -1,12 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { NavUser } from "@/components/nav-user";
 
-import {
-  SidebarMenuButton,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import Link from "next/link";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const data = {
   user: {

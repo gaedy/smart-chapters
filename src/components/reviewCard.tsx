@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import Rating from "./ui/rating";
 
 interface ReviewCardProps {
-  name: string;
-  date: string;
+  name?: string;
+  date?: string;
   rating: number;
   comment: string;
   avatarColor?: string; // optional to customize avatar circle color
@@ -20,6 +20,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   avatarColor = "bg-amber-900",
   className,
 }) => {
+  
   return (
     <div
       className={cn(

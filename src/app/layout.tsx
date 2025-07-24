@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Libre_Baskerville } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,10 +31,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${libre.variable}  antialiased text-primaryText`}
       >
-        <SidebarProvider>
-          {children}
-        </SidebarProvider>
-        
+        <SessionProvider>
+          <SidebarProvider>{children}</SidebarProvider>
+        </SessionProvider>
       </body>
     </html>
   );

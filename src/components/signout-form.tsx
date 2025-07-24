@@ -10,27 +10,27 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signInWithCredentials } from "@/lib/actions/user.actions";
+import { signUpUser } from "@/lib/actions/user.actions";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import Link from "next/link";
 
-const SignInButton = () => {
+const SignUpButton = () => {
   const { pending } = useFormStatus();
 
   return (
     <Button disabled={pending}>
       {" "}
-      {pending ? "Signing in ..." : "Sign in"}{" "}
+      {pending ? "Submitting ..." : "Sign up"}{" "}
     </Button>
   );
 };
 
-export function LoginForm({
+export function SignoutForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [data, action] = useActionState(signInWithCredentials, {
+  const [data, action] = useActionState(signUpUser, {
     success: false,
     message: "",
   });
@@ -39,14 +39,25 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Create Account</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your information below to sign out
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form action={action}>
             <div className="flex flex-col gap-6">
+              <div className="grid gap-3">
+                <Label htmlFor="email">Name</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Alice bob"
+                  required
+                />
+              </div>
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -61,20 +72,27 @@ export function LoginForm({
               <div className="grid gap-3">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </Link>
                 </div>
                 <Input id="password" name="password" type="password" required />
               </div>
+
+              <div className="grid gap-3">
+                <div className="flex items-center">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                </div>
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  required
+                />
+              </div>
+
               <div className="flex flex-col gap-3">
-                <SignInButton />
-                <Button variant="outline" className="w-full">
+                <SignUpButton />
+                {/* <Button variant="outline" className="w-full">
                   Login with Google
-                </Button>
+                </Button> */}
               </div>
 
               {data && !data.success && (
@@ -86,9 +104,9 @@ export function LoginForm({
               )}
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <Link href="/sign-up" className="underline underline-offset-4">
-                Sign up
+              Already have an account?{" "}
+              <Link href="/sign-in" className="underline underline-offset-4">
+                Sign in
               </Link>
             </div>
           </form>

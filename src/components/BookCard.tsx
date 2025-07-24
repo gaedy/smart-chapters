@@ -24,14 +24,14 @@ export default function BookCard({ title, author, coverUrl }: BookCardProps) {
           fill
           className="rounded-3xl object-cover" // object-cover to cover entire or object-contain to respect ratio
         />
-        <div className="p-2">
+        {/* <div className="p-2">
           <div
             className="absolute p-2 px-2.5 text-xs rounded-full backdrop-blur-xs bg-green-500/20 
           backdrop-brightness-40 text-amber-50"
           >
             Want to Read
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex flex-col gap-1">

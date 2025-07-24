@@ -83,6 +83,7 @@
   --color-foregroundClicked: var(--foregroundClicked);
   --color-primaryText: var(--primaryText);
   --font-libre: var(--font-libre);
+  --font-inter: var(--font-inter);
 }
 
 @theme inline {

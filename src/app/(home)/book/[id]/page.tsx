@@ -1,7 +1,8 @@
+import ButtonToWork from "@/components/button-to-work";
 import ReviewCard from "@/components/reviewCard";
-import { Button } from "@/components/ui/button";
 import Rating from "@/components/ui/rating";
 import { getBookById } from "@/lib/actions/book.actions";
+import { Bookmark, BookmarkCheck, BookOpenCheck } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -24,31 +25,18 @@ export default async function theDetailedBookPage({ params }: PageProps) {
             className=" w-full lg:w-fit h-full lg:h-auto flex flex-col items-center 
         justify-start  gap-2"
           >
-            <div className="flex flex-col w-40 gap-4 transition-colors">
-              <div className="w-40 h-60 rounded-2xl relative flex justify-center items-center">
+            <div className="flex flex-col w-40 gap-4 transition-colors ">
+              <div className="w-40 h-60 rounded-2xl relative flex justify-center items-center ">
                 <Image
                   src={imgSource}
                   alt="Book Cover"
                   fill
-                  className="rounded-3xl object-cover" // object-cover to cover entire or object-contain to respect ratio
+                  className="rounded-3xl object-cover shadow-lg" // object-cover to cover entire or object-contain to respect ratio
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="w-full rounded-full cursor-pointer hover:bg-green-400 bg-green-300"
-                >
-                  Want to Read
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="w-full rounded-full cursor-pointer bg-progress hover:bg-blue-400"
-                >
-                  Read it Later
-                </Button>
+                <ButtonToWork/>
               </div>
             </div>
           </div>

@@ -2,17 +2,14 @@
 
 import * as React from "react";
 import {
-  
   Earth,
   Heart,
   House,
   Library,
- 
   NotepadText,
   PieChart,
   Send,
   Settings,
- 
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -31,102 +28,77 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Home",
-      url: "/",
-      icon: House,
-      isActive: true,
-    },
-
-    {
-      title: "Explore",
-      url: "/explore",
-      icon: Earth,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-
-    {
-      title: "Library",
-
-      url: "/library",
-      icon: Library,
-      items: [
-        
-        {
-          title: "Want to Read",
-          url: "/library/want-to-read",
-        },
-        {
-          title: "Currently Reading",
-          url: "/library/currently-reading",
-        },
-        {
-          title: "Finished",
-          url: "/library/finished",
-        },
-      ],
-    },
-  
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Settings,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
-  projects: [
-    {
-      name: "Notes & Quotes",
-      url: "/notes",
-      icon: NotepadText,
-    },
-    {
-      name: "Statistics",
-      url: "/stats",
-      icon: PieChart,
-    },
-    {
-      name: "Favorites",
-      url: "/favorites",
-      icon: Heart,
-    },
-  ],
-};
+import { usePathname } from "next/navigation"; // Add this import
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, open, isMobile } = useSidebar();
-   
+
+  const pathname = usePathname();
+
+  const data = {
+    user: {
+      name: "shadcn",
+      email: "m@example.com",
+      avatar: "/avatars/shadcn.jpg",
+    },
+    navMain: [
+      {
+        title: "Home",
+        url: "/",
+        icon: House,
+        isActive: pathname === "/",
+      },
+
+      {
+        title: "Explore",
+        url: "/explore",
+        icon: Earth,
+        isActive: pathname === "/explore",
+      },
+
+      {
+        title: "Library",
+
+        url: "/library",
+        icon: Library,
+        isActive: pathname.startsWith("/library"),
+      },
+    ],
+    navSecondary: [
+      {
+        title: "Settings",
+        url: "/settings",
+        isActive: pathname === "/settings",
+        icon: Settings,
+      },
+      {
+        title: "Feedback",
+        url: "#",
+        icon: Send,
+      },
+    ],
+    projects: [
+      {
+        name: "Notes & Quotes",
+
+        url: "/notes",
+        isActive: pathname === "/notes",
+        icon: NotepadText,
+      },
+      {
+        name: "Statistics",
+        url: "/stats",
+        isActive: pathname === "/stats",
+        icon: PieChart,
+      },
+      {
+        name: "Favorites",
+        url: "/favorites",
+        isActive: pathname === "/favorites",
+        icon: Heart,
+      },
+    ],
+  };
 
   return (
     <Sidebar variant="inset" {...props}>
@@ -163,7 +135,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user}  />
+        <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
   );

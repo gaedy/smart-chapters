@@ -18,6 +18,7 @@ export function NavSecondary({
     title: string
     url: string
     icon: LucideIcon
+    isActive?: boolean
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
@@ -26,7 +27,7 @@ export function NavSecondary({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild size="sm">
+              <SidebarMenuButton asChild size="sm" className={item.isActive ? "bg-foreground" : ""}>
                 <Link href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>

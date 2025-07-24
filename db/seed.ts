@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { simpleData } from "./simpleData";
 import { hashSync } from "bcrypt-ts";
-
+import bookData from "./bookData.json";
+import { prisma } from "@/lib/prisma";
 async function main() {
-  const prisma = new PrismaClient();
   console.log("🌱 Starting database seeding...");
 
   // Clean tables respecting FK dependencies
@@ -22,7 +21,7 @@ async function main() {
 
   // Seed Books
   await prisma.book.createMany({
-    data: simpleData.books,
+    data: bookData,
   });
 
   // Seed Accounts
@@ -51,9 +50,6 @@ async function main() {
   });
 
   console.log("✅ Seeding completed successfully.");
-
-  const hash = hashSync("123456", 10);
-  console.log(hash);
 
   await prisma.$disconnect();
 }
