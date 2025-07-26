@@ -18,6 +18,10 @@ export const bookItemSchema = z.object({
   isFeatured: z.boolean().optional().nullable(),
 });
 
+export const insertBookSchema = z.object({
+  items: z.array(bookItemSchema),
+});
+
 export const signInSchema = z.object({
   email: z.string().email("invalid mail"),
   password: z.string().min(6, "password must be at least 6 characters"),
@@ -36,3 +40,5 @@ export const signUpSchema = z
     message: "password not match",
     path: ["confirmPassword"],
   });
+
+

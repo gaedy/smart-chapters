@@ -37,13 +37,13 @@ export default function BookCard({
     <div className="flex flex-col w-fit gap-2  rounded-3xl group cursor-pointer">
       <div
         className="flex w-40 shadow-md hover:shadow-xl transition-all duration-300
-        relative h-60 rounded-3xl overflow-hidden group-hover:scale-105"
+        relative h-60 rounded-2xl overflow-hidden group-hover:scale-105"
       >
         <Image
           src={imageSrc}
           alt="Book Cover"
           fill
-          className="rounded-3xl object-cover" // object-cover to cover entire or object-contain to respect ratio
+          className="rounded-2xl object-cover" // object-cover to cover entire or object-contain to respect ratio
         />
 
         {status && (

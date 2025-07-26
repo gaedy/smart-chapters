@@ -42,7 +42,7 @@ export default function HomeLayout({
         </div>
 
         {/* main content */}
-        <div className="flex flex-col flex-1 p-2 overflow-x-hidden overflow-y-auto">
+        <div className="flex flex-col flex-1 py-2 md:pr-2 md:px-0 px-2  overflow-x-hidden overflow-y-auto">
           <div
             className="sticky top-0 bg-foreground overflow-x-hidden overflow-auto 
             font-libre p-4 rounded-xl flex-1 flex flex-col"

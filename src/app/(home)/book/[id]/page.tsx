@@ -1,8 +1,9 @@
+import AddToLibrary from "@/components/add-to-library";
 import ButtonToWork from "@/components/button-to-work";
+import RemoveFromLibrary from "@/components/removeFromLibrary";
 import ReviewCard from "@/components/reviewCard";
 import Rating from "@/components/ui/rating";
 import { getBookById } from "@/lib/actions/book.actions";
-import { Bookmark, BookmarkCheck, BookOpenCheck } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -31,12 +32,39 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                   src={imgSource}
                   alt="Book Cover"
                   fill
-                  className="rounded-3xl object-cover shadow-lg" // object-cover to cover entire or object-contain to respect ratio
+                  className="rounded-2xl object-cover shadow-lg" // object-cover to cover entire or object-contain to respect ratio
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <ButtonToWork/>
+                {/* <ButtonToWork /> */}
+                <AddToLibrary
+                  item={{
+                    title: book.title,
+                    author: book.author,
+                  }}
+                  status="WANT_TO_READ"
+                  label="Want to Read"
+                ></AddToLibrary>
+                <AddToLibrary
+                  item={{
+                    title: book.title,
+                    author: book.author,
+                  }}
+                  status="READING"
+                  label="Reading"
+                ></AddToLibrary>
+
+                <AddToLibrary
+                  item={{
+                    title: book.title,
+                    author: book.author,
+                  }}
+                  status="FINISHED"
+                  label="Finished"
+                ></AddToLibrary>
+
+                <RemoveFromLibrary bookId={book.id} label="Remove" />
               </div>
             </div>
           </div>
@@ -70,25 +98,13 @@ export default async function theDetailedBookPage({ params }: PageProps) {
               <div className="flex bg-secondary text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
                 <div className="flex justify-between items-center ">
                   <p>Total Pages</p>
-                  <p>2549</p>
+                  <p>{book.pageCount}</p>
                 </div>
 
-                <div className="flex justify-between items-center ">
+                {/* <div className="flex justify-between items-center ">
                   <p>Pages Left</p>
                   <p>451</p>
-                </div>
-              </div>
-
-              <div className="flex bg-secondary text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
-                <div className="flex justify-between items-center ">
-                  <p>Total Pages</p>
-                  <p>2549</p>
-                </div>
-
-                <div className="flex justify-between items-center ">
-                  <p>Pages Left</p>
-                  <p>451</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
