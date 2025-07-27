@@ -1,11 +1,24 @@
 import AddToLibrary from "@/components/add-to-library";
-import ButtonToWork from "@/components/button-to-work";
 import RemoveFromLibrary from "@/components/removeFromLibrary";
 import ReviewCard from "@/components/reviewCard";
 import Rating from "@/components/ui/rating";
-import { getBookById } from "@/lib/actions/book.actions";
+import {
+  getBookById,
+  getUserBookTrackingStatus,
+} from "@/lib/actions/book.actions";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Check, Plus } from "lucide-react";
+import { auth } from "auth";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -18,6 +31,17 @@ export default async function theDetailedBookPage({ params }: PageProps) {
   if (!book) notFound();
 
   const imgSource = book.coverUrl || "/2.jpg";
+
+  const session = await auth();
+
+  if (!session || !session.user?.id) {
+    return;
+  }
+
+  const { isTracked, status } = await getUserBookTrackingStatus(
+    session?.user?.id,
+    book.id
+  );
   return (
     <>
       <div className="flex flex-col gap-10">
@@ -26,7 +50,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
             className=" w-full lg:w-fit h-full lg:h-auto flex flex-col items-center 
         justify-start  gap-2"
           >
-            <div className="flex flex-col w-40 gap-4 transition-colors ">
+            <div className="flex flex-col w-44 justify-center items-center  gap-4 transition-colors  ">
               <div className="w-40 h-60 rounded-2xl relative flex justify-center items-center ">
                 <Image
                   src={imgSource}
@@ -36,9 +60,118 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex justify-center items-center flex-col gap-4 flex-wrap">
+                <Rating canModified={true} value={4} />
+                {/* <p>4</p>
+                <p className="text-sm opacity-80">12,454 Reviews</p> */}
+              </div>
+
+              <div className="flex w-full flex-col gap-2">
                 {/* <ButtonToWork /> */}
-                <AddToLibrary
+
+                {/* <div className="flex gap-2">
+                  <AddToLibrary
+                    iconName="wantToRead"
+                    item={{
+                      title: book.title,
+                      author: book.author,
+                    }}
+                    status="WANT_TO_READ"
+                    label="Want to Read"
+                  ></AddToLibrary>
+                </div> */}
+
+                <Dialog>
+                  <DialogTrigger
+                    className={`flex justify-center gap-1 items-center bg-background p-2.5 text-[13px] 
+                  rounded-full cursor-pointer active:scale-100 hover:scale-105 hover:shadow-lg 
+                  transition-all duration-200 ${
+                    isTracked && "bg-library-color-1 text-accent-foreground"
+                  }`}
+                  >
+                    {isTracked ? (
+                      <>
+                        <Check className="w-5" />
+
+                        <p>Added to Library</p>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="w-5" />
+
+                        <p>Add to Library</p>
+                      </>
+                    )}
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader className="flex gap-4 font-libre">
+                      <DialogTitle>Choose a List for this book</DialogTitle>
+                      <DialogDescription className="flex flex-col self-center gap-2 min-w-1/2 max-w-72">
+                        <AddToLibrary
+                          iconName={`${
+                            status === "WANT_TO_READ" ? "check" : "wantToRead"
+                          }`}
+                          item={{
+                            title: book.title,
+                            author: book.author,
+                          }}
+                          status="WANT_TO_READ"
+                          label="Want to Read"
+                          className={`${
+                            status === "WANT_TO_READ" &&
+                            "bg-library-color-1  text-primary pointer-events-none"
+                          }`}
+                        ></AddToLibrary>
+
+                        <AddToLibrary
+                          iconName={`${
+                            status === "READING" ? "check" : "reading"
+                          }`}
+                          item={{
+                            title: book.title,
+                            author: book.author,
+                          }}
+                          status="READING"
+                          label={
+                            status === "READING"
+                              ? "Currently Reading"
+                              : "Currently Reading"
+                          }
+                          className={`${
+                            status === "READING" &&
+                            "bg-library-color-1 text-primary pointer-events-none"
+                          } `}
+                        ></AddToLibrary>
+
+                        <AddToLibrary
+                          iconName={`${
+                            status === "FINISHED" ? "check" : "finished"
+                          }`}
+                          item={{
+                            title: book.title,
+                            author: book.author,
+                          }}
+                          status="FINISHED"
+                          label="Finished"
+                          className={`${
+                            status === "FINISHED" &&
+                            "bg-library-color-1 text-primary pointer-events-none"
+                          }`}
+                        ></AddToLibrary>
+
+                        {isTracked && (
+                          <RemoveFromLibrary
+                            iconName="remove"
+                            bookId={book.id}
+                            label="Remove from Library"
+                          />
+                        )}
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+
+                {/* <AddToLibrary
                   item={{
                     title: book.title,
                     author: book.author,
@@ -64,7 +197,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                   label="Finished"
                 ></AddToLibrary>
 
-                <RemoveFromLibrary bookId={book.id} label="Remove" />
+                <RemoveFromLibrary bookId={book.id} label="Remove" /> */}
               </div>
             </div>
           </div>
@@ -75,27 +208,22 @@ export default async function theDetailedBookPage({ params }: PageProps) {
               <p>{book.author}</p>
               <p className="text-sm text-pretty">{book.description}</p>
             </div>
-            <div className="flex justify-start items-center mt-8 gap-4 flex-wrap">
-              <Rating rating={4} />
-              <p>4.0</p>
-              <p className="text-sm opacity-80">12,454 Reviews</p>
-            </div>
           </div>
 
           <div
-            className=" w-full min-w-2xs lg:flex-1 lg:max-w-xs h-full 
+            className=" w-full min-w-2xs  lg:flex-1 lg:max-w-xs h-full 
         lg:h-auto flex"
           >
             <div className="flex flex-col w-full gap-4">
               <p>Progress</p>
 
-              <div className="flex bg-secondary rounded-full p-1 w-full h-8">
-                <div className="w-1/4 h-full text-sm p-2 bg-progress rounded-full flex justify-end items-center relative">
+              <div className="flex bg-background rounded-full p-1 w-full h-8">
+                <div className="w-1/4 h-full dark:text-primary-foreground text-sm p-2 bg-progress rounded-full flex justify-end items-center relative">
                   <p className="absolute">37%</p>
                 </div>
               </div>
 
-              <div className="flex bg-secondary text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
+              <div className="flex bg-background text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
                 <div className="flex justify-between items-center ">
                   <p>Total Pages</p>
                   <p>{book.pageCount}</p>

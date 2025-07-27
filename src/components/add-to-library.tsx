@@ -5,14 +5,38 @@ import type { BookType } from "@/types";
 import { TrackingStatus } from "@prisma/client";
 import { toast } from "sonner";
 import { ActionButton } from "./ui/button-book";
+import { Check, LucideIcon } from "lucide-react";
+import { Bookmark, BookOpenCheck, BookOpenText } from "lucide-react";
+
+const iconMap = {
+  reading: BookOpenText,
+  wantToRead: Bookmark,
+  finished: BookOpenCheck,
+  check: Check,
+  // Add more if needed
+};
 
 interface AddToLibraryProps {
   item: BookType;
   status: TrackingStatus;
   label?: string;
+  color?: string;
+  className? : string;
+
+  iconName?: keyof typeof iconMap;
 }
 
-function AddToLibrary({ item, status, label = "Button" }: AddToLibraryProps) {
+function AddToLibrary({
+  item,
+  status,
+  label = "Button",
+  color,
+
+className,
+  iconName,
+}: AddToLibraryProps) {
+  const icon = iconName ? iconMap[iconName] : undefined;
+
   const handleClick = async () => {
     const res = await addBookToLib(item, status);
     if (!res.success) {
@@ -28,7 +52,7 @@ function AddToLibrary({ item, status, label = "Button" }: AddToLibraryProps) {
   };
 
   return (
-    <ActionButton onClick={handleClick} label={label}>
+    <ActionButton onClick={handleClick} className={className} color={color} label={label} icon={icon}>
       {label ?? `Add to ${status.toLowerCase().replace(/_/g, " ")}`}
     </ActionButton>
   );

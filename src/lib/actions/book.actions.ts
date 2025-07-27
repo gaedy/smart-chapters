@@ -222,3 +222,23 @@ export async function removeBookFromLib(bookId: string) {
 
   return { success: true, message: "Book removed from library" };
 }
+
+
+export async function getUserBookTrackingStatus(userId: string, bookId: string) {
+  const tracking = await prisma.bookTracking.findUnique({
+    where: {
+      userId_bookId: {
+        userId,
+        bookId,
+      },
+    },
+    select: {
+      status: true,
+    },
+  });
+
+  return {
+    isTracked: !!tracking,
+    status: tracking?.status ?? null,
+  };
+}

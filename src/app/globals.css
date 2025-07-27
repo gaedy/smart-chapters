@@ -39,6 +39,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --progress :oklch(0.8041 0.0981 263.24);
+  --library-color-1: oklch(79.406% 0.10877 156.468);
 }
 
 .dark {
@@ -76,6 +77,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --progress :oklch(0.8041 0.0981 263.24);
+  --library-color-1: oklch(47.774% 0.09028 169.959);
 }
 @theme {
   --color-background: var(--background);
@@ -123,6 +125,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-progress : var(--progress);
+  --color-library-color-1: var(--library-color-1);
 }
 
 @layer base {

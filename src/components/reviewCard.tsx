@@ -24,7 +24,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   return (
     <div
       className={cn(
-        "flex items-start rounded-2xl bg-secondary gap-2 p-3 px-3.5 w-full lg:max-w-xl h-fit",
+        "flex items-start rounded-2xl bg-background gap-2 p-3 px-3.5 w-full lg:max-w-xl h-fit",
         className
       )}
     >
@@ -37,7 +37,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             <p className="font-semibold">{name}</p>
             <div className="text-xs opacity-80">{date}</div>
           </div>
-          <Rating rating={rating} />
+          
+          <Rating canModified={false} value={rating} />
         </div>
         <div className="w-full h-full flex">
           <p className="text-sm text-pretty">{comment}</p>
