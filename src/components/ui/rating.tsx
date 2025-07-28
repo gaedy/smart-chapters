@@ -2,22 +2,30 @@
 
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { updateUserBookTrackingRating } from "@/lib/actions/book.actions";
 
 interface RatingProps {
   value: number;
   canModified: boolean;
+  bookId: string;
 }
 
-export default function Rating({
-  value = 0,
-  canModified = false,
-}: RatingProps) {
+export default function Rating({ value, canModified = false, bookId }: RatingProps) {
   const [rating, setRating] = useState(value);
   const [hover, setHover] = useState(0);
+  const { data: session } = useSession();
 
   useEffect(() => {
     setRating(value); // If the API changes the value, reflect it
   }, [value]);
+
+  const handleClick = async (star: number) => {
+    if (!session?.user?.id) return;
+
+    setRating(star); // update UI immediately
+    await updateUserBookTrackingRating(session.user.id, bookId, star); // update DB
+  };
 
   return (
     <div className="flex gap-1">
@@ -38,7 +46,7 @@ export default function Rating({
           `}
               onMouseEnter={() => setHover(star)}
               onMouseLeave={() => setHover(0)}
-              onClick={() => setRating(star)}
+              onClick={() => handleClick(star)}
               fill={hover >= star || rating >= star ? "#facc15" : "none"}
             />
           ))}

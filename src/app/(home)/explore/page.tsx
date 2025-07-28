@@ -1,7 +1,7 @@
 import { getBooks } from "@/lib/actions/book.actions";
 import { auth } from "../../../../auth";
 import Link from "next/link";
-import BookCard from "@/components/BookCard";
+import BookCard from "@/components/Book/BookCard";
 
 async function Explore() {
   const session = await auth();

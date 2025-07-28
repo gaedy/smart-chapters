@@ -4,7 +4,7 @@ import { addBookToLib } from "@/lib/actions/book.actions";
 import type { BookType } from "@/types";
 import { TrackingStatus } from "@prisma/client";
 import { toast } from "sonner";
-import { ActionButton } from "./ui/button-book";
+import { ActionButton } from "../ui/actionButton";
 import { Check, LucideIcon } from "lucide-react";
 import { Bookmark, BookOpenCheck, BookOpenText } from "lucide-react";
 

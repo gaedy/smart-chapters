@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Libre_Baskerville } from "next/font/google";
+import { Libre_Baskerville, Inter } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/Sidebar/sidebar";
 import { SessionProvider } from "next-auth/react";
 import React from "react";
 import { Toaster } from "sonner";
@@ -29,13 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${libre.variable}  antialiased text-primaryText`}
+        className={`${inter.variable} ${libre.variable} antialiased text-primaryText`}
       >
         <SessionProvider>
-          <SidebarProvider>{children}
-            <Toaster/>
+          <SidebarProvider>
+            {children}
+            <Toaster />
           </SidebarProvider>
         </SessionProvider>
       </body>

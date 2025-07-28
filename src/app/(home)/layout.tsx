@@ -1,7 +1,7 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import { NavUser } from "@/components/nav-user";
+import { AppSidebar } from "@/components/Sidebar/app-sidebar";
+import { NavUser } from "@/components/Sidebar/nav-user";
 
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/Sidebar/sidebar";
 
 const data = {
   user: {

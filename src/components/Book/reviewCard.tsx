@@ -1,7 +1,7 @@
 import React from "react";
 
 import { cn } from "@/lib/utils";
-import Rating from "./ui/rating";
+import Rating from "../ui/rating";
 
 interface ReviewCardProps {
   name?: string;
@@ -37,8 +37,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             <p className="font-semibold">{name}</p>
             <div className="text-xs opacity-80">{date}</div>
           </div>
-          
-          <Rating canModified={false} value={rating} />
+
+          {/* <Rating canModified={false} value={rating} /> */}
         </div>
         <div className="w-full h-full flex">
           <p className="text-sm text-pretty">{comment}</p>

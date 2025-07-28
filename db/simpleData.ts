@@ -152,7 +152,7 @@ export const simpleData = {
       bookId: "dune-clm4d5e6f7g8h9i0j1k2l3m4",
       status: TrackingStatus.WANT_TO_READ,
       currentPage: 36,
-      rating: null,
+      rating: 4,
       notes: null,
       startedAt: null,
       finishedAt: null,

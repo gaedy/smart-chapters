@@ -3,7 +3,7 @@
 import { removeBookFromLib } from "@/lib/actions/book.actions";
 
 import { toast } from "sonner";
-import { ActionButton } from "./ui/button-book";
+import { ActionButton } from "../ui/actionButton";
 import { Trash } from "lucide-react";
 const iconMap = {
   remove: Trash,

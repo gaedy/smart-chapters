@@ -223,8 +223,10 @@ export async function removeBookFromLib(bookId: string) {
   return { success: true, message: "Book removed from library" };
 }
 
-
-export async function getUserBookTrackingStatus(userId: string, bookId: string) {
+export async function getUserBookTrackingStatus(
+  userId: string,
+  bookId: string
+) {
   const tracking = await prisma.bookTracking.findUnique({
     where: {
       userId_bookId: {
@@ -234,11 +236,57 @@ export async function getUserBookTrackingStatus(userId: string, bookId: string) 
     },
     select: {
       status: true,
+      currentPage: true,
     },
   });
 
   return {
     isTracked: !!tracking,
     status: tracking?.status ?? null,
+    currentPage: tracking?.currentPage ?? null,
   };
+}
+
+export async function getUserBookTrackingRating(
+  userId: string,
+  bookId: string
+) {
+  const rate = await prisma.bookTracking.findUnique({
+    where: {
+      userId_bookId: {
+        userId,
+        bookId,
+      },
+    },
+    select: {
+      rating: true,
+    },
+  });
+
+  return rate;
+}
+
+export async function updateUserBookTrackingRating(
+  userId: string,
+  bookId: string,
+  rating: number
+) {
+  return await prisma.bookTracking.upsert({
+    where: {
+      userId_bookId: {
+        userId,
+        bookId,
+      },
+    },
+    update: {
+      rating,
+    },
+    create: {
+      userId,
+      bookId,
+      rating,
+      status: "WANT_TO_READ",
+      currentPage: 0,
+    },
+  });
 }

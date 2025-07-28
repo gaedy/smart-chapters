@@ -1,4 +1,4 @@
-import BookCard from "@/components/BookCard";
+import BookCard from "@/components/Book/BookCard";
 import { getReadingBooks } from "@/lib/actions/book.actions";
 import { auth } from "../../../auth";
 import Link from "next/link";

@@ -1,7 +1,14 @@
-import BookCard from "@/components/BookCard";
+import BookCard from "@/components/Book/BookCard";
 import { getAllTrackedBooks } from "@/lib/actions/book.actions";
 import Link from "next/link";
 import { auth } from "../../../../auth";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "Library - Smart Chapters",
+};
+
 
 async function page() {
   const session = await auth();

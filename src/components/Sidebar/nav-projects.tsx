@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
+} from "@/components/Sidebar/sidebar";
 import Link from "next/link";
 
 export function NavProjects({

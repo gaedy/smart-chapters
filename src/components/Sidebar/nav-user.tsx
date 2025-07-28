@@ -25,7 +25,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
+} from "@/components/Sidebar/sidebar";
 import { useSession } from "next-auth/react";
 import { signOutUser } from "@/lib/actions/user.actions";
 import { signOut } from "next-auth/react";

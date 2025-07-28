@@ -1,9 +1,10 @@
-import AddToLibrary from "@/components/add-to-library";
-import RemoveFromLibrary from "@/components/removeFromLibrary";
-import ReviewCard from "@/components/reviewCard";
+import AddToLibrary from "@/components/Book/add-to-library";
+import RemoveFromLibrary from "@/components/Book/removeFromLibrary";
+import ReviewCard from "@/components/Book/reviewCard";
 import Rating from "@/components/ui/rating";
 import {
   getBookById,
+  getUserBookTrackingRating,
   getUserBookTrackingStatus,
 } from "@/lib/actions/book.actions";
 import Image from "next/image";
@@ -19,9 +20,33 @@ import {
 } from "@/components/ui/dialog";
 import { Check, Plus } from "lucide-react";
 import { auth } from "auth";
+import { Metadata } from "next";
+import { Progress } from "@/components/ui/progress";
 
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+type metaProps = {
+  params: {
+    id: string;
+  };
+};
+
+export async function generateMetadata({
+  params,
+}: metaProps): Promise<Metadata> {
+  const book = await getBookById(params.id);
+  if (!book) {
+    return {
+      title: "Book Not Found",
+      description: "This book does not exist.",
+    };
+  }
+
+  return {
+    title: `${book.title} - Smart Chapters`,
+    description: book.description || "Read more about this book.",
+  };
 }
 
 export default async function theDetailedBookPage({ params }: PageProps) {
@@ -38,10 +63,13 @@ export default async function theDetailedBookPage({ params }: PageProps) {
     return;
   }
 
-  const { isTracked, status } = await getUserBookTrackingStatus(
+  const { isTracked, status, currentPage } = await getUserBookTrackingStatus(
     session?.user?.id,
     book.id
   );
+
+  const rate = await getUserBookTrackingRating(session.user.id, book.id);
+
   return (
     <>
       <div className="flex flex-col gap-10">
@@ -61,7 +89,12 @@ export default async function theDetailedBookPage({ params }: PageProps) {
               </div>
 
               <div className="flex justify-center items-center flex-col gap-4 flex-wrap">
-                <Rating canModified={true} value={4} />
+                <Rating
+                  bookId={book.id}
+                  canModified={true}
+                  value={rate?.rating ?? 0}
+                />
+
                 {/* <p>4</p>
                 <p className="text-sm opacity-80">12,454 Reviews</p> */}
               </div>
@@ -170,34 +203,6 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                     </DialogHeader>
                   </DialogContent>
                 </Dialog>
-
-                {/* <AddToLibrary
-                  item={{
-                    title: book.title,
-                    author: book.author,
-                  }}
-                  status="WANT_TO_READ"
-                  label="Want to Read"
-                ></AddToLibrary>
-                <AddToLibrary
-                  item={{
-                    title: book.title,
-                    author: book.author,
-                  }}
-                  status="READING"
-                  label="Reading"
-                ></AddToLibrary>
-
-                <AddToLibrary
-                  item={{
-                    title: book.title,
-                    author: book.author,
-                  }}
-                  status="FINISHED"
-                  label="Finished"
-                ></AddToLibrary>
-
-                <RemoveFromLibrary bookId={book.id} label="Remove" /> */}
               </div>
             </div>
           </div>
@@ -217,23 +222,32 @@ export default async function theDetailedBookPage({ params }: PageProps) {
             <div className="flex flex-col w-full gap-4">
               <p>Progress</p>
 
-              <div className="flex bg-background rounded-full p-1 w-full h-8">
-                <div className="w-1/4 h-full dark:text-primary-foreground text-sm p-2 bg-progress rounded-full flex justify-end items-center relative">
-                  <p className="absolute">37%</p>
-                </div>
-              </div>
+              <Progress
+                value={
+                  currentPage != null && book?.pageCount
+                    ? Math.min(
+                        100,
+                        Math.round((currentPage / book.pageCount) * 100)
+                      )
+                    : 0
+                }
+              ></Progress>
 
-              <div className="flex bg-background text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
-                <div className="flex justify-between items-center ">
-                  <p>Total Pages</p>
-                  <p>{book.pageCount}</p>
-                </div>
+              {isTracked && (
+                <div className="flex bg-background text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
+                  <div className="flex justify-between items-center ">
+                    <p>Current Page</p>
+                    <p>
+                      {currentPage}/{book.pageCount}
+                    </p>
+                  </div>
 
-                {/* <div className="flex justify-between items-center ">
+                  {/* <div className="flex justify-between items-center ">
                   <p>Pages Left</p>
                   <p>451</p>
                 </div> */}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

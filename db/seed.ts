@@ -1,5 +1,4 @@
 import { simpleData } from "./simpleData";
-import { hashSync } from "bcrypt-ts";
 import bookData from "./bookData.json";
 import { prisma } from "@/lib/prisma";
 async function main() {
