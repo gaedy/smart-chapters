@@ -7,7 +7,7 @@ interface BookCardProps {
   title: string;
   author: string;
   coverUrl?: string | null;
-  status?: string | null; // Optional coverUrl to allow for static images
+  status?: string | null;
 }
 
 export default function BookCard({
@@ -16,7 +16,8 @@ export default function BookCard({
   coverUrl,
   status,
 }: BookCardProps) {
-  const imageSrc = coverUrl || fg; // fallback
+  const imageSrc = coverUrl || fg;
+
   type TrackingStatus = "FINISHED" | "READING" | "WANT_TO_READ" | "DEFAULT";
   type TrackingStatusWithDefault = TrackingStatus | "DEFAULT";
 
@@ -25,7 +26,10 @@ export default function BookCard({
     { color: string; label: string }
   > = {
     FINISHED: { color: "bg-green-500/70 text-white", label: "Finished" },
-    READING: { color: "bg-yellow-500/70 text-white", label: "Currently Reading" },
+    READING: {
+      color: "bg-yellow-500/70 text-white",
+      label: "Currently Reading",
+    },
     WANT_TO_READ: { color: "bg-blue-500/70 text-white", label: "Want to Read" },
     DEFAULT: { color: "bg-gray-400/70 text-white", label: "Not Tracked" },
   };

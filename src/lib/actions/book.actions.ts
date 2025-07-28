@@ -290,3 +290,14 @@ export async function updateUserBookTrackingRating(
     },
   });
 }
+
+export async function getBooksByTitle(title: string) {
+  return await prisma.book.findMany({
+    where: {
+      title: {
+        contains: title,
+        mode: "insensitive",
+      },
+    },
+  });
+}

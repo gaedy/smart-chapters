@@ -8,10 +8,10 @@ import {
   Library,
   NotepadText,
   PieChart,
+  Search,
   Send,
   Settings,
 } from "lucide-react";
-
 import { NavMain } from "@/components/Sidebar/nav-main";
 import { NavProjects } from "@/components/Sidebar/nav-projects";
 import { NavSecondary } from "@/components/Sidebar/nav-secondary";
@@ -20,6 +20,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -27,13 +28,35 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/Sidebar/sidebar";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // Add this import
+import SearchBar from "../Search/searchBar";
+import { getBooksByTitle } from "@/lib/actions/book.actions";
 
+import BookCardSearch from "../Search/bookCardSearch";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, open, isMobile } = useSidebar();
 
+  type Book = Awaited<ReturnType<typeof getBooksByTitle>>[number];
+
+  const [results, setResults] = React.useState<Book[]>([]);
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+
   const pathname = usePathname();
+
+  const handleSearch = async (query: string) => {
+    if (!query) return setResults([]);
+    const data = await getBooksByTitle(query); // your Prisma function
+    setResults(data);
+  };
 
   const data = {
     user: {
@@ -59,7 +82,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             title: "Browse",
             url: "/explore",
             icon: Earth,
-            
           },
         ],
       },
@@ -138,6 +160,41 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <SidebarMenuButton
+                className="text-muted-foreground bg-foreground cursor-pointer transition-colors"
+                tooltip="Search"
+              >
+                <Search />
+                <span>Search Books</span>
+              </SidebarMenuButton>
+            </DialogTrigger>
+
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  Search Books by title, author, or keyword
+                </DialogTitle>
+                <DialogDescription></DialogDescription>
+              </DialogHeader>
+              <SearchBar onSearch={handleSearch} />
+
+              <div className="mt-4 flex flex-col gap-2 max-h-64 overflow-auto">
+                {results.map((book) => (
+                  <BookCardSearch
+                    key={book.id}
+                    book={book}
+                    href={`/book/${book.id}`}
+                    onClick={() => setIsDialogOpen(false)}
+                  />
+                ))}
+              </div>
+            </DialogContent>
+          </Dialog>
+        </SidebarGroup>
+
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />

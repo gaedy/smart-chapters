@@ -215,25 +215,25 @@ export default async function theDetailedBookPage({ params }: PageProps) {
             </div>
           </div>
 
-          <div
-            className=" w-full min-w-2xs  lg:flex-1 lg:max-w-xs h-full 
+          {isTracked && (
+            <div
+              className="w-full min-w-2xs  lg:flex-1 lg:max-w-xs h-full 
         lg:h-auto flex"
-          >
-            <div className="flex flex-col w-full gap-4">
-              <p>Progress</p>
+            >
+              <div className="flex flex-col w-full gap-4">
+                <p>Progress</p>
 
-              <Progress
-                value={
-                  currentPage != null && book?.pageCount
-                    ? Math.min(
-                        100,
-                        Math.round((currentPage / book.pageCount) * 100)
-                      )
-                    : 0
-                }
-              ></Progress>
+                <Progress
+                  value={
+                    currentPage != null && book?.pageCount
+                      ? Math.min(
+                          100,
+                          Math.round((currentPage / book.pageCount) * 100)
+                        )
+                      : 0
+                  }
+                ></Progress>
 
-              {isTracked && (
                 <div className="flex bg-background text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
                   <div className="flex justify-between items-center ">
                     <p>Current Page</p>
@@ -241,15 +241,10 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                       {currentPage}/{book.pageCount}
                     </p>
                   </div>
-
-                  {/* <div className="flex justify-between items-center ">
-                  <p>Pages Left</p>
-                  <p>451</p>
-                </div> */}
                 </div>
-              )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-2">

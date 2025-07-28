@@ -7,8 +7,6 @@ import { ActionButton } from "../ui/actionButton";
 import { Trash } from "lucide-react";
 const iconMap = {
   remove: Trash,
-
-  // Add more if needed
 };
 function RemoveFromLibrary({
   bookId,
