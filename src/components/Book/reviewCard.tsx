@@ -2,14 +2,17 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 import Rating from "../ui/rating";
+import Image from "next/image";
+import a from "/public/avatar.jpg";
 
 interface ReviewCardProps {
-  name?: string;
+  name: string;
   date?: string;
   rating: number;
   comment: string;
-  avatarColor?: string; // optional to customize avatar circle color
+
   className?: string;
+  avatar?: string;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
@@ -17,28 +20,41 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   date,
   rating,
   comment,
-  avatarColor = "bg-amber-900",
+
   className,
+  avatar,
 }) => {
-  
   return (
     <div
       className={cn(
-        "flex items-start rounded-2xl bg-background gap-2 p-3 px-3.5 w-full lg:max-w-xl h-fit",
+        "flex items-start rounded-2xl bg-background gap-2 p-3 px-4 max-w-2xl lg:max-w-2xl h-fit",
         className
       )}
     >
-      <div className="flex justify-center items-center">
-        <div className={cn(avatarColor, "w-10 h-10 rounded-full")} />
-      </div>
-      <div className="flex flex-col w-full h-full gap-2">
-        <div className="flex justify-between">
-          <div className="flex flex-col gap-1 text-sm">
-            <p className="font-semibold">{name}</p>
-            <div className="text-xs opacity-80">{date}</div>
+      <div className="flex flex-col w-full h-full gap-3">
+        <div className="flex justify-between items-center h-8 ">
+          <div className="flex items-center gap-2 text-sm">
+            <div className="flex justify-center items-center w-8 h-8 overflow-hidden rounded-full">
+              <Image
+                className=" object-cover rounded-full w-full h-full"
+                alt={name}
+                src={avatar || a}
+                width={96}
+                height={96}
+                objectFit="fill"
+              ></Image>
+            </div>
+
+            <div className="flex items-end gap-2">
+              <span className="font-medium">{name}</span>
+              <span className=" opacity-80">&bull;</span>
+              <span className="text-xs opacity-80">{date || "01/01/2025"}</span>
+            </div>
           </div>
 
-          {/* <Rating canModified={false} value={rating} /> */}
+          <div>
+            <Rating size="sm" canModified={false} value={rating} />
+          </div>
         </div>
         <div className="w-full h-full flex">
           <p className="text-sm text-pretty">{comment}</p>

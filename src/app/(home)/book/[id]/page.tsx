@@ -1,8 +1,9 @@
-import AddToLibrary from "@/components/Book/add-to-library";
-import RemoveFromLibrary from "@/components/Book/removeFromLibrary";
+
 import ReviewCard from "@/components/Book/reviewCard";
 import Rating from "@/components/ui/rating";
 import {
+  getAllReviewsByBookId,
+  getAverageRatingAForAllUser,
   getBookById,
   getUserBookTrackingRating,
   getUserBookTrackingStatus,
@@ -10,19 +11,12 @@ import {
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Check, Plus } from "lucide-react";
 import { auth } from "auth";
 import { Metadata } from "next";
-import { Progress } from "@/components/ui/progress";
-
+import { ActionButton } from "@/components/ui/actionButton";
+import { BookProgressBox } from "./BookProgressBox";
+import { BookLibraryBox } from "./BookLibraryBox";
+import { Textarea } from "@/components/ui/textarea";
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -70,6 +64,9 @@ export default async function theDetailedBookPage({ params }: PageProps) {
 
   const rate = await getUserBookTrackingRating(session.user.id, book.id);
 
+  const { average, count } = await getAverageRatingAForAllUser(book.id);
+  const reviews = await getAllReviewsByBookId(book.id);
+
   return (
     <>
       <div className="flex flex-col gap-10">
@@ -78,8 +75,8 @@ export default async function theDetailedBookPage({ params }: PageProps) {
             className=" w-full lg:w-fit h-full lg:h-auto flex flex-col items-center 
         justify-start  gap-2"
           >
-            <div className="flex flex-col w-44 justify-center items-center  gap-4 transition-colors  ">
-              <div className="w-40 h-60 rounded-2xl relative flex justify-center items-center ">
+            <div className="flex flex-col w-40 justify-center items-center  gap-4 transition-colors  ">
+              <div className="w-40 h-60 rounded-2xl relative flex justify-center items-center  ">
                 <Image
                   src={imgSource}
                   alt="Book Cover"
@@ -89,178 +86,99 @@ export default async function theDetailedBookPage({ params }: PageProps) {
               </div>
 
               <div className="flex justify-center items-center flex-col gap-4 flex-wrap">
-                <Rating
-                  bookId={book.id}
-                  canModified={true}
-                  value={rate?.rating ?? 0}
-                />
-
-                {/* <p>4</p>
-                <p className="text-sm opacity-80">12,454 Reviews</p> */}
+                <div className="flex flex-col text-sm gap-4 justify-center items-center">
+                  <Rating
+                    bookId={book.id}
+                    canModified={true}
+                    value={rate?.rating ?? 0}
+                  />{" "}
+                  {rate?.rating ? <p>Rated</p> : <p>Rate this book</p>}{" "}
+                </div>
               </div>
 
               <div className="flex w-full flex-col gap-2">
-                {/* <ButtonToWork /> */}
-
-                {/* <div className="flex gap-2">
-                  <AddToLibrary
-                    iconName="wantToRead"
-                    item={{
-                      title: book.title,
-                      author: book.author,
-                    }}
-                    status="WANT_TO_READ"
-                    label="Want to Read"
-                  ></AddToLibrary>
-                </div> */}
-
-                <Dialog>
-                  <DialogTrigger
-                    className={`flex justify-center gap-1 items-center bg-background p-2.5 text-[13px] 
-                  rounded-full cursor-pointer active:scale-100 hover:scale-105 hover:shadow-lg 
-                  transition-all duration-200 ${
-                    isTracked && "bg-library-color-1 text-accent-foreground"
-                  }`}
-                  >
-                    {isTracked ? (
-                      <>
-                        <Check className="w-5" />
-
-                        <p>Added to Library</p>
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="w-5" />
-
-                        <p>Add to Library</p>
-                      </>
-                    )}
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader className="flex gap-4 font-libre">
-                      <DialogTitle>Choose a List for this book</DialogTitle>
-                      <DialogDescription className="flex flex-col self-center gap-2 min-w-1/2 max-w-72">
-                        <AddToLibrary
-                          iconName={`${
-                            status === "WANT_TO_READ" ? "check" : "wantToRead"
-                          }`}
-                          item={{
-                            title: book.title,
-                            author: book.author,
-                          }}
-                          status="WANT_TO_READ"
-                          label="Want to Read"
-                          className={`${
-                            status === "WANT_TO_READ" &&
-                            "bg-library-color-1  text-primary pointer-events-none"
-                          }`}
-                        ></AddToLibrary>
-
-                        <AddToLibrary
-                          iconName={`${
-                            status === "READING" ? "check" : "reading"
-                          }`}
-                          item={{
-                            title: book.title,
-                            author: book.author,
-                          }}
-                          status="READING"
-                          label={
-                            status === "READING"
-                              ? "Currently Reading"
-                              : "Currently Reading"
-                          }
-                          className={`${
-                            status === "READING" &&
-                            "bg-library-color-1 text-primary pointer-events-none"
-                          } `}
-                        ></AddToLibrary>
-
-                        <AddToLibrary
-                          iconName={`${
-                            status === "FINISHED" ? "check" : "finished"
-                          }`}
-                          item={{
-                            title: book.title,
-                            author: book.author,
-                          }}
-                          status="FINISHED"
-                          label="Finished"
-                          className={`${
-                            status === "FINISHED" &&
-                            "bg-library-color-1 text-primary pointer-events-none"
-                          }`}
-                        ></AddToLibrary>
-
-                        {isTracked && (
-                          <RemoveFromLibrary
-                            iconName="remove"
-                            bookId={book.id}
-                            label="Remove from Library"
-                          />
-                        )}
-                      </DialogDescription>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
+                <BookLibraryBox
+                  isTracked={isTracked}
+                  status={status ?? undefined}
+                  book={{
+                    id: book.id,
+                    title: book.title,
+                    author: book.author,
+                  }}
+                />
               </div>
             </div>
           </div>
 
-          <div className=" w-full lg:flex-[2]  gap-4 h-full lg:h-auto flex flex-col ">
-            <div className="flex flex-col gap-2">
-              <p className="text-2xl">{book.title}</p>
-              <p>{book.author}</p>
+          <div className=" w-full lg:flex-[2] gap-4 h-full lg:h-auto flex flex-col ">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2 ">
+                <span className="text-3xl font-medium">{book.title}</span>
+                <span className="text-lg">{book.author}</span>
+              </div>
+
+              {rate?.rating && (
+                <div className="flex items-center gap-2  w-fit">
+                  <p className="text-yellow-600 font-medium">{average}</p>
+                  <Rating
+                    size="sm"
+                    canModified={false}
+                    value={average}
+                    bookId={book.id}
+                  />
+                  <p>&bull;</p>
+                  <p className="text-sm">{count} Ratings</p>
+                </div>
+              )}
+
               <p className="text-sm text-pretty">{book.description}</p>
-            </div>
-          </div>
-
-          {isTracked && (
-            <div
-              className="w-full min-w-2xs  lg:flex-1 lg:max-w-xs h-full 
-        lg:h-auto flex"
-            >
-              <div className="flex flex-col w-full gap-4">
-                <p>Progress</p>
-
-                <Progress
-                  value={
-                    currentPage != null && book?.pageCount
-                      ? Math.min(
-                          100,
-                          Math.round((currentPage / book.pageCount) * 100)
-                        )
-                      : 0
-                  }
-                ></Progress>
-
-                <div className="flex bg-background text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
-                  <div className="flex justify-between items-center ">
-                    <p>Current Page</p>
-                    <p>
-                      {currentPage}/{book.pageCount}
-                    </p>
-                  </div>
+              <div className="text-sm text-pretty flex items-center gap-2">
+                <div className="flex justify-center items-center rounded-full px-3 p-2 bg-background">
+                  <p>{book.genre}</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {isTracked && status === "READING" && (
+            <div className="w-full min-w-2xs  lg:flex-1 lg:max-w-xs h-full lg:h-auto flex">
+              <BookProgressBox
+                currentPage={currentPage || 0}
+                pageCount={book.pageCount || 0}
+                bookId={book.id}
+                userId={session.user.id}
+              />
             </div>
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <p className="font-medium">Reviews</p>
+        <div className="flex flex-col gap-4 max-w-2xl">
+          <div className="flex flex-col gap-3">
+            <p>Write your review</p>
+            <Textarea className="min-h-24 bg-background rounded-2xl" />
+            <ActionButton className="w-fit" label="Submit" />
+          </div>
 
-          <ReviewCard
-            name="Rita Arens"
-            date="August 29, 2016"
-            rating={5}
-            comment="One of the best books, read over the last few years. In my
-                  opinion, the title does NOT do it justice. While this is
-                  applicable to negotiating, and the title DOES highlight a
-                  critical component, this book is valuable to MANY types of
-                  negotiating, even situations that we may not consider to be
-                  negotiating."
-          />
+          <div className="font-medium flex  items-center gap-2">
+            <span>Community Reviews</span>
+
+            <span className=" opacity-80">&bull;</span>
+            <span>{reviews.length}</span>
+          </div>
+
+          {reviews.length === 0 ? (
+            <p>No reviews yet.</p>
+          ) : (
+            reviews.map((review) => (
+              <ReviewCard
+                key={review.id}
+                name={review.user.name ?? "g"}
+                rating={review.rating ?? 0}
+                comment={review.content}
+                avatar={review.user.image || undefined}
+              />
+            ))
+          )}
         </div>
       </div>
     </>

@@ -29,9 +29,12 @@ async function page() {
 
   return (
     <>
+
       {books.map((book) => {
         const status = book.bookTrackings[0]?.status ?? "WANT_TO_READ";
         return (
+          
+          
           <Link href={`/book/${book.id}`} key={book.id}>
             <BookCard
               title={book.title}

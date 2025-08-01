@@ -34,11 +34,7 @@ export default function SearchBar({
         placeholder={placeholder}
       />
       {query && (
-        <X
-          size={20}
-          className="cursor-pointer hover:text-white"
-          onClick={() => setQuery("")}
-        />
+        <X size={20} className="cursor-pointer" onClick={() => setQuery("")} />
       )}
     </div>
   );

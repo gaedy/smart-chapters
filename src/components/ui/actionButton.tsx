@@ -9,14 +9,12 @@ import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-
 type ActionButtonProps = {
   label: string;
-  color?: string; // Tailwind color class e.g., 'bg-green-300'
-  activeColor?: string; // Tailwind color class for active state
-  icon?: LucideIcon; // Properly typed Lucide icon component
-  href?: string; // Optional Next.js route link
-  
+  color?: string;
+  activeColor?: string;
+  icon?: LucideIcon;
+  href?: string;
 } & ComponentProps<typeof Button>;
 
 export function ActionButton({
@@ -26,7 +24,7 @@ export function ActionButton({
   icon: IconComponent,
   href,
   className,
-  
+
   ...props
 }: ActionButtonProps) {
   const pathname = usePathname();

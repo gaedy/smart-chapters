@@ -41,4 +41,8 @@ export const signUpSchema = z
     path: ["confirmPassword"],
   });
 
-
+export const updateCurrentPageSchema = z.object({
+  userId: z.string().min(1),
+  bookId: z.string().min(1),
+  currentPage: z.number().min(0),
+});

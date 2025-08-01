@@ -22,8 +22,8 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
+  --border: oklch(84.911% 0.00108 12.265);
+  --input: oklch(92.003% 0.03364 95.902);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -86,7 +86,7 @@
   --color-primaryText: var(--primaryText);
   --font-libre: var(--font-libre);
   --font-inter: var(--font-inter);
-  --font-garamond: var(--font-garamond);
+  --font-merriweather: var(--font-merriweather);
 }
 
 @theme inline {

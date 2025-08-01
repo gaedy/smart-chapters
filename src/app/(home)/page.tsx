@@ -1,5 +1,7 @@
 import BookCard from "@/components/Book/BookCard";
-import { getReadingBooks } from "@/lib/actions/book.actions";
+import {
+  getReadingBooks,
+} from "@/lib/actions/book.actions";
 import { auth } from "../../../auth";
 import Link from "next/link";
 
@@ -25,6 +27,7 @@ export default async function Home() {
   }
 
   const books = await getReadingBooks(session.user.id);
+  
 
   return (
     <>
@@ -65,6 +68,8 @@ export default async function Home() {
             </div>
           </>
         )}
+
+      
       </div>
     </>
   );

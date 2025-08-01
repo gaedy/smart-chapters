@@ -9,7 +9,7 @@ export const simpleData = {
       email: "alice@example.com",
       passwordHash: hashSync("123456", 10),
       role: "user",
-      image: "https://i.pravatar.cc/150?u=alice",
+      image: "/avatar01.jpg",
       paymentMethod: "card",
     },
     {
@@ -18,7 +18,7 @@ export const simpleData = {
       email: "bob@example.com",
       passwordHash: hashSync("123456", 10),
       role: "user",
-      image: "https://i.pravatar.cc/150?u=bob",
+      image: "/avatar02.jpg",
       paymentMethod: "paypal",
     },
   ],
@@ -159,6 +159,16 @@ export const simpleData = {
     },
     {
       userId: "user1",
+      bookId: "dune-clm4d5e6f7g8h9i0j1k2l3m4",
+      status: TrackingStatus.READING,
+      currentPage: 161,
+      rating: 3,
+      notes: null,
+      startedAt: null,
+      finishedAt: null,
+    },
+    {
+      userId: "user1",
       bookId: "atomic-habits-clm2b3c4d5e6f7g8h9i0j1k2",
       status: TrackingStatus.FINISHED,
       currentPage: 114,
@@ -173,7 +183,15 @@ export const simpleData = {
       userId: "user1",
       bookId: "the-midnight-library-clm1a2b3c4d5e6f7g8h9i0j1",
       rating: 5,
-      content: "An incredible read, timeless and deep.",
+      content:
+        "There are books you read, and there are books that read you back. The Midnight Library by Aurelia Wren is the latter — a luminous, surreal journey through the rooms of regret and the corridors of possibility. I finished it at 3:42 a.m., unable to sleep, and feeling as though I had just emerged from a dream both painful and beautiful.",
+    },
+    {
+      userId: "user2",
+      bookId: "the-midnight-library-clm1a2b3c4d5e6f7g8h9i0j1",
+      rating: 3,
+      content:
+        "The premise is undeniably captivating — a mysterious library that exists between life and death, filled with books representing every life you could have lived. That idea alone hooked me. And to the book’s credit, Aurelia Wren has a lovely, poetic writing style that sometimes reads like a dream.",
     },
     {
       userId: "user2",

@@ -28,6 +28,7 @@ export function NavMain({
     url: string;
     icon: LucideIcon;
     isActive?: boolean;
+    count? : number;
     items?: {
       title: string;
       url: string;
@@ -48,7 +49,10 @@ export function NavMain({
               >
                 <Link href={item.url}>
                   <item.icon />
-                  <span>{item.title}</span>
+                  <div className="flex w-full justify-between items-center">
+                    <span>{item.title}</span>
+                    <span>{item.count}</span>
+                  </div>
                 </Link>
               </SidebarMenuButton>
               {item.items?.length ? (

@@ -17,7 +17,7 @@ export type SearchResultCardProps = {
 const BookCardSearch: FC<SearchResultCardProps> = ({ book, href, onClick }) => {
   const content = (
     <div
-      className="flex gap-2 p-2 border cursor-pointer rounded-md hover:bg-background"
+      className="flex gap-2 p-2 border border-border cursor-pointer rounded-md hover:bg-background"
       onClick={onClick}
     >
       <div className="flex justify-center rounded-md items-center">

@@ -4,27 +4,39 @@ import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { updateUserBookTrackingRating } from "@/lib/actions/book.actions";
+type SizeKey = "sm" | "lg";
 
 interface RatingProps {
   value: number;
   canModified: boolean;
-  bookId: string;
+  bookId?: string;
+  size?: SizeKey;
 }
 
-export default function Rating({ value, canModified = false, bookId }: RatingProps) {
+export default function Rating({
+  value,
+  canModified = false,
+  bookId,
+  size = "lg",
+}: RatingProps) {
   const [rating, setRating] = useState(value);
   const [hover, setHover] = useState(0);
   const { data: session } = useSession();
 
   useEffect(() => {
-    setRating(value); // If the API changes the value, reflect it
+    setRating(value);
   }, [value]);
 
   const handleClick = async (star: number) => {
-    if (!session?.user?.id) return;
+    if (!session?.user?.id || !bookId) return;
 
-    setRating(star); // update UI immediately
-    await updateUserBookTrackingRating(session.user.id, bookId, star); // update DB
+    setRating(star);
+    await updateUserBookTrackingRating(session.user.id, bookId, star);
+  };
+
+  const sizes: Record<SizeKey, number> = {
+    sm: 20,
+    lg: 24,
   };
 
   return (
@@ -34,14 +46,13 @@ export default function Rating({ value, canModified = false, bookId }: RatingPro
           {[1, 2, 3, 4, 5].map((star) => (
             <Star
               key={star}
-              size={24}
+              size={sizes[size]}
               className={`
-            cursor-pointer
-            transition-colors duration-200
+            cursor-pointer transition-colors duration-200
             ${
               hover >= star || rating >= star
-                ? "text-yellow-400"
-                : "text-gray-300"
+                ? "text-yellow-500"
+                : "text-neutral-300"
             }
           `}
               onMouseEnter={() => setHover(star)}
@@ -56,14 +67,14 @@ export default function Rating({ value, canModified = false, bookId }: RatingPro
           {[1, 2, 3, 4, 5].map((star) => (
             <Star
               key={star}
-              size={24}
+              size={sizes[size]}
               className={`
             
             
             ${
               hover >= star || rating >= star
-                ? "text-yellow-400"
-                : "text-gray-300"
+                ? "text-yellow-500"
+                : "text-neutral-300"
             }
           `}
               fill={hover >= star || rating >= star ? "#facc15" : "none"}

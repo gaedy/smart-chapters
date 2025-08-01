@@ -4,6 +4,7 @@ import { prisma } from "../prisma";
 import { convertToPlainObject } from "../utils";
 import { auth } from "../../../auth";
 import { TrackingStatus } from "@prisma/client";
+import { updateCurrentPageSchema } from "../validators";
 
 export async function getBooks() {
   const books = await prisma.book.findMany({
@@ -301,3 +302,95 @@ export async function getBooksByTitle(title: string) {
     },
   });
 }
+
+export async function getGenres() {
+  return await prisma.book.findMany({
+    where: {
+      genre: {
+        not: null,
+      },
+    },
+    distinct: ["genre"],
+    select: {
+      genre: true,
+    },
+  });
+}
+
+export async function getBooksByGenre(genre: string) {
+  return await prisma.book.findMany({
+    where: { genre },
+  });
+}
+
+export async function getAverageRatingAForAllUser(bookId: string) {
+  const result = await prisma.bookTracking.aggregate({
+    where: {
+      bookId,
+      rating: {
+        not: null,
+      },
+    },
+    _avg: {
+      rating: true,
+    },
+    _count: {
+      rating: true,
+    },
+  });
+
+  return {
+    average: result._avg.rating
+      ? parseFloat(result._avg.rating.toFixed(1))
+      : 0.0,
+    count: result._count.rating,
+  };
+}
+
+export async function updateCurrentPage(data: {
+  userId: string;
+  bookId: string;
+  currentPage: number;
+}) {
+  const parsed = updateCurrentPageSchema.safeParse(data);
+  if (!parsed.success) {
+    return { error: "Invalid input", details: parsed.error.flatten() };
+  }
+
+  const { userId, bookId, currentPage } = parsed.data;
+
+  try {
+    const updatedTracking = await prisma.bookTracking.update({
+      where: {
+        userId_bookId: { userId, bookId },
+      },
+      data: {
+        currentPage,
+      },
+    });
+
+    return { success: true, data: updatedTracking };
+  } catch (error) {
+    return { error: "Failed to update current page", details: error };
+  }
+}
+
+export async function getAllReviewsByBookId(bookId: string) {
+  const reviews = await prisma.review.findMany({
+    where: { bookId },
+    orderBy: { createdAt: "desc" }, // latest first
+    include: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
+
+  return reviews;
+}
+
+// Count of all reviews
+const getAllReviewsCount = await prisma.review.count();
