@@ -22,58 +22,7 @@ export const simpleData = {
       paymentMethod: "paypal",
     },
   ],
-  accounts: [
-    {
-      type: "oauth",
-      provider: "google",
-      providerAccountId: "google-alice",
-      refresh_token: "fake_refresh_token_alice",
-      access_token: "fake_access_token_alice",
-      expires_at: Math.floor(Date.now() / 1000) + 3600,
-      token_type: "Bearer",
-      scope: "email profile",
-      id_token: "fake_id_token_alice",
-      session_state: "fake_session_state_alice",
-      userId: "user1", // added for FK
-    },
-    {
-      type: "oauth",
-      provider: "github",
-      providerAccountId: "github-bob",
-      refresh_token: "fake_refresh_token_bob",
-      access_token: "fake_access_token_bob",
-      expires_at: Math.floor(Date.now() / 1000) + 3600,
-      token_type: "Bearer",
-      scope: "user repo",
-      id_token: "fake_id_token_bob",
-      session_state: "fake_session_state_bob",
-      userId: "user2", // added for FK
-    },
-  ],
-  sessions: [
-    {
-      sessionToken: "fake_session_token_alice",
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      userId: "user1", // added for FK
-    },
-    {
-      sessionToken: "fake_session_token_bob",
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      userId: "user2", // added for FK
-    },
-  ],
-  verificationTokens: [
-    {
-      identifier: "alice@example.com",
-      token: "verify_token_alice",
-      expires: new Date(Date.now() + 60 * 60 * 1000),
-    },
-    {
-      identifier: "bob@example.com",
-      token: "verify_token_bob",
-      expires: new Date(Date.now() + 60 * 60 * 1000),
-    },
-  ],
+
   books: [
     {
       id: "book1",
@@ -172,7 +121,7 @@ export const simpleData = {
       bookId: "atomic-habits-clm2b3c4d5e6f7g8h9i0j1k2",
       status: TrackingStatus.FINISHED,
       currentPage: 114,
-      rating: null,
+      rating: 5,
       notes: null,
       startedAt: null,
       finishedAt: null,

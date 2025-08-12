@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import Rating from "../ui/rating";
 import Image from "next/image";
 import a from "/public/avatar.jpg";
+import { deleteReview } from "@/lib/actions/book.actions";
+import RemoveReviewButton from "./removeReview";
 
 interface ReviewCardProps {
   name: string;
@@ -13,6 +15,7 @@ interface ReviewCardProps {
 
   className?: string;
   avatar?: string;
+  reviewBookId?: string | null;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
@@ -23,6 +26,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
 
   className,
   avatar,
+  reviewBookId,
 }) => {
   return (
     <div
@@ -32,8 +36,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       )}
     >
       <div className="flex flex-col w-full h-full gap-3">
-        <div className="flex justify-between items-center h-8 ">
-          <div className="flex items-center gap-2 text-sm">
+        <div className="flex justify-between  items-center gap-2 h-8 ">
+          <div className="flex items-center  gap-2 text-sm">
             <div className="flex justify-center items-center border w-8 h-8 overflow-hidden rounded-full">
               <Image
                 className=" object-cover rounded-full w-full h-full"
@@ -52,9 +56,15 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             </div>
           </div>
 
-          <div>
+          <div className="ml-auto">
             <Rating size="sm" canModified={false} value={rating} />
           </div>
+
+          {reviewBookId && (
+            <div className="">
+              <RemoveReviewButton bookId={reviewBookId ?? ""} />
+            </div>
+          )}
         </div>
         {comment && (
           <div className="w-full h-full flex">

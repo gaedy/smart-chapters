@@ -1,4 +1,3 @@
-import { getBooks, getGenres } from "@/lib/actions/book.actions";
 import { auth } from "../../../../auth";
 import ExploreBooks from "./ExploreBooks";
 

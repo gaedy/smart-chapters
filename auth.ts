@@ -10,12 +10,12 @@ export const config = {
   pages: {
     signIn: "/sign-in",
 
-    error: "/sign-in", // Error code passed in query string as ?error=
+    error: "/sign-in",
   },
 
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60,
   },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -44,6 +44,7 @@ export const config = {
               id: user.id,
               name: user.name,
               email: user.email,
+              image: user.image,
               role: user.role,
             };
           }
@@ -54,13 +55,26 @@ export const config = {
   ],
 
   callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.userId = user.id;
+      }
+      return token;
+    },
     async session({ session, user, trigger, token }: any) {
       session.user.id = token.sub;
+
+      if (token.sub) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.sub },
+          select: { image: true },
+        });
+        session.user.image = dbUser?.image || null;
+      }
 
       if (trigger === "update") {
         session.user.name = user.name;
       }
-
       return session;
     },
   },

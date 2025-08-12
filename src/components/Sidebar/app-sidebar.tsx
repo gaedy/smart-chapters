@@ -47,6 +47,7 @@ import {
 
 import BookCardSearch from "../Search/bookCardSearch";
 import { useSession } from "next-auth/react";
+import Logo from "../ui/Logo";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, open, isMobile } = useSidebar();
@@ -83,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     user: {
       name: session?.user?.name ?? "Guest",
       email: session?.user?.email ?? "guest@example.com",
-      avatar: session?.user?.image ?? "/avatar.jpg", // public folder fallback
+      avatar: session?.user?.image ?? "/avatar.jpg",
     },
     navMain: [
       {
@@ -150,22 +151,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           {state !== "collapsed" || isMobile ? (
             <div className="flex justify-between w-full items-center relative">
-              <SidebarMenuButton className="" size="lg" asChild>
+              <SidebarMenuButton size="lg" asChild>
                 <Link href="/">
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate text-lg font-medium font-libre">
-                      Smart Chapters
-                    </span>
+                    <Logo />
                   </div>
                 </Link>
               </SidebarMenuButton>
 
-              <SidebarTrigger className="absolute right-0 hover:bg-foreground" />
+              <SidebarTrigger className="absolute right-0 " />
             </div>
           ) : (
             <>
               <div className="flex justify-center items-center">
-                <SidebarTrigger className="hover:bg-foreground" />
+                <SidebarTrigger />
               </div>
             </>
           )}

@@ -17,6 +17,8 @@ import { ActionButton } from "@/components/ui/actionButton";
 import { BookProgressBox } from "./BookProgressBox";
 import { BookLibraryBox } from "./BookLibraryBox";
 import { Textarea } from "@/components/ui/textarea";
+import ReviewEditor from "./reviewEditor";
+import RemoveReviewButton from "@/components/Book/removeReview";
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -125,7 +127,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
 
               {totalRatings > 0 && (
                 <div className="flex items-center gap-2  w-fit">
-                  <p className="text-yellow-600 font-medium">{averageRating}</p>
+                  <p className="text-yellow-400 font-medium">{averageRating}</p>
                   <Rating
                     size="sm"
                     canModified={false}
@@ -161,18 +163,12 @@ export default async function theDetailedBookPage({ params }: PageProps) {
         <div className="flex flex-col gap-4 max-w-2xl">
           {!myReview ? (
             <>
-              <div className="flex flex-col gap-3">
-                <span>Write your review</span>
-                <Textarea className="min-h-24 bg-background rounded-2xl" />
-                <ActionButton className="w-fit" label="Submit" />
-              </div>
+              <ReviewEditor bookId={book.id} />
             </>
           ) : (
             <>
               <div className="flex flex-col gap-3">
-                <span>{`Your ${
-                  myReview.rating && myReview.content ? "Review" : "Rating"
-                }`}</span>
+                <span>Your Review</span>
 
                 <ReviewCard
                   key={myReview.id}
@@ -188,14 +184,10 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                       day: "numeric",
                     }
                   )}
+                  reviewBookId={book.id}
                 />
-                {!myReview.content && (
-                  <div className="flex flex-col gap-3">
-                    <p>Write your review</p>
-                    <Textarea className="min-h-24 bg-background rounded-2xl" />
-                    <ActionButton className="w-fit" label="Submit" />
-                  </div>
-                )}
+
+                {!myReview.content && <ReviewEditor bookId={book.id} />}
               </div>
             </>
           )}

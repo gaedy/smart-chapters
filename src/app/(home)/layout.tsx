@@ -5,6 +5,7 @@ import {
   SidebarMenuButton,
   SidebarTrigger,
 } from "@/components/Sidebar/sidebar";
+import Logo from "@/components/ui/Logo";
 import { auth } from "auth";
 
 export default async function HomeLayout({
@@ -26,9 +27,11 @@ export default async function HomeLayout({
       <div className="top-0 p-2 md:hidden  sticky overflow-hidden flex justify-between items-center">
         <div>
           <SidebarMenuButton asChild>
-            <SidebarTrigger className="hover:bg-foreground" />
+            <SidebarTrigger />
           </SidebarMenuButton>
         </div>
+
+        <Logo/>
 
         <div>
           <NavUser onlyAvatar={true} user={data.user} />
@@ -42,7 +45,7 @@ export default async function HomeLayout({
         </div>
 
         {/* main content */}
-        <div className="flex flex-col flex-1 py-2 md:pr-2 md:px-0 px-2  overflow-x-hidden overflow-y-auto">
+        <div className="flex flex-col flex-1 py-0 md:py-2 md:pr-2 md:px-0 px-2  overflow-x-hidden overflow-y-auto">
           <div
             className="sticky font-merriweather top-0 bg-foreground overflow-x-hidden overflow-auto 
              p-4 rounded-xl flex-1 flex flex-col"

@@ -10,7 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type ActionButtonProps = {
-  label: string;
+  label?: string;
   color?: string;
   activeColor?: string;
   icon?: LucideIcon;

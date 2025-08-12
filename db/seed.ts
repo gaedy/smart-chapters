@@ -5,9 +5,7 @@ async function main() {
   console.log("🌱 Starting database seeding...");
 
   // Clean tables respecting FK dependencies
-  await prisma.verificationToken.deleteMany();
-  await prisma.session.deleteMany();
-  await prisma.account.deleteMany();
+
   await prisma.review.deleteMany();
   await prisma.bookTracking.deleteMany();
   await prisma.book.deleteMany();
@@ -21,21 +19,6 @@ async function main() {
   // Seed Books
   await prisma.book.createMany({
     data: bookData,
-  });
-
-  // Seed Accounts
-  await prisma.account.createMany({
-    data: simpleData.accounts,
-  });
-
-  // Seed Sessions
-  await prisma.session.createMany({
-    data: simpleData.sessions,
-  });
-
-  // Seed VerificationTokens
-  await prisma.verificationToken.createMany({
-    data: simpleData.verificationTokens,
   });
 
   // Seed BookTrackings

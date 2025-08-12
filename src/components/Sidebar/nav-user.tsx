@@ -44,7 +44,7 @@ export function NavUser({
   };
   onlyAvatar?: boolean;
 }) {
-  const { isMobile } = useSidebar();
+  const { isMobile, state } = useSidebar();
   const { data: session, status } = useSession();
 
   if (!session) {
@@ -76,11 +76,14 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground 
+                ${onlyAvatar && "rounded-full"} ${
+                state === "collapsed" && !isMobile && "rounded-full"
+              }`}
             >
               {!onlyAvatar ? (
                 <>
-                  <Avatar className="h-8 w-8 rounded-lg">
+                  <Avatar className="rounded-full border border-border">
                     <AvatarImage src={user.avatar} alt={user.name} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
@@ -93,22 +96,12 @@ export function NavUser({
                 </>
               ) : (
                 <>
-                  <Avatar className="h-8 w-8 rounded-lg">
+                  <Avatar className=" rounded-full border border-border">
                     <AvatarImage src={user.avatar} alt={user.name} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                 </>
               )}
-              {/* <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" /> */}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -119,7 +112,7 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className="h-8 w-8 border border-border">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
