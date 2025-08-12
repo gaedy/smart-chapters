@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { ActionButton } from "../ui/actionButton";
 import { Check } from "lucide-react";
 import { Bookmark, BookOpenCheck, BookOpenText } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const iconMap = {
   reading: BookOpenText,
@@ -36,6 +37,8 @@ function AddToLibrary({
 }: AddToLibraryProps) {
   const icon = iconName ? iconMap[iconName] : undefined;
 
+  const hhh = useRouter();
+
   const handleClick = async () => {
     const res = await addBookToLib(item, status);
     if (!res.success) {
@@ -44,10 +47,14 @@ function AddToLibrary({
     }
 
     toast.success(
-      `${item.title} Added to "${status
+      `"${
+        item.title.length > 25 ? item.title.slice(0, 22) + "..." : item.title
+      }" added to ${status
         .toLowerCase()
-        .replace(/_/g, " ")}"${" "}List`
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase())} List`
     );
+    hhh.refresh();
   };
 
   return (

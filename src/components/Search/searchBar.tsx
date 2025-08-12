@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { X, Search } from "lucide-react";
 
 interface SearchBarProps {
@@ -15,6 +15,7 @@ export default function SearchBar({
   debounceTime = 300,
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
+  
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -28,14 +29,21 @@ export default function SearchBar({
     <div className="bg-background p-2 px-2.5 flex gap-2 text-sm justify-center w-full items-center rounded-lg">
       <Search size={20} className="shrink-0" />
       <input
-        className="w-full outline-none bg-transparent"
+        className="w-full outline-none  bg-transparent"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={placeholder}
       />
       {query && (
-        <X size={20} className="cursor-pointer" onClick={() => setQuery("")} />
-      )}
+  <X
+    size={20}
+    className="cursor-pointer"
+    onClick={() => {
+      setQuery("");
+      onSearch(""); // <- clear results
+    }}
+  />
+)}
     </div>
   );
 }

@@ -198,7 +198,6 @@ export async function addBookToLib(book: BookType, status: TrackingStatus) {
 
   return { success: true };
 }
-
 export async function removeBookFromLib(bookId: string) {
   const session = await auth();
 
@@ -214,6 +213,7 @@ export async function removeBookFromLib(bookId: string) {
     return { success: false, message: "User not found" };
   }
 
+  // Remove book from library
   await prisma.bookTracking.deleteMany({
     where: {
       userId: user.id,
@@ -221,7 +221,15 @@ export async function removeBookFromLib(bookId: string) {
     },
   });
 
-  return { success: true, message: "Book removed from library" };
+  // Remove user's review/rating for this book
+  await prisma.review.deleteMany({
+    where: {
+      userId: user.id,
+      bookId: bookId,
+    },
+  });
+
+  return { success: true, message: "Book and rating removed" };
 }
 
 export async function getUserBookTrackingStatus(
@@ -272,7 +280,8 @@ export async function updateUserBookTrackingRating(
   bookId: string,
   rating: number
 ) {
-  return await prisma.bookTracking.upsert({
+  // 1️⃣ Update BookTracking so the user's progress tracking has the latest rating
+  const tracking = await prisma.bookTracking.upsert({
     where: {
       userId_bookId: {
         userId,
@@ -290,6 +299,27 @@ export async function updateUserBookTrackingRating(
       currentPage: 0,
     },
   });
+
+  // 2️⃣ Upsert into Review table so that ALL ratings are in one place
+  await prisma.review.upsert({
+    where: {
+      userId_bookId: {
+        userId,
+        bookId,
+      },
+    },
+    update: {
+      rating,
+    },
+    create: {
+      userId,
+      bookId,
+      rating,
+      content: "", // empty content for star-only ratings
+    },
+  });
+
+  return tracking;
 }
 
 export async function getBooksByTitle(title: string) {
@@ -324,26 +354,18 @@ export async function getBooksByGenre(genre: string) {
 }
 
 export async function getAverageRatingAForAllUser(bookId: string) {
-  const result = await prisma.bookTracking.aggregate({
+  const result = await prisma.review.aggregate({
+    _avg: { rating: true },
+    _count: { rating: true },
     where: {
       bookId,
-      rating: {
-        not: null,
-      },
-    },
-    _avg: {
-      rating: true,
-    },
-    _count: {
-      rating: true,
+      rating: { not: null },
     },
   });
 
   return {
-    average: result._avg.rating
-      ? parseFloat(result._avg.rating.toFixed(1))
-      : 0.0,
-    count: result._count.rating,
+    averageRating: result._avg.rating || 0,
+    totalRatings: result._count.rating || 0,
   };
 }
 
@@ -390,6 +412,20 @@ export async function getAllReviewsByBookId(bookId: string) {
   });
 
   return reviews;
+}
+
+export async function getCurrentSessionReview(userId: string, bookId: string) {
+  return await prisma.review.findUnique({
+    where: {
+      userId_bookId: {
+        userId,
+        bookId,
+      },
+    },
+    include: {
+      user: true, // in case you want name/avatar
+    },
+  });
 }
 
 // Count of all reviews

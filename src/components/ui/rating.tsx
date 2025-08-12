@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { updateUserBookTrackingRating } from "@/lib/actions/book.actions";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 type SizeKey = "sm" | "lg";
 
 interface RatingProps {
@@ -22,6 +24,7 @@ export default function Rating({
   const [rating, setRating] = useState(value);
   const [hover, setHover] = useState(0);
   const { data: session } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     setRating(value);
@@ -32,6 +35,9 @@ export default function Rating({
 
     setRating(star);
     await updateUserBookTrackingRating(session.user.id, bookId, star);
+
+    router.refresh();
+    toast.success("Book rated successfully.");
   };
 
   const sizes: Record<SizeKey, number> = {

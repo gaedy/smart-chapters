@@ -1,10 +1,10 @@
-
 import ReviewCard from "@/components/Book/reviewCard";
 import Rating from "@/components/ui/rating";
 import {
   getAllReviewsByBookId,
   getAverageRatingAForAllUser,
   getBookById,
+  getCurrentSessionReview,
   getUserBookTrackingRating,
   getUserBookTrackingStatus,
 } from "@/lib/actions/book.actions";
@@ -64,8 +64,14 @@ export default async function theDetailedBookPage({ params }: PageProps) {
 
   const rate = await getUserBookTrackingRating(session.user.id, book.id);
 
-  const { average, count } = await getAverageRatingAForAllUser(book.id);
+  const { averageRating, totalRatings } = await getAverageRatingAForAllUser(
+    book.id
+  );
   const reviews = await getAllReviewsByBookId(book.id);
+  const myReview = await getCurrentSessionReview(session.user.id, book.id);
+  const communityReviews = reviews.filter(
+    (review) => review.userId !== session?.user?.id
+  );
 
   return (
     <>
@@ -76,7 +82,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
         justify-start  gap-2"
           >
             <div className="flex flex-col w-40 justify-center items-center  gap-4 transition-colors  ">
-              <div className="w-40 h-60 rounded-2xl relative flex justify-center items-center  ">
+              <div className="w-40 h-60 rounded-2xl border border-border relative flex justify-center items-center  ">
                 <Image
                   src={imgSource}
                   alt="Book Cover"
@@ -117,17 +123,17 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                 <span className="text-lg">{book.author}</span>
               </div>
 
-              {rate?.rating && (
+              {totalRatings > 0 && (
                 <div className="flex items-center gap-2  w-fit">
-                  <p className="text-yellow-600 font-medium">{average}</p>
+                  <p className="text-yellow-600 font-medium">{averageRating}</p>
                   <Rating
                     size="sm"
                     canModified={false}
-                    value={average}
+                    value={averageRating}
                     bookId={book.id}
                   />
                   <p>&bull;</p>
-                  <p className="text-sm">{count} Ratings</p>
+                  <p className="text-sm">{totalRatings} Ratings</p>
                 </div>
               )}
 
@@ -153,28 +159,72 @@ export default async function theDetailedBookPage({ params }: PageProps) {
         </div>
 
         <div className="flex flex-col gap-4 max-w-2xl">
-          <div className="flex flex-col gap-3">
-            <p>Write your review</p>
-            <Textarea className="min-h-24 bg-background rounded-2xl" />
-            <ActionButton className="w-fit" label="Submit" />
-          </div>
+          {!myReview ? (
+            <>
+              <div className="flex flex-col gap-3">
+                <span>Write your review</span>
+                <Textarea className="min-h-24 bg-background rounded-2xl" />
+                <ActionButton className="w-fit" label="Submit" />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex flex-col gap-3">
+                <span>{`Your ${
+                  myReview.rating && myReview.content ? "Review" : "Rating"
+                }`}</span>
 
-          <div className="font-medium flex  items-center gap-2">
+                <ReviewCard
+                  key={myReview.id}
+                  name={myReview.user.name ?? "You"}
+                  rating={myReview.rating ?? 0}
+                  comment={myReview.content}
+                  avatar={myReview.user.image || undefined}
+                  date={new Date(myReview.createdAt).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    }
+                  )}
+                />
+                {!myReview.content && (
+                  <div className="flex flex-col gap-3">
+                    <p>Write your review</p>
+                    <Textarea className="min-h-24 bg-background rounded-2xl" />
+                    <ActionButton className="w-fit" label="Submit" />
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          <div className="font-medium flex items-center gap-2">
             <span>Community Reviews</span>
 
-            <span className=" opacity-80">&bull;</span>
-            <span>{reviews.length}</span>
+            {communityReviews.length !== 0 && (
+              <>
+                <span className=" text-muted-foreground">&bull;</span>
+                <span>{communityReviews.length}</span>
+              </>
+            )}
           </div>
 
-          {reviews.length === 0 ? (
-            <p>No reviews yet.</p>
+          {communityReviews.length === 0 ? (
+            <span>No reviews yet.</span>
           ) : (
-            reviews.map((review) => (
+            communityReviews.map((review) => (
               <ReviewCard
                 key={review.id}
                 name={review.user.name ?? "g"}
                 rating={review.rating ?? 0}
                 comment={review.content}
+                date={new Date(review.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
                 avatar={review.user.image || undefined}
               />
             ))

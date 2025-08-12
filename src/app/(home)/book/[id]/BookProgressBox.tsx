@@ -51,7 +51,7 @@ export function BookProgressBox({
   };
 
   return (
-    <div className="flex flex-col w-full gap-4">
+    <div className="flex flex-col w-full gap-4 ">
       <p>Progress</p>
       <Progress value={pageCount ? Math.round((page / pageCount) * 100) : 0} />
       <div className="flex bg-background text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
@@ -67,7 +67,7 @@ export function BookProgressBox({
         <PopoverTrigger asChild>
           <ActionButton label="Update your progress" />
         </PopoverTrigger>
-        <PopoverContent className="bg-background rounded-2xl">
+        <PopoverContent className="bg-background rounded-2xl font-merriweather">
           <div className="flex flex-col  gap-4 p-4 w-full">
             <p>Current Page</p>
             <div className="flex justify-start gap-2 text-sm items-center">

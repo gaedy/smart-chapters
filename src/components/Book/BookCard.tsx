@@ -41,7 +41,7 @@ export default function BookCard({
     <div className="flex flex-col w-fit gap-2  rounded-3xl group cursor-pointer">
       <div
         className="flex w-40 shadow-md hover:shadow-xl transition-all duration-300
-        relative h-60 rounded-2xl overflow-hidden group-hover:scale-105"
+        relative h-60 rounded-2xl border border-border overflow-hidden group-hover:scale-105"
       >
         <Image
           src={imageSrc}

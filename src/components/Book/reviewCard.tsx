@@ -34,7 +34,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       <div className="flex flex-col w-full h-full gap-3">
         <div className="flex justify-between items-center h-8 ">
           <div className="flex items-center gap-2 text-sm">
-            <div className="flex justify-center items-center w-8 h-8 overflow-hidden rounded-full">
+            <div className="flex justify-center items-center border w-8 h-8 overflow-hidden rounded-full">
               <Image
                 className=" object-cover rounded-full w-full h-full"
                 alt={name}
@@ -45,7 +45,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
               ></Image>
             </div>
 
-            <div className="flex items-end gap-2">
+            <div className="flex items-center gap-2">
               <span className="font-medium">{name}</span>
               <span className=" opacity-80">&bull;</span>
               <span className="text-xs opacity-80">{date || "01/01/2025"}</span>
@@ -56,9 +56,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             <Rating size="sm" canModified={false} value={rating} />
           </div>
         </div>
-        <div className="w-full h-full flex">
-          <p className="text-sm text-pretty">{comment}</p>
-        </div>
+        {comment && (
+          <div className="w-full h-full flex">
+            <p className="text-sm text-pretty">{comment}</p>
+          </div>
+        )}
       </div>
     </div>
   );

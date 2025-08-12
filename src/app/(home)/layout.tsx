@@ -1,37 +1,37 @@
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 import { NavUser } from "@/components/Sidebar/nav-user";
 
-import { SidebarTrigger } from "@/components/Sidebar/sidebar";
+import {
+  SidebarMenuButton,
+  SidebarTrigger,
+} from "@/components/Sidebar/sidebar";
+import { auth } from "auth";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-};
-export default function HomeLayout({
+export default async function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
+  const data = {
+    user: {
+      name: session?.user?.name ?? "Guest",
+      email: session?.user?.email ?? "guest@example.com",
+      avatar: session?.user?.image ?? "/avatar.jpg",
+    },
+  };
   return (
     <div className="flex flex-col h-screen w-full">
       <div className="top-0 p-2 md:hidden  sticky overflow-hidden flex justify-between items-center">
         <div>
-          <SidebarTrigger className="hover:bg-foreground" />
+          <SidebarMenuButton asChild>
+            <SidebarTrigger className="hover:bg-foreground" />
+          </SidebarMenuButton>
         </div>
 
-        {/* <div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate text-lg font-medium font-libre">
-              Smart Chapters
-            </span>
-          </div>
-        </div> */}
-
         <div>
-          <NavUser user={data.user} />
+          <NavUser onlyAvatar={true} user={data.user} />
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import { removeBookFromLib } from "@/lib/actions/book.actions";
 import { toast } from "sonner";
 import { ActionButton } from "../ui/actionButton";
 import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 const iconMap = {
   remove: Trash,
 };
@@ -19,13 +20,16 @@ function RemoveFromLibrary({
 }) {
   const icon = iconName ? iconMap[iconName] : undefined;
 
+  const updateRemove = useRouter();
+
   const handleRemove = async () => {
     const res = await removeBookFromLib(bookId);
     if (!res.success) {
       toast.error(res.message);
       return;
     }
-    toast.success("Book removed from your library");
+    toast.success("Book Removed From Your Library");
+    updateRemove.refresh();
   };
 
   return (
