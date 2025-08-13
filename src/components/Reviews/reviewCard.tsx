@@ -60,7 +60,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             <Rating size="sm" canModified={false} value={rating} />
           </div>
 
-          {reviewBookId && (
+          {reviewBookId && comment && (
             <div className="">
               <RemoveReviewButton bookId={reviewBookId ?? ""} />
             </div>

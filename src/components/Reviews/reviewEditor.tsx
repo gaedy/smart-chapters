@@ -3,7 +3,7 @@
 import { ActionButton } from "@/components/ui/actionButton";
 
 import { Textarea } from "@/components/ui/textarea";
-import { addReview, deleteReview } from "@/lib/actions/book.actions";
+import { addReview } from "@/lib/actions/book.actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";

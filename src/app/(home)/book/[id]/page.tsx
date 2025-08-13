@@ -1,4 +1,4 @@
-import ReviewCard from "@/components/Book/reviewCard";
+import ReviewCard from "@/components/Reviews/reviewCard";
 import Rating from "@/components/ui/rating";
 import {
   getAllReviewsByBookId,
@@ -17,8 +17,8 @@ import { ActionButton } from "@/components/ui/actionButton";
 import { BookProgressBox } from "./BookProgressBox";
 import { BookLibraryBox } from "./BookLibraryBox";
 import { Textarea } from "@/components/ui/textarea";
-import ReviewEditor from "./reviewEditor";
-import RemoveReviewButton from "@/components/Book/removeReview";
+import ReviewEditor from "../../../../components/Reviews/reviewEditor";
+import RemoveReviewButton from "@/components/Reviews/removeReview";
 interface PageProps {
   params: Promise<{ id: string }>;
 }
