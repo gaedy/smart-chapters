@@ -1,0 +1,222 @@
+[
+  {
+    "id": "the-midnight-library-clm1a2b3c4d5e6f7g8h9i0j1",
+    "title": "The Midnight Library",
+    "author": "Matt Haig",
+    "coverUrl": "/book_img001.jpg",
+    "description": "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived.",
+    "pageCount": 288,
+    "publishedAt": "2020-08-13T00:00:00.000Z",
+    "genre": "Fiction",
+    "isFeatured": true
+  },
+  {
+    "id": "atomic-habits-clm2b3c4d5e6f7g8h9i0j1k2",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "coverUrl": "/book_img002.jpg",
+    "description": "An Easy & Proven Way to Build Good Habits & Break Bad Ones. No matter your goals, Atomic Habits offers a proven framework for improving--every day.",
+    "pageCount": 320,
+    "publishedAt": "2018-10-16T00:00:00.000Z",
+    "genre": "Self-Help",
+    "isFeatured": true
+  },
+  {
+    "id": "the-seven-husbands-of-evelyn-hugo-clm3c4d5e6f7g8h9i0j1k2l3",
+    "title": "The Seven Husbands of Evelyn Hugo",
+    "author": "Taylor Jenkins Reid",
+    "coverUrl": "/book_img003.jpg",
+    "description": "Reclusive Hollywood icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life.",
+    "pageCount": 400,
+    "publishedAt": "2017-06-13T00:00:00.000Z",
+    "genre": "Historical Fiction",
+    "isFeatured": false
+  },
+  {
+    "id": "dune-clm4d5e6f7g8h9i0j1k2l3m4",
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "coverUrl": "/book_img004.jpg",
+    "description": "Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family tasked with ruling an inhospitable world.",
+    "pageCount": 688,
+    "publishedAt": "1965-08-01T00:00:00.000Z",
+    "genre": "Science Fiction",
+    "isFeatured": true
+  },
+  {
+    "id": "the-psychology-of-money-clm5e6f7g8h9i0j1k2l3m4n5",
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "coverUrl": "/book_img005.jpg",
+    "description": "Timeless lessons on wealth, greed, and happiness. Money investing decisions are never made purely with a spreadsheet.",
+    "pageCount": 256,
+    "publishedAt": "2020-09-08T00:00:00.000Z",
+    "genre": "Finance",
+    "isFeatured": false
+  },
+  {
+    "id": "project-hail-mary-clm6f7g8h9i0j1k2l3m4n5o6",
+    "title": "Project Hail Mary",
+    "author": "Andy Weir",
+    "coverUrl": "/book_img006.jpg",
+    "description": "Ryland Grace is the sole survivor on a desperate, last-chance mission—and if he fails, humanity and the earth itself will perish.",
+    "pageCount": 496,
+    "publishedAt": "2021-05-04T00:00:00.000Z",
+    "genre": "Science Fiction",
+    "isFeatured": true
+  },
+  {
+    "id": "educated-clm7g8h9i0j1k2l3m4n5o6p7",
+    "title": "Educated",
+    "author": "Tara Westover",
+    "coverUrl": "/book_img007.jpg",
+    "description": "A memoir about a young girl who, kept out of school, leaves her survivalist family and goes on to earn a PhD from Cambridge University.",
+    "pageCount": 334,
+    "publishedAt": "2018-02-20T00:00:00.000Z",
+    "genre": "Biography",
+    "isFeatured": false
+  },
+  {
+    "id": "the-silent-patient-clm8h9i0j1k2l3m4n5o6p7q8",
+    "title": "The Silent Patient",
+    "author": "Alex Michaelides",
+    "coverUrl": "/book_img008.jpg",
+    "description": "Alicia Berenson's life is seemingly perfect. A woman's act of violence against her husband—and of the therapist obsessed with uncovering her motive.",
+    "pageCount": 336,
+    "publishedAt": "2019-02-05T00:00:00.000Z",
+    "genre": "Thriller",
+    "isFeatured": false
+  },
+  {
+    "id": "where-the-crawdads-sing-clm9i0j1k2l3m4n5o6p7q8r9",
+    "title": "Where the Crawdads Sing",
+    "author": "Delia Owens",
+    "coverUrl": "/book_img009.jpg",
+    "description": "For years, rumors of the 'Marsh Girl' have haunted Barkley Cove, a quiet town on the North Carolina coast.",
+    "pageCount": 384,
+    "publishedAt": "2018-08-14T00:00:00.000Z",
+    "genre": "Mystery",
+    "isFeatured": true
+  },
+  {
+    "id": "sapiens-clm0j1k2l3m4n5o6p7q8r9s0",
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "coverUrl": "/book_img010.jpg",
+    "description": "A Brief History of Humankind. How did our species succeed in the battle for dominance? Why did our foraging ancestors come together to create cities and kingdoms?",
+    "pageCount": 443,
+    "publishedAt": "2014-09-04T00:00:00.000Z",
+    "genre": "History",
+    "isFeatured": true
+  },
+  {
+    "id": "the-thursday-murder-club-clm1k2l3m4n5o6p7q8r9s0t1",
+    "title": "The Thursday Murder Club",
+    "author": "Richard Osman",
+    "coverUrl": "/book_img011.jpg",
+    "description": "In a peaceful retirement village, four unlikely friends meet weekly to investigate cold cases. But when a real murder takes place, the Thursday Murder Club find themselves in the middle of their first live case.",
+    "pageCount": 368,
+    "publishedAt": "2020-09-03T00:00:00.000Z",
+    "genre": "Mystery",
+    "isFeatured": false
+  },
+  {
+    "id": "becoming-clm2l3m4n5o6p7q8r9s0t1u2",
+    "title": "1984",
+    "author": "George Orwell",
+    "coverUrl": "/book_img012.jpg",
+    "description": "This dystopian classic unveils a chilling totalitarian regime where surveillance and propaganda shape every aspect of human life, leaving no room for freedom.",
+    "pageCount": 328,
+    "publishedAt": "2018-11-13T00:00:00.000Z",
+    "genre": "Biography",
+    "isFeatured": true
+  },
+  {
+    "id": "the-alchemist-clm3m4n5o6p7q8r9s0t1u2v3",
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "coverUrl": "/book_img013.jpg",
+    "description": "Paulo Coelho's masterpiece tells the mystical story of Santiago, an Andalusian shepherd boy who yearns to travel in search of a worldly treasure.",
+    "pageCount": 163,
+    "publishedAt": "1988-01-01T00:00:00.000Z",
+    "genre": "Fiction",
+    "isFeatured": false
+  },
+  {
+    "id": "circe-clm4n5o6p7q8r9s0t1u2v3w4",
+    "title": "Circe",
+    "author": "Madeline Miller",
+    "coverUrl": "/book_img014.jpg",
+    "description": "In the house of Helios, god of the sun and mightiest of the Titans, a daughter is born. But Circe is a strange child—not powerful, like her father, nor viciously alluring like her mother.",
+    "pageCount": 393,
+    "publishedAt": "2018-04-10T00:00:00.000Z",
+    "genre": "Fantasy",
+    "isFeatured": false
+  },
+  {
+    "id": "the-guest-list-clm5o6p7q8r9s0t1u2v3w4x5",
+    "title": "The Guest List",
+    "author": "Lucy Foley",
+    "coverUrl": "/book_img015.jpg",
+    "description": "A wedding celebration turns dark and deadly in this deliciously wicked and atmospheric thriller.",
+    "pageCount": 320,
+    "publishedAt": "2020-06-02T00:00:00.000Z",
+    "genre": "Thriller",
+    "isFeatured": false
+  },
+  {
+    "id": "klara-and-the-sun-clm6p7q8r9s0t1u2v3w4x5y6",
+    "title": "Klara and the Sun",
+    "author": "Kazuo Ishiguro",
+    "coverUrl": "/book_img016.jpg",
+    "description": "Klara and the Sun is a thrilling book that offers a look at our changing world through the eyes of an unforgettable narrator, and one that explores the fundamental question: what does it mean to love?",
+    "pageCount": 303,
+    "publishedAt": "2021-03-02T00:00:00.000Z",
+    "genre": "Science Fiction",
+    "isFeatured": true
+  },
+  {
+    "id": "the-invisible-life-of-addie-larue-clm7q8r9s0t1u2v3w4x5y6z7",
+    "title": "The Invisible Life of Addie LaRue",
+    "author": "V.E. Schwab",
+    "coverUrl": "/book_img017.jpg",
+    "description": "France, 1714: in a moment of desperation, a young woman makes a Faustian bargain to live forever—and is cursed to be forgotten by everyone she meets.",
+    "pageCount": 560,
+    "publishedAt": "2020-10-06T00:00:00.000Z",
+    "genre": "Fantasy",
+    "isFeatured": false
+  },
+  {
+    "id": "untamed-clm8r9s0t1u2v3w4x5y6z7a8",
+    "title": "Untamed",
+    "author": "Glennon Doyle",
+    "coverUrl": "/book_img018.jpg",
+    "description": "This is how you find yourself. There is a voice of longing inside each woman. We strive so mightily to be good: good partners, daughters, mothers, employees, and friends.",
+    "pageCount": 352,
+    "publishedAt": "2020-03-10T00:00:00.000Z",
+    "genre": "Self-Help",
+    "isFeatured": false
+  },
+  {
+    "id": "the-poppy-war-clm9s0t1u2v3w4x5y6z7a8b9",
+    "title": "The Poppy War",
+    "author": "R.F. Kuang",
+    "coverUrl": "/book_img019.jpg",
+    "description": "When Rin aced the Keju—the Empire-wide test to find the most talented youth to learn at the Academies—it was a shock to everyone: to the test officials, who couldn't believe a war orphan from Rooster Province could pass without cheating.",
+    "pageCount": 544,
+    "publishedAt": "2018-05-01T00:00:00.000Z",
+    "genre": "Fantasy",
+    "isFeatured": true
+  },
+  {
+    "id": "the-martian-clm0t1u2v3w4x5y6z7a8b9c0",
+    "title": "The Martian",
+    "author": "Andy Weir",
+    "coverUrl": "/book_img020.jpg",
+    "description": "Six days ago, astronaut Mark Watney became one of the first people to walk on Mars. Now, he's sure he'll be the first person to die there.",
+    "pageCount": 369,
+    "publishedAt": "2014-02-11T00:00:00.000Z",
+    "genre": "Science Fiction",
+    "isFeatured": false
+  }
+]

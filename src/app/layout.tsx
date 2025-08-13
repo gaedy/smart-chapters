@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Libre_Baskerville } from "next/font/google";
+import { Libre_Baskerville, Inter, Merriweather } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar/sidebar";
+import { SidebarProvider } from "@/components/Sidebar/sidebar";
+import { SessionProvider } from "next-auth/react";
+import React from "react";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -13,6 +15,11 @@ const libre = Libre_Baskerville({
   variable: "--font-libre",
   subsets: ["latin"],
   weight: "400",
+});
+
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -26,18 +33,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${libre.variable}  antialiased text-primaryText`}
+        className={`${inter.variable}  ${libre.variable} ${merriweather.variable} antialiased text-primaryText`}
       >
-        {/* sidebar */}
-        <div className="flex justify-between w-full h-screen gap-2 p-2 bg-background">
-          <Sidebar />
-          {/* main content */}
-          <div className="flex-1 overflow-auto bg-foreground font-libre p-4 rounded-xl">
+        <SessionProvider>
+          <SidebarProvider>
             {children}
-          </div>
-        </div>
+            <Toaster />
+          </SidebarProvider>
+        </SessionProvider>
       </body>
     </html>
   );
