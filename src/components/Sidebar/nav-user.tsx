@@ -2,12 +2,9 @@
 
 import {
   BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
   LogIn,
   LogOut,
-  Sparkles,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -27,7 +24,6 @@ import {
   useSidebar,
 } from "@/components/Sidebar/sidebar";
 import { useSession } from "next-auth/react";
-import { signOutUser } from "@/lib/actions/user.actions";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 

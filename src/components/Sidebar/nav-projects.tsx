@@ -8,7 +8,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/Sidebar/sidebar";
 import Link from "next/link";
 

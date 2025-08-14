@@ -24,33 +24,27 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
   SidebarTrigger,
   useSidebar,
 } from "@/components/Sidebar/sidebar";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
-  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // Add this import
+import { usePathname } from "next/navigation";
 import SearchBar from "../Search/searchBar";
-import {
-  getAllTrackedBooks,
-  getBooksByTitle,
-} from "@/lib/actions/book.actions";
+import { getBooksByTitle } from "@/lib/actions/book.actions";
 
 import BookCardSearch from "../Search/bookCardSearch";
 import { useSession } from "next-auth/react";
 import Logo from "../ui/Logo";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { state, open, isMobile } = useSidebar();
+  const { state, isMobile } = useSidebar();
 
   type Book = Awaited<ReturnType<typeof getBooksByTitle>>[number];
 

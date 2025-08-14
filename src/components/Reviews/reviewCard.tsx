@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import Rating from "../ui/rating";
 import Image from "next/image";
 import a from "/public/avatar.jpg";
-import { deleteReview } from "@/lib/actions/book.actions";
 import RemoveReviewButton from "./removeReview";
 
 interface ReviewCardProps {
