@@ -2,10 +2,9 @@
 
 import { deleteReview } from "@/lib/actions/book.actions";
 import { useTransition } from "react";
-import { ActionButton } from "../ui/actionButton";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Ellipsis, Trash } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 

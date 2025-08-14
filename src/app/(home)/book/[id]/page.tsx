@@ -13,25 +13,42 @@ import { notFound } from "next/navigation";
 
 import { auth } from "auth";
 import { Metadata } from "next";
-import { ActionButton } from "@/components/ui/actionButton";
 import { BookProgressBox } from "./BookProgressBox";
 import { BookLibraryBox } from "./BookLibraryBox";
-import { Textarea } from "@/components/ui/textarea";
 import ReviewEditor from "../../../../components/Reviews/reviewEditor";
-import RemoveReviewButton from "@/components/Reviews/removeReview";
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }
-type metaProps = {
-  params: {
-    id: string;
-  };
-};
+// type metaProps = {
+//   params: {
+//     id: string;
+//   };
+// };
+
+// export async function generateMetadata({
+//   params,
+// }: PageProps): Promise<Metadata> {
+
+//   const book = await getBookById(params.id);
+//   if (!book) {
+//     return {
+//       title: "Book Not Found",
+//       description: "This book does not exist.",
+//     };
+//   }
+
+//   return {
+//     title: `${book.title} - Smart Chapters`,
+//     description: book.description || "Read more about this book.",
+//   };
+// }
 
 export async function generateMetadata({
   params,
-}: metaProps): Promise<Metadata> {
-  const book = await getBookById(params.id);
+}: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const book = await getBookById(id);
   if (!book) {
     return {
       title: "Book Not Found",
