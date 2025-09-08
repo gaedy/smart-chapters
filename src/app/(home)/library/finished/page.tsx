@@ -19,7 +19,7 @@ export default async function FinishedPage() {
   }
 
   return (
-    <div>
+    <div className="flex justify-center w-full  gap-4 flex-wrap break-words">
       {books.map((book) => (
         <Link href={`/book/${book.id}`} key={book.id}>
           <BookCard

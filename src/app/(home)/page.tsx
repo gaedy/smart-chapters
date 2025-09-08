@@ -1,4 +1,3 @@
-import BookCard from "@/components/Book/BookCard";
 import {
   getAllTrackedBooks,
   getReadingBooks,
@@ -14,7 +13,6 @@ import {
   mapBookToActivity,
   RecentActivity,
 } from "@/components/recent-activity";
-import { Card } from "@/components/ui/card";
 import { CurrentReading } from "@/components/currentReading";
 import { CurrentRecommend } from "@/components/CurrentRecommend";
 
@@ -60,7 +58,7 @@ export default async function Home() {
   activities.sort((a, b) => {
     const aTime = a.rawDate ? a.rawDate.getTime() : 0;
     const bTime = b.rawDate ? b.rawDate.getTime() : 0;
-    return bTime - aTime; // desc
+    return bTime - aTime;
   });
 
   return (

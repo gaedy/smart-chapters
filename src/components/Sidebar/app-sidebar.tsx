@@ -11,6 +11,7 @@ import {
   Search,
   Send,
   Settings,
+  UserRound,
 } from "lucide-react";
 import { NavMain } from "@/components/Sidebar/nav-main";
 import { NavProjects } from "@/components/Sidebar/nav-projects";
@@ -105,15 +106,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navSecondary: [
       {
+        title: "My Account",
+        url: "/account",
+        isActive: pathname === "/account",
+        icon: UserRound,
+      },
+      {
         title: "Settings",
         url: "/settings",
         isActive: pathname === "/settings",
         icon: Settings,
-      },
-      {
-        title: "Feedback",
-        url: "#",
-        icon: Send,
       },
     ],
     projects: [

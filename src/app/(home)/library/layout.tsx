@@ -23,7 +23,7 @@ export default function LibraryLayout({
             <ActionButton label="Finished" href="/library/finished" />
           </div>
         </div>
-        <div className="flex h-full w-full gap-4 items-start flex-wrap">
+        <div className="flex h-full w-full gap-4 justify-center items-start flex-wrap">
           {children}
         </div>
       </div>

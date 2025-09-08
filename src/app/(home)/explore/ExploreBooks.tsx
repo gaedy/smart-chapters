@@ -81,7 +81,7 @@ export default function ExploreBooks() {
       ) : books.length === 0 ? (
         <p className="text-center text-muted-foreground">No books found.</p>
       ) : (
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap md:justify-start justify-center gap-4">
           {books.map((book) => (
             <Link key={book.id} href={`/book/${book.id}`}>
               <BookCard
