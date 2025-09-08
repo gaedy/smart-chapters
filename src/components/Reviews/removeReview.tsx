@@ -1,12 +1,10 @@
 "use client";
 
-import { deleteReview } from "@/lib/actions/book.actions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Ellipsis } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
+import { deleteReview } from "@/lib/actions/reviews.actions";
 
 export default function RemoveReviewButton({ bookId }: { bookId: string }) {
   const [isPending, startTransition] = useTransition();
@@ -18,7 +16,7 @@ export default function RemoveReviewButton({ bookId }: { bookId: string }) {
       } catch (error) {
         console.error(error);
       } finally {
-        toast.success("Removed Review successfully");
+        toast.success("Your review has been deleted.");
         refresh.refresh();
       }
     });
@@ -26,24 +24,14 @@ export default function RemoveReviewButton({ bookId }: { bookId: string }) {
 
   return (
     <>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Ellipsis className="cursor-pointer" />
-        </PopoverTrigger>
-        <PopoverContent className="bg-background w-full flex flex-col  rounded-2xl font-merriweather">
-          {/* <ActionButton
-            className="w-fit bg-red-500 hover:bg-red-600"
-            label={isPending ? "Removing..." : "Remove"}
-            icon={Trash}
-            onClick={handleRemove}
-            disabled={isPending}
-          /> */}
-
-          <Button onClick={handleRemove} disabled={isPending} variant="ghost">
-            {isPending ? "Removing..." : "Remove"}
-          </Button>
-        </PopoverContent>
-      </Popover>
+      <Button
+        size="sm"
+        onClick={handleRemove}
+        disabled={isPending}
+        variant="secondary"
+      >
+        {isPending ? "Removing..." : "Remove"}
+      </Button>
     </>
   );
 }

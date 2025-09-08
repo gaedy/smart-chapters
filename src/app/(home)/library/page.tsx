@@ -4,11 +4,9 @@ import Link from "next/link";
 import { auth } from "../../../../auth";
 import { Metadata } from "next";
 
-
 export const metadata: Metadata = {
   title: "Library - Smart Chapters",
 };
-
 
 async function page() {
   const session = await auth();
@@ -29,12 +27,9 @@ async function page() {
 
   return (
     <>
-
       {books.map((book) => {
         const status = book.bookTrackings[0]?.status ?? "WANT_TO_READ";
         return (
-          
-          
           <Link href={`/book/${book.id}`} key={book.id}>
             <BookCard
               title={book.title}

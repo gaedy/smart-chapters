@@ -8,6 +8,7 @@ interface BookCardProps {
   author: string;
   coverUrl?: string | null;
   status?: string | null;
+  className?: string;
 }
 
 export default function BookCard({
@@ -15,6 +16,7 @@ export default function BookCard({
   author,
   coverUrl,
   status,
+  className,
 }: BookCardProps) {
   const imageSrc = coverUrl || fg;
 
@@ -38,7 +40,9 @@ export default function BookCard({
   const { color, label } = statusConfig[key];
 
   return (
-    <div className="flex flex-col w-fit gap-2  rounded-3xl group cursor-pointer">
+    <div
+      className={`flex flex-col w-fit gap-2 rounded-3xl group cursor-pointer ${className}`}
+    >
       <div
         className="flex w-40 shadow-md hover:shadow-xl transition-all duration-300
         relative h-60 rounded-2xl border border-border overflow-hidden group-hover:scale-105"

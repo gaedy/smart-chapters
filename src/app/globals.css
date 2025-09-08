@@ -99,7 +99,6 @@
   --color-foreground: var(--foreground);
   --color-foregroundClicked: var(--foregroundClicked);
   --color-primaryText: var(--primaryText);
-  --font-libre: var(--font-libre);
   --font-inter: var(--font-inter);
   --font-merriweather: var(--font-merriweather);
 }

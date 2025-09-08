@@ -27,22 +27,6 @@ export async function getBookById(id: string) {
   });
 }
 
-export async function getReviews() {
-  // const prisma = new PrismaClient();
-
-  const reviews = await prisma.review.findMany({
-    select: {
-      id: true,
-      rating: true,
-      content: true,
-      createdAt: true,
-    },
-    orderBy: { createdAt: "asc" },
-  });
-
-  return convertToPlainObject(reviews);
-}
-
 export async function getWantToReadBooks(userId: string) {
   const books = await prisma.book.findMany({
     where: {
@@ -140,6 +124,22 @@ export async function getAllTrackedBooks(userId: string) {
   });
 
   return convertToPlainObject(books);
+}
+
+export async function getUserBookCounts(userId: string) {
+  const counts = await prisma.bookTracking.groupBy({
+    by: ["status"],
+    where: { userId },
+    _count: { status: true },
+  });
+
+  return {
+    READING: counts.find((c) => c.status === "READING")?._count.status ?? 0,
+    WANT_TO_READ:
+      counts.find((c) => c.status === "WANT_TO_READ")?._count.status ?? 0,
+    FINISHED: counts.find((c) => c.status === "FINISHED")?._count.status ?? 0,
+    TOTAL: counts.reduce((acc, c) => acc + c._count.status, 0),
+  };
 }
 
 export async function addBookToLib(book: BookType, status: TrackingStatus) {
@@ -246,13 +246,30 @@ export async function getUserBookTrackingStatus(
     select: {
       status: true,
       currentPage: true,
+      startedAt: true,
+      finishedAt: true,
+      updatedAt: true,
     },
   });
 
+  if (!tracking) {
+    return {
+      isTracked: false,
+      status: null,
+      currentPage: null,
+      startedAt: null,
+      finishedAt: null,
+      updatedAt: null,
+    };
+  }
+
   return {
-    isTracked: !!tracking,
-    status: tracking?.status ?? null,
-    currentPage: tracking?.currentPage ?? null,
+    isTracked: true,
+    status: tracking.status, // "READING" | "WANT_TO_READ" | "FINISHED"
+    currentPage: tracking.currentPage,
+    startedAt: tracking.startedAt,
+    finishedAt: tracking.finishedAt,
+    updatedAt: tracking.updatedAt,
   };
 }
 
@@ -397,91 +414,71 @@ export async function updateCurrentPage(data: {
   }
 }
 
-export async function getAllReviewsByBookId(bookId: string) {
-  const reviews = await prisma.review.findMany({
-    where: { bookId },
-    orderBy: { createdAt: "desc" }, // latest first
-    include: {
-      user: {
+
+
+
+export async function getSuggestedBooks(userId: string, limit: number = 10) {
+  // 1️⃣ نجيب الـ IDs للكتب اللي المستخدم متابعها
+  const trackedBooks = await prisma.bookTracking.findMany({
+    where: { userId },
+    select: { bookId: true },
+  });
+
+  const excludedBookIds = trackedBooks.map((t) => t.bookId);
+
+  // 2️⃣ نجيب الكتب مع الريفيوهات ونستبعد الكتب دي
+  const books = await prisma.book.findMany({
+    where: {
+      id: { notIn: excludedBookIds }, // استبعاد كتب التراكنج
+    },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      coverUrl: true,
+      _count: {
         select: {
-          name: true,
-          image: true,
+          Review: true,
+        },
+      },
+      Review: {
+        select: {
+          rating: true,
         },
       },
     },
   });
 
-  return reviews;
-}
+  // 3️⃣ نحسب الـ stats
+  const booksWithStats = books.map((book) => {
+    const ratings = book.Review.map((r) => r.rating).filter(
+      (r): r is number => r !== null
+    );
 
-export async function getCurrentSessionReview(userId: string, bookId: string) {
-  return await prisma.review.findUnique({
-    where: {
-      userId_bookId: {
-        userId,
-        bookId,
-      },
-    },
-    include: {
-      user: true, // in case you want name/avatar
-    },
-  });
-}
+    const avgRating =
+      ratings.length > 0
+        ? ratings.reduce((a, b) => a + b, 0) / ratings.length
+        : 0;
 
-export async function addReview(bookId: string, content: string) {
-  const session = await auth();
-
-  if (!session?.user?.id) {
-    throw new Error("Not authenticated");
-  }
-  const userId = session.user.id;
-
-  // optional: ensure book exists
-  const bookExists = await prisma.book.findUnique({
-    where: { id: bookId },
-    select: { id: true },
-  });
-  if (!bookExists) {
-    throw new Error("Book not found");
-  }
-
-  const review = await prisma.review.upsert({
-    where: {
-      // compound unique from your schema @@unique([userId, bookId])
-      userId_bookId: {
-        userId,
-        bookId,
-      },
-    },
-    update: {
-      content,
-      // Prisma will auto-update `updatedAt` because of @updatedAt, so this is optional
-    },
-    create: {
-      userId,
-      bookId,
-      content,
-    },
+    return {
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      coverUrl: book.coverUrl,
+      reviewCount: book._count.Review,
+      avgRating,
+    };
   });
 
-  return review;
-}
+  // 4️⃣ نرتب ونطبق limit
+  const sortedBooks = booksWithStats
+    .sort((a, b) => {
+      if (b.reviewCount !== a.reviewCount) {
+        return b.reviewCount - a.reviewCount;
+      }
+      return b.avgRating - a.avgRating;
+    })
+    .slice(0, limit);
 
-export async function deleteReview(bookId: string) {
-  const session = await auth();
-
-  if (!session?.user?.id) {
-    throw new Error("Not authenticated");
-  }
-
-  await prisma.review.delete({
-    where: {
-      userId_bookId: {
-        userId: session.user.id,
-        bookId: bookId,
-      },
-    },
-  });
-
-  return { success: true };
+  return sortedBooks;
 }

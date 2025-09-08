@@ -8,7 +8,7 @@ export default function LibraryLayout({
 }>) {
   return (
     <>
-      <div className="w-full h-full flex-col flex  gap-4">
+      <div className="w-full h-full flex-col flex gap-4">
         <p className="text-2xl">Library</p>
 
         <div className="flex flex-col gap-2">
@@ -23,7 +23,7 @@ export default function LibraryLayout({
             <ActionButton label="Finished" href="/library/finished" />
           </div>
         </div>
-        <div className=" flex  h-full w-full gap-4 items-start flex-wrap">
+        <div className="flex h-full w-full gap-4 items-start flex-wrap">
           {children}
         </div>
       </div>

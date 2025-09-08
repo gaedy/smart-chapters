@@ -40,7 +40,7 @@ export default function SearchBar({
     className="cursor-pointer"
     onClick={() => {
       setQuery("");
-      onSearch(""); // <- clear results
+      onSearch("");
     }}
   />
 )}

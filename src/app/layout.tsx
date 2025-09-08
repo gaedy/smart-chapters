@@ -11,12 +11,6 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const libre = Libre_Baskerville({
-  variable: "--font-libre",
-  subsets: ["latin"],
-  weight: "400",
-});
-
 const merriweather = Merriweather({
   variable: "--font-merriweather",
   subsets: ["latin"],
@@ -35,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.variable}  ${libre.variable} ${merriweather.variable} antialiased text-primaryText`}
+        className={`${inter.variable}   ${merriweather.variable} antialiased text-primaryText`}
       >
         <SessionProvider>
           <SidebarProvider>

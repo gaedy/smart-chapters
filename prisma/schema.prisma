@@ -68,11 +68,11 @@ model Book {
   id          String    @id @default(cuid())
   title       String
   author      String
-  coverUrl    String? // URL to cover image
-  description String? // Optional description or blurb
-  pageCount   Int? // Total pages
-  publishedAt DateTime? // Publish date
-  genre       String? // Optional genre/category
+  coverUrl    String?
+  description String?
+  pageCount   Int?
+  publishedAt DateTime?
+  genre       String?
   isFeatured  Boolean?
 
   createdAt     DateTime       @default(now())
@@ -88,7 +88,7 @@ model BookTracking {
 
   status      TrackingStatus @default(WANT_TO_READ)
   currentPage Int            @default(0)
-  rating      Int? // 1–5 star rating
+  rating      Int?
   notes       String?
   startedAt   DateTime?
   finishedAt  DateTime?
@@ -107,8 +107,8 @@ model Review {
   userId String
   bookId String
 
-  rating    Int? // 1-5 stars for this review
-  content   String // review text
+  rating    Int?
+  content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
