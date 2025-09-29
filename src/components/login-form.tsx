@@ -37,16 +37,18 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
+      <Card className="bg-foreground border-none  shadow-none overflow-auto w-full">
+        <CardHeader className="">
+          <CardTitle className="text-lg md:text-xl">
+            Login to your account
+          </CardTitle>
+          <CardDescription className="text-sm">
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           <form action={action}>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 md:gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -56,25 +58,34 @@ export function LoginForm({
                   autoComplete="email"
                   placeholder="m@example.com"
                   required
+                  defaultValue="alice@example.com"
+                  className="bg-background"
                 />
               </div>
               <div className="grid gap-3">
-                <div className="flex items-center">
+                <div className="flex justify-start items-center flex-wrap">
                   <Label htmlFor="password">Password</Label>
                   <Link
                     href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="ml-auto self-start text-muted-foreground hover:text-primary text-sm underline-offset-4 hover:underline"
                   >
                     Forgot your password?
                   </Link>
                 </div>
-                <Input id="password" name="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  defaultValue="123456"
+                  type="password"
+                  required
+                  className="bg-background"
+                />
               </div>
               <div className="flex flex-col gap-3">
                 <SignInButton />
-                <Button variant="outline" className="w-full">
+                {/* <Button variant="outline" className="w-full text-sm">
                   Login with Google
-                </Button>
+                </Button> */}
               </div>
 
               {data && !data.success && (
@@ -85,7 +96,7 @@ export function LoginForm({
                 </>
               )}
             </div>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-xs md:text-sm">
               Don&apos;t have an account?{" "}
               <Link href="/sign-up" className="underline underline-offset-4">
                 Sign up

@@ -2,17 +2,10 @@ import {
   getAllTrackedBooks,
   getReadingBooks,
   getSuggestedBooks,
-  getUserBookCounts,
-  getUserBookTrackingStatus,
 } from "@/lib/actions/book.actions";
 import { auth } from "../../../auth";
-import Link from "next/link";
-import { BookStats } from "@/components/booksStats";
-import {
-  ActivityItem,
-  mapBookToActivity,
-  RecentActivity,
-} from "@/components/recent-activity";
+import { redirect } from "next/navigation";
+
 import { CurrentReading } from "@/components/currentReading";
 import { CurrentRecommend } from "@/components/CurrentRecommend";
 
@@ -20,46 +13,13 @@ export default async function Home() {
   const session = await auth();
 
   if (!session?.user?.id) {
-    return (
-      <div className="flex flex-col gap-4">
-        <p className="text-2xl font-medium">Welcome to Your Reading Haven!</p>
-        <p>Discover your next great read and keep track of your journey.</p>
-        <p>
-          <Link
-            href="/sign-in"
-            className="text-primary underline underline-offset-4 hover:text-primary/80 transition"
-          >
-            Sign in
-          </Link>{" "}
-          to start building your personal library and track your progress.
-        </p>
-      </div>
-    );
+    redirect("/sign-in");
   }
-  const readingBooks = await getReadingBooks(session.user.id);
+  const readingBooks = await getReadingBooks(session!.user!.id);
 
-  const books = await getAllTrackedBooks(session.user.id);
+  const books = await getAllTrackedBooks(session!.user!.id);
 
-  const booksCount = await getUserBookCounts(session.user.id);
-
-  const suggestBooks = await getSuggestedBooks(session.user.id, 4);
-
-  const activities: (ActivityItem & { rawDate: Date | null })[] =
-    await Promise.all(
-      books.map(async (book) => {
-        const tracking = await getUserBookTrackingStatus(
-          session.user.id,
-          book.id
-        );
-        return mapBookToActivity(book, tracking);
-      })
-    );
-
-  activities.sort((a, b) => {
-    const aTime = a.rawDate ? a.rawDate.getTime() : 0;
-    const bTime = b.rawDate ? b.rawDate.getTime() : 0;
-    return bTime - aTime;
-  });
+  const suggestBooks = await getSuggestedBooks(session!.user!.id, 4);
 
   return (
     <>
@@ -84,20 +44,6 @@ export default async function Home() {
                 <CurrentReading books={readingBooks} />
 
                 <CurrentRecommend books={suggestBooks} />
-
-                <div className="flex flex-col gap-4">
-                  <p className="text-xl">Your Stats</p>
-                  <div className="flex flex-col w-full gap-4 lg:flex-row">
-                    <BookStats
-                      bookFinished={booksCount.TOTAL}
-                      pagesThisMonth={54}
-                      currentlyReading={booksCount.READING}
-                      wantToRead={booksCount.WANT_TO_READ}
-                    />
-
-                    <RecentActivity activities={activities} />
-                  </div>
-                </div>
               </div>
             </>
           )}

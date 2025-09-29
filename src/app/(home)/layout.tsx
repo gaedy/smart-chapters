@@ -7,6 +7,7 @@ import {
 } from "@/components/Sidebar/sidebar";
 import Logo from "@/components/ui/Logo";
 import { auth } from "auth";
+import { redirect } from "next/navigation";
 
 export default async function HomeLayout({
   children,
@@ -15,11 +16,16 @@ export default async function HomeLayout({
 }>) {
   const session = await auth();
 
+  // This should not happen due to middleware protection, but just in case
+  if (!session) {
+    redirect("/sign-in");
+  }
+
   const data = {
     user: {
-      name: session?.user?.name ?? "Guest",
-      email: session?.user?.email ?? "guest@example.com",
-      avatar: session?.user?.image ?? "/avatar.jpg",
+      name: session.user?.name ?? "Guest",
+      email: session.user?.email ?? "guest@example.com",
+      avatar: session.user?.image ?? "/avatar.jpg",
     },
   };
   return (
@@ -31,7 +37,7 @@ export default async function HomeLayout({
           </SidebarMenuButton>
         </div>
 
-        <Logo/>
+        <Logo />
 
         <div>
           <NavUser onlyAvatar={true} user={data.user} />

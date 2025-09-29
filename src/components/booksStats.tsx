@@ -19,9 +19,6 @@ export function BookStats({
   currentlyReading = 25,
 }: UserReadingStatsProps) {
   return (
-
-
-    
     <Card className="p-6 border-none h-fit min-w-md shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="flex items-center justify-between gap-3 flex-wrap ">
         <div>

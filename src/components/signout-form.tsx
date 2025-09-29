@@ -37,11 +37,11 @@ export function SignoutForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+      <Card className="bg-foreground border-none  shadow-none overflow-auto w-full">
         <CardHeader>
           <CardTitle>Create Account</CardTitle>
           <CardDescription>
-            Enter your information below to sign out
+            Enter your information below to sign up
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -56,6 +56,7 @@ export function SignoutForm({
                   autoComplete="name"
                   placeholder="Alice bob"
                   required
+                  className="bg-background"
                 />
               </div>
               <div className="grid gap-3">
@@ -67,13 +68,14 @@ export function SignoutForm({
                   autoComplete="email"
                   placeholder="m@example.com"
                   required
+                  className="bg-background"
                 />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" name="password" type="password" required />
+                <Input id="password" name="password" type="password" required className="bg-background" />
               </div>
 
               <div className="grid gap-3">
@@ -85,6 +87,7 @@ export function SignoutForm({
                   name="confirmPassword"
                   type="password"
                   required
+                  className="bg-background"
                 />
               </div>
 
