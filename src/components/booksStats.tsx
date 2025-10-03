@@ -1,6 +1,11 @@
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Flame, Calendar, ArrowRight, Trophy } from "lucide-react";
+import {
+  BookOpen,
+  Flame,
+  ArrowRight,
+  BookMarked,
+  CircleCheckBig,
+} from "lucide-react";
 import Link from "next/link";
 
 interface UserReadingStatsProps {
@@ -9,6 +14,7 @@ interface UserReadingStatsProps {
   pagesThisMonth: number;
   currentlyReading: number;
   wantToRead: number;
+  isLink?: boolean;
 }
 
 export function BookStats({
@@ -17,69 +23,88 @@ export function BookStats({
   pagesThisMonth = 450,
   wantToRead = 12,
   currentlyReading = 25,
+  isLink = true,
 }: UserReadingStatsProps) {
   return (
-    <Card className="p-6 border-none h-fit min-w-md shadow-lg hover:shadow-xl transition-all duration-300">
+    <div className="flex flex-col gap-4 ">
       <div className="flex items-center justify-between gap-3 flex-wrap ">
         <div>
           <div className="flex items-center gap-3">
-            <h2 className=" font-bold">Reading Progress</h2>
+            <h2 className=" text-xl">Reading Progress</h2>
           </div>
         </div>
 
-        <Link href="/stats">
-          <Button
-            variant="secondary"
-            size="sm"
-            className="border-primary/30 text-muted-foreground hover:text-primary cursor-pointer hover:bg-primary/10 bg-transparent"
-          >
-            View Details
-            <ArrowRight className="w-4 h-4 ml-1" />
-          </Button>
-        </Link>
+        {!isLink && (
+          <Link href="/stats">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="border-primary/30 text-muted-foreground hover:text-primary cursor-pointer hover:bg-primary/10 bg-transparent"
+            >
+              View Details
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </Link>
+        )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 ">
-        <div className="p-4 rounded-lg border border-border/50 text-center hover:bg-card/80 transition-colors">
-          <div className="flex items-center justify-center mb-2">
-            <Trophy className="w-5 h-5 text-chart-4" />
+      <div className="flex gap-2 items-center justify-center lg:justify-start flex-wrap">
+        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
+          <div className=" h-1/2 flex items-center">
+            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-blue-500">
+              <Flame className="text-primary-foreground" />
+            </div>
           </div>
-          <div className="text-2xl font-bold">{bookFinished}</div>
-          <p className="text-xs text-muted-foreground font-medium">
-            Books Finished
-          </p>
+          <div className=" h-1/4 flex items-center">
+            <p className="text-2xl font-bold">{bookFinished}</p>
+          </div>
+          <div className=" h-1/4 text-muted-foreground flex items-center">
+            <p>Book Finished</p>
+          </div>
         </div>
 
-        <div className="bg-card/50 p-4 rounded-lg border border-border/50 text-center hover:bg-card/80 transition-colors">
-          <div className="flex items-center justify-center mb-2">
-            <BookOpen className="w-5 h-5 text-primary" />
+        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
+          <div className=" h-1/2 flex items-center">
+            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-green-600">
+              <BookOpen className="text-primary-foreground" />
+            </div>
           </div>
-          <div className="text-2xl font-bold">{currentlyReading}</div>
-          <p className="text-xs text-muted-foreground font-medium">
-            Reading Now
-          </p>
+          <div className=" h-1/4 flex items-center">
+            <p className="text-2xl font-bold">{currentlyReading}</p>
+          </div>
+          <div className=" h-1/4 text-muted-foreground flex items-center">
+            <p>Reading Now</p>
+          </div>
         </div>
 
-        <div className="bg-card/50 p-4 rounded-lg border border-border/50 text-center hover:bg-card/80 transition-colors">
-          <div className="flex items-center justify-center mb-2">
-            <Flame className="w-5 h-5 text-destructive" />
+        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
+          <div className=" h-1/2 flex items-center">
+            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-purple-600">
+              <BookMarked className="text-primary-foreground" />
+            </div>
           </div>
-          <div className="text-2xl font-bold">{wantToRead}</div>
-          <p className="text-xs text-muted-foreground font-medium">
-            Want to read
-          </p>
+          <div className=" h-1/4 flex items-center">
+            <p className="text-2xl font-bold">{wantToRead}</p>
+          </div>
+          <div className=" h-1/4 text-muted-foreground flex items-center">
+            <p>Want to read</p>
+          </div>
         </div>
 
-        <div className="bg-card/50 p-4 rounded-lg border border-border/50 text-center hover:bg-card/80 transition-colors">
-          <div className="flex items-center justify-center mb-2">
-            <Calendar className="w-5 h-5 text-primary" />
+        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
+          <div className=" h-1/2 flex items-center">
+            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-orange-400">
+              <CircleCheckBig className="text-primary-foreground" />
+            </div>
           </div>
-          <div className="text-2xl font-bold">{pagesThisMonth}</div>
-          <p className="text-xs text-muted-foreground font-medium">
-            Pages/Month
-          </p>
+          <div className=" h-1/4 flex items-center">
+            <p className="text-2xl font-bold">{pagesThisMonth}</p>
+          </div>
+          <div className=" h-1/4 text-muted-foreground flex items-center">
+            <p>Pages Read</p>
+          </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }

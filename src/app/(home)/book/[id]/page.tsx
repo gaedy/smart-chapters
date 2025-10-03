@@ -84,7 +84,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
             justify-start gap-2"
             >
               <div className="flex flex-col w-40 justify-center items-center  gap-4 transition-colors  ">
-                <div className="w-40 h-60 rounded-2xl border border-border relative flex justify-center items-center  ">
+                <div className="w-40 h-60 rounded-2xl relative flex justify-center items-center  ">
                   <Image
                     src={imgSource}
                     alt="Book Cover"
