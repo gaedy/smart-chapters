@@ -13,7 +13,7 @@ export default function LibraryLayout({
 
         <div className="flex flex-col items-center  gap-2">
           {/* <p>Bookshelves</p> */}
-          <div className=" bg-background p-2 rounded-full w-fit text-sm gap-2 flex flex-wrap ">
+          <div className=" bg-background text-sm p-2 rounded-full w-fit gap-2 flex ">
             <ActionButton
               className="hover:scale-100 shadow-none hover:shadow-none"
               label="All Books"

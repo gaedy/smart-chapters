@@ -125,68 +125,61 @@ export function mapBookToActivity(
 /* ----------------- Component ----------------- */
 export function RecentActivity({ activities = [] }: RecentActivityProps) {
   return (
-    <div className="bg-card border-none w-full  rounded-xl shadow-sm p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-semibold text-card-foreground">Recent Activity</h2>
-        {/* <Button
-          variant="secondary"
-          size="sm"
-          className="border-primary/30 text-muted-foreground hover:text-primary  cursor-pointer hover:bg-primary/10 bg-transparent"
-        >
-          View All
-          <ArrowRight className="w-4 h-4 ml-1" />
-        </Button> */}
-      </div>
-
-      {activities.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No recent activity</p>
-      ) : (
-        <div className="space-y-2 h-fit">
-          {activities.map((activity) => (
-            <div
-              key={activity.id}
-              className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
-            >
-              <div className="flex-shrink-0 mt-0.5">
-                {getActivityIcon(activity.type)}
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1">
-                    <p className="text-sm text-card-foreground">
-                      <span className="text-muted-foreground">
-                        {getActivityText(activity)}
-                      </span>
-                      <Link href={`/book/${activity.id}`}>
-                        <span className="font-medium hover:underline ml-1">
-                          {activity.bookTitle}
-                        </span>
-                      </Link>
-
-                      {activity.author && (
-                        <span className="text-muted-foreground ml-1">
-                          by {activity.author}
-                        </span>
-                      )}
-                    </p>
-
-                    {activity.details && (
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {activity.details}
-                      </p>
-                    )}
+    <>
+      <div className="flex flex-col gap-4">
+        <h2 className="text-xl ">Recent Activity</h2>
+        <div className="bg-background border-none w-full rounded-xl p-6">
+          {activities.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No recent activity</p>
+          ) : (
+            <div className="space-y-1 h-fit">
+              {activities.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-foreground transition-colors"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {getActivityIcon(activity.type)}
                   </div>
 
-                  <span className="text-xs text-muted-foreground flex-shrink-0">
-                    {activity.timestamp}
-                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <p className="text-sm text-card-foreground">
+                          <span className="text-muted-foreground">
+                            {getActivityText(activity)}
+                          </span>
+                          <Link href={`/book/${activity.id}`}>
+                            <span className="font-medium hover:underline ml-1">
+                              {activity.bookTitle}
+                            </span>
+                          </Link>
+
+                          {activity.author && (
+                            <span className="text-muted-foreground ml-1">
+                              by {activity.author}
+                            </span>
+                          )}
+                        </p>
+
+                        {activity.details && (
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {activity.details}
+                          </p>
+                        )}
+                      </div>
+
+                      <span className="text-xs text-muted-foreground flex-shrink-0">
+                        {activity.timestamp}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 }
