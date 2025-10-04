@@ -14,18 +14,20 @@ import { auth } from "auth";
 export default async function StatsPage() {
   const session = await auth();
 
-  if (!session || !session.user?.id) {
+  if (!session || !session.user || !session.user.id) {
     return <p className="text-center">Please sign in to view Stats</p>;
   }
 
-  const booksCount = await getUserBookCounts(session.user.id);
-  const books = await getAllTrackedBooks(session.user.id);
+  const userId = session.user.id;
+
+  const booksCount = await getUserBookCounts(userId);
+  const books = await getAllTrackedBooks(userId);
 
   const activities: (ActivityItem & { rawDate: Date | null })[] =
     await Promise.all(
       books.map(async (book) => {
         const tracking = await getUserBookTrackingStatus(
-          session.user.id,
+          userId,
           book.id
         );
         return mapBookToActivity(book, tracking);
