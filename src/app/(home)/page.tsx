@@ -10,8 +10,7 @@ import { redirect } from "next/navigation";
 import { CurrentReading } from "@/components/currentReading";
 import { CurrentRecommend } from "@/components/CurrentRecommend";
 import { BookStats } from "@/components/booksStats";
-import { Progress } from "@/components/ui/progress";
-import { Goal } from "lucide-react";
+
 import GoalTracker from "@/components/goal";
 
 export default async function Home() {
@@ -44,8 +43,7 @@ export default async function Home() {
           ) : (
             <>
               <div className="flex flex-col gap-10">
-
-                <GoalTracker/>
+                <GoalTracker />
                 <BookStats
                   bookFinished={booksCount.TOTAL}
                   pagesThisMonth={54}
@@ -57,11 +55,6 @@ export default async function Home() {
 
                 <CurrentRecommend books={suggestBooks} />
               </div>
-
-
-              
-
-            
             </>
           )}
         </div>
