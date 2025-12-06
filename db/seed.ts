@@ -1,4 +1,7 @@
+import 'dotenv/config'
+
 import { simpleData } from "./simpleData";
+
 import bookData from "./bookData.json";
 import { prisma } from "@/lib/prisma";
 async function main() {

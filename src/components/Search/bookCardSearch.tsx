@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
-import h from "/public/h.jpg"; // fallback image
+// import h from "/public/h.jpg"; // fallback image
 
 export type SearchResultCardProps = {
   book: {
@@ -23,7 +23,7 @@ const BookCardSearch: FC<SearchResultCardProps> = ({ book, href, onClick }) => {
       <div className="flex justify-center rounded-md items-center">
         <Image
           className="rounded-md"
-          src={book.coverUrl || h}
+          src={book.coverUrl || "h"}
           alt={book.title}
           width={48}
           height={64}

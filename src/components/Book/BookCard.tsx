@@ -1,6 +1,6 @@
 "use client";
 
-import fg from "/public/h.jpg";
+// import fg from "/public/h.jpg";
 import Image from "next/image";
 
 interface BookCardProps {
@@ -18,7 +18,7 @@ export default function BookCard({
   status,
   className,
 }: BookCardProps) {
-  const imageSrc = coverUrl || fg;
+  const imageSrc = coverUrl || "fg";
 
   type TrackingStatus = "FINISHED" | "READING" | "WANT_TO_READ" | "DEFAULT";
   type TrackingStatusWithDefault = TrackingStatus | "DEFAULT";
