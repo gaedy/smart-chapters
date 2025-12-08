@@ -3,7 +3,6 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import Rating from "../ui/rating";
 import Image from "next/image";
-import a from "/public/avatar.jpg";
 import RemoveReviewButton from "./removeReview";
 
 interface ReviewCardProps {
@@ -42,7 +41,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
                 <Image
                   className=" object-cover rounded-full w-full h-full"
                   alt={name}
-                  src={avatar || a}
+                  src={avatar || ""}
                   width={96}
                   height={96}
                   objectFit="fill"

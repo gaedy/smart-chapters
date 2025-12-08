@@ -25,6 +25,7 @@ export default async function Home() {
   const booksCount = await getUserBookCounts(session.user.id);
   return (
     <>
+    
       <div className="flex flex-col w-full h-full gap-10">
         <div className="flex flex-col gap-4 ">
           {session && (
