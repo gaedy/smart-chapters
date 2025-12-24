@@ -25,85 +25,68 @@ export function BookStats({
   currentlyReading = 25,
   isLink = true,
 }: UserReadingStatsProps) {
+  const stats = [
+    {
+      title: "Book Finished",
+      value: bookFinished,
+      subtitle: "Last month",
+      badge: "245",
+      showBadge: true,
+      icon: <Flame />,
+    },
+    {
+      title: "Currently Reading",
+      value: currentlyReading,
+      subtitle: "Last month",
+      badge: "5",
+      showBadge: true,
+      icon: <Flame />,
+    },
+    {
+      title: "Want to read",
+      value: wantToRead,
+      subtitle: "Last month",
+      badge: "16",
+      showBadge: true,
+      icon: <Flame />,
+    },
+    {
+      title: "Pages Read",
+      value: pagesThisMonth,
+      subtitle: "Last month",
+      badge: "1.4K",
+      showBadge: true,
+      icon: <Flame />,
+    },
+  ];
   return (
     <div className="flex flex-col gap-4 ">
-      <div className="flex items-center justify-between gap-3 flex-wrap ">
-        <div>
-          <div className="flex items-center gap-3">
-            <h2 className=" text-xl">Reading Progress</h2>
-          </div>
-        </div>
-
-        {!isLink && (
-          <Link href="/stats">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="border-primary/30 text-muted-foreground hover:text-primary cursor-pointer hover:bg-primary/10 bg-transparent"
-            >
-              View Details
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
-          </Link>
-        )}
-      </div>
-
-      <div className="flex gap-2 items-center justify-center lg:justify-start flex-wrap">
-        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
-          <div className=" h-1/2 flex items-center">
-            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-blue-500">
-              <Flame className="text-primary-foreground" />
+      <div className="flex gap-2 items-center justify-between">
+        {stats.map((item, index) => (
+          <div
+            key={index}
+            className="flex bg-background rounded-2xl w-1/4 p-4 h-36 gap-2 flex-col justify-between"
+          >
+            {/* Title + Icon */}
+            <div className="gap-2 text-secondary flex items-center">
+              {item.icon && item.icon}
+              <p>{item.title}</p>
             </div>
-          </div>
-          <div className=" h-1/4 flex items-center">
-            <p className="text-2xl font-bold">{bookFinished}</p>
-          </div>
-          <div className=" h-1/4 text-muted-foreground flex items-center">
-            <p>Book Finished</p>
-          </div>
-        </div>
 
-        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
-          <div className=" h-1/2 flex items-center">
-            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-green-600">
-              <BookOpen className="text-primary-foreground" />
-            </div>
-          </div>
-          <div className=" h-1/4 flex items-center">
-            <p className="text-2xl font-bold">{currentlyReading}</p>
-          </div>
-          <div className=" h-1/4 text-muted-foreground flex items-center">
-            <p>Reading Now</p>
-          </div>
-        </div>
+            {/* Value */}
+            <p className="text-2xl font-bold flex items-center">{item.value}</p>
 
-        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
-          <div className=" h-1/2 flex items-center">
-            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-purple-600">
-              <BookMarked className="text-primary-foreground" />
-            </div>
+            {/* Footer */}
+            {item.showBadge && (
+              <div className="flex items-center text-sm gap-2 text-secondary">
+                <div className="bg-green-color-1 p-1 px-2.5 rounded-full">
+                  <p className="text-green-color-2">+{item.badge}</p>
+                </div>
+                <p>{item.subtitle}</p>
+              </div>
+            )}
           </div>
-          <div className=" h-1/4 flex items-center">
-            <p className="text-2xl font-bold">{wantToRead}</p>
-          </div>
-          <div className=" h-1/4 text-muted-foreground flex items-center">
-            <p>Want to read</p>
-          </div>
-        </div>
-
-        <div className="flex bg-background rounded-4xl w-52 p-4 h-48 gap-2 flex-col ">
-          <div className=" h-1/2 flex items-center">
-            <div className="w-16 h-16 shadow-lg rounded-3xl flex justify-center items-center bg-orange-400">
-              <CircleCheckBig className="text-primary-foreground" />
-            </div>
-          </div>
-          <div className=" h-1/4 flex items-center">
-            <p className="text-2xl font-bold">{pagesThisMonth}</p>
-          </div>
-          <div className=" h-1/4 text-muted-foreground flex items-center">
-            <p>Pages Read</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

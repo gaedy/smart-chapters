@@ -1,62 +1,28 @@
+import Navbar from "@/components/NavBar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
-import { NavUser } from "@/components/Sidebar/nav-user";
-
-import {
-  SidebarMenuButton,
-  SidebarTrigger,
-} from "@/components/Sidebar/sidebar";
-import Logo from "@/components/ui/Logo";
-import { auth } from "auth";
-import { redirect } from "next/navigation";
 
 export default async function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
-  // This should not happen due to middleware protection, but just in case
-  if (!session) {
-    redirect("/sign-in");
-  }
-
-  const data = {
-    user: {
-      name: session.user?.name ?? "Guest",
-      email: session.user?.email ?? "guest@example.com",
-      avatar: session.user?.image ?? "/avatar.jpg",
-    },
-  };
   return (
     <div className="flex flex-col h-screen w-full">
-      <div className="top-0 p-2 md:hidden  sticky overflow-hidden flex justify-between items-center">
-        <div>
-          <SidebarMenuButton asChild>
-            <SidebarTrigger />
-          </SidebarMenuButton>
-        </div>
-
-        <Logo />
-
-        <div>
-          <NavUser onlyAvatar={true} user={data.user} />
-        </div>
-      </div>
-
       <div className="flex justify-between w-full h-screen overflow-hidden bg-background ">
-        {/* Sidebar */}
         <div>
           <AppSidebar />
         </div>
 
         {/* main content */}
-        <div className="flex flex-col flex-1 py-2 md:py-2 md:pr-2 md:px-0 px-2  overflow-x-hidden overflow-y-auto">
+        <div className="flex flex-col gap-2  flex-1 py-2 md:py-2 md:pr-2 md:px-0 px-2 overflow-hidden">
+          <Navbar />
           <div
-            className="sticky font-merriweather top-0 bg-foreground overflow-x-hidden overflow-auto 
-             p-4 rounded-xl flex-1 flex flex-col"
+            className="sticky top-0 bg-foreground overflow-y-auto
+   rounded-3xl flex-1 flex flex-col scrollbar-overlay"
           >
-            {children}
+            <div className="p-4 flex flex-col gap-4 overflow-x-hidden  pr-2 scrollbar-thin scrollbar-thumb-black scrollbar-track-transparent">
+              {children}
+            </div>
           </div>
         </div>
       </div>

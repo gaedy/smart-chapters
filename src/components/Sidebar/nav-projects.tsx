@@ -27,7 +27,12 @@ export function NavProjects({
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild className={item.isActive ? "bg-foreground" : ""}>
+            <SidebarMenuButton
+              asChild
+              className={
+                item.isActive ? "bg-foreground rounded-full" : "rounded-full"
+              }
+            >
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

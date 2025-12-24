@@ -15,7 +15,7 @@ export default async function ExplorePage() {
         <p className="">Search books, authors, or genres...</p>
       </div>
 
-      <ExploreBooks />
+      {/* <ExploreBooks /> */}
     </div>
   );
 }

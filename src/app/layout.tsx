@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.variable}   ${merriweather.variable} antialiased text-primaryText`}
+        className={`${inter.variable}   ${merriweather.variable} antialiased`}
       >
         <SessionProvider>
           <SidebarProvider>

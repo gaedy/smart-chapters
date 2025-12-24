@@ -28,7 +28,7 @@ export function NavMain({
     url: string;
     icon: LucideIcon;
     isActive?: boolean;
-    count? : number;
+    count?: number;
     items?: {
       title: string;
       url: string;
@@ -45,7 +45,9 @@ export function NavMain({
               <SidebarMenuButton
                 asChild
                 tooltip={item.title}
-                className={item.isActive ? "bg-foreground" : ""}
+                className={
+                  item.isActive ? "bg-foreground rounded-full" : "rounded-full"
+                }
               >
                 <Link href={item.url}>
                   <item.icon />

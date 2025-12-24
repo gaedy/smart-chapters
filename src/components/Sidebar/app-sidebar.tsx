@@ -167,7 +167,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {!session || !session.user?.id ? (
+        {/* {!session || !session.user?.id ? (
           ""
         ) : (
           <SidebarGroup>
@@ -220,8 +220,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </DialogContent>
             </Dialog>
           </SidebarGroup>
-        )}{" "}
-        {}
+        )}{" "} */}
+        
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
