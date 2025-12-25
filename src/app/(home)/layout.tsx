@@ -16,10 +16,7 @@ export default async function HomeLayout({
         {/* main content */}
         <div className="flex flex-col gap-2  flex-1 py-2 md:py-2 md:pr-2 md:px-0 px-2 overflow-hidden">
           <Navbar />
-          <div
-            className="sticky top-0 bg-foreground overflow-y-auto
-   rounded-3xl flex-1 flex flex-col scrollbar-overlay"
-          >
+          <div className="sticky top-0 bg-foreground overflow-y-auto rounded-3xl flex-1 flex flex-col scrollbar-overlay">
             <div className="p-4 flex flex-col gap-4 overflow-x-hidden  pr-2 scrollbar-thin scrollbar-thumb-black scrollbar-track-transparent">
               {children}
             </div>

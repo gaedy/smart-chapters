@@ -61,11 +61,11 @@ export function BookStats({
   ];
   return (
     <div className="flex flex-col gap-4 ">
-      <div className="flex gap-2 items-center justify-between">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {stats.map((item, index) => (
           <div
             key={index}
-            className="flex bg-background rounded-2xl w-1/4 p-4 h-36 gap-2 flex-col justify-between"
+            className="flex bg-background rounded-2xl w-full p-4 h-36  gap-2 flex-col justify-between"
           >
             {/* Title + Icon */}
             <div className="gap-2 text-secondary flex items-center">

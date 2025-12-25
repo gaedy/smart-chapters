@@ -145,83 +145,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
-          {state !== "collapsed" || isMobile ? (
-            <div className="flex justify-between w-full items-center relative">
-              <SidebarMenuButton size="lg" asChild>
-                <Link href="/">
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <Logo />
-                  </div>
-                </Link>
-              </SidebarMenuButton>
-
-              <SidebarTrigger className="absolute right-0 " />
+          <SidebarMenuButton
+            className={`flex justify-between w-full items-center relative ${
+              isMobile ? "p-2" : "p-0"
+            }`}
+          >
+            <div className="h-12 flex items-center">
+              {state !== "collapsed" || isMobile ? (
+                <div className="text-sm leading-tight">
+                  <Logo />
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-          ) : (
-            <>
-              <div className="flex justify-center items-center">
-                <SidebarTrigger />
-              </div>
-            </>
-          )}
+
+            <SidebarTrigger className="absolute right-0 " />
+          </SidebarMenuButton>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {/* {!session || !session.user?.id ? (
-          ""
-        ) : (
-          <SidebarGroup>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <SidebarMenuButton
-                  className="text-muted-foreground bg-foreground  cursor-pointer transition-colors"
-                  tooltip="Search"
-                >
-                  <Search />
-                  <span>Search Books</span>
-                </SidebarMenuButton>
-              </DialogTrigger>
-
-              <DialogContent className="gap-4">
-                <DialogHeader>
-                  <DialogTitle>
-                    Search Books by title, author, or keyword
-                  </DialogTitle>
-                </DialogHeader>
-                <SearchBar onSearch={handleSearch} />
-
-                <div className="mt-4 flex flex-col gap-2 max-h-64 relative overflow-auto">
-                  {results.length !== 0 && isBookSearched && (
-                    <div className=" text-sm flex text-muted-foreground justify-between bg-foreground p-1 items-center sticky top-0">
-                      <span>Search results</span>
-                      <span>{results.length}</span>
-                    </div>
-                  )}
-
-                  {isSearchResult ? (
-                    <div className="flex justify-center items-center overflow-hidden">
-                      <Loader className="animate-spin" />
-                    </div>
-                  ) : results.length === 0 && isBookSearched ? (
-                    <span className="flex justify-center items-center">
-                      No Book Found
-                    </span>
-                  ) : (
-                    results.map((book) => (
-                      <BookCardSearch
-                        key={book.id}
-                        book={book}
-                        href={`/book/${book.id}`}
-                        onClick={() => setIsDialogOpen(false)}
-                      />
-                    ))
-                  )}
-                </div>
-              </DialogContent>
-            </Dialog>
-          </SidebarGroup>
-        )}{" "} */}
-        
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
