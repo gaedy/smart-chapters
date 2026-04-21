@@ -1,11 +1,6 @@
 import ReviewCard from "@/components/Reviews/reviewCard";
 import Rating from "@/components/ui/rating";
-import {
-  getAverageRatingAForAllUser,
-  getBookById,
-  getUserBookTrackingRating,
-  getUserBookTrackingStatus,
-} from "@/lib/actions/book.actions";
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -17,7 +12,14 @@ import ReviewEditor from "../../../../components/Reviews/reviewEditor";
 import {
   getAllReviewsByBookId,
   getCurrentSessionReview,
-} from "@/lib/actions/reviews.actions";
+} from "@/lib/data/reviews.data";
+
+import {
+  getAverageRatingForAllUsers,
+  getBookById,
+  getUserBookTrackingRating,
+  getUserBookTrackingStatus,
+} from "@/lib/data/book.data";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -57,18 +59,18 @@ export default async function theDetailedBookPage({ params }: PageProps) {
 
   const { isTracked, status, currentPage } = await getUserBookTrackingStatus(
     session?.user?.id,
-    book.id
+    book.id,
   );
 
   const rate = await getUserBookTrackingRating(session.user.id, book.id);
 
-  const { averageRating, totalRatings } = await getAverageRatingAForAllUser(
-    book.id
+  const { averageRating, totalRatings } = await getAverageRatingForAllUsers(
+    book.id,
   );
   const reviews = await getAllReviewsByBookId(book.id);
   const myReview = await getCurrentSessionReview(session.user.id, book.id);
   const communityReviews = reviews.filter(
-    (review) => review.userId !== session?.user?.id
+    (review) => review.userId !== session?.user?.id,
   );
 
   const ratingsNumber = reviews.filter((r) => r.rating != null).length;
@@ -197,7 +199,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
-                    }
+                    },
                   )}
                   reviewBookId={book.id}
                 />

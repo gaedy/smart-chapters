@@ -2,14 +2,9 @@
 import * as React from "react";
 import {
   Earth,
-  Heart,
   House,
   Library,
-  Loader,
-  NotepadText,
   PieChart,
-  Search,
-  Send,
   Settings,
   UserRound,
 } from "lucide-react";
@@ -37,41 +32,14 @@ import {
 } from "@/components/ui/dialog";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import SearchBar from "../Search/searchBar";
-import { getBooksByTitle } from "@/lib/actions/book.actions";
 
-import BookCardSearch from "../Search/bookCardSearch";
 import { useSession } from "next-auth/react";
 import Logo from "../ui/Logo";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, isMobile } = useSidebar();
 
-  type Book = Awaited<ReturnType<typeof getBooksByTitle>>[number];
-
-  const [results, setResults] = React.useState<Book[]>([]);
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-  const [isSearchResult, setIsSearchResult] = React.useState(false);
-  const [isBookSearched, setIsBookSearched] = React.useState(false);
-
   const pathname = usePathname();
-
-  const handleSearch = React.useCallback(async (query: string) => {
-    setResults([]);
-    setIsBookSearched(false); // reset flag
-    setIsSearchResult(true); // show loader
-
-    if (!query) {
-      setIsSearchResult(false);
-      return;
-    }
-
-    const data = await getBooksByTitle(query);
-
-    setResults(data);
-    setIsBookSearched(true); // only mark search as done if query was valid
-    setIsSearchResult(false);
-  }, []);
 
   const { data: session } = useSession();
 

@@ -3,7 +3,7 @@ import {
   getReadingBooks,
   getSuggestedBooks,
   getUserBookCounts,
-} from "@/lib/actions/book.actions";
+} from "@/lib/data/book.data";
 import { auth } from "../../../auth";
 import { redirect } from "next/navigation";
 

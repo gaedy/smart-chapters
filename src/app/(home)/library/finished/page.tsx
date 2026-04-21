@@ -1,5 +1,5 @@
 import BookCard from "@/components/Book/BookCard";
-import { getFinishedBooks } from "@/lib/actions/book.actions";
+import { getFinishedBooks } from "@/lib/data/book.data";
 import Link from "next/link";
 import { auth } from "../../../../../auth";
 

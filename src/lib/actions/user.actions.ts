@@ -8,7 +8,7 @@ import { prisma } from "../prisma";
 
 export async function signInWithCredentials(
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   try {
     const user = signInSchema.parse({
@@ -48,7 +48,6 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
         name: user.name,
         email: user.email,
         passwordHash: user.password,
-        
       },
     });
 

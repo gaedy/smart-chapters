@@ -1,5 +1,5 @@
 import BookCard from "@/components/Book/BookCard";
-import { getAllTrackedBooks } from "@/lib/actions/book.actions";
+import { getAllTrackedBooks } from "@/lib/data/book.data";
 import Link from "next/link";
 import { auth } from "../../../../auth";
 import { Metadata } from "next";

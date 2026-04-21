@@ -12,7 +12,7 @@ export async function searchBarBooks(query: string, limit = 5) {
         { author: { contains: query, mode: "insensitive" } },
       ],
     },
-    take: 20, 
+    take: 20,
     select: {
       id: true,
       title: true,

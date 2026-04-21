@@ -8,7 +8,7 @@ import {
   getAllTrackedBooks,
   getUserBookCounts,
   getUserBookTrackingStatus,
-} from "@/lib/actions/book.actions";
+} from "@/lib/data/book.data";
 import { auth } from "auth";
 
 export default async function StatsPage() {

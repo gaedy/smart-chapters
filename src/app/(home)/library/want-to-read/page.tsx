@@ -1,5 +1,5 @@
 import BookCard from "@/components/Book/BookCard";
-import { getWantToReadBooks } from "@/lib/actions/book.actions";
+import { getWantToReadBooks } from "@/lib/data/book.data";
 import Link from "next/link";
 import { auth } from "../../../../../auth";
 export default async function WantToReadPage() {

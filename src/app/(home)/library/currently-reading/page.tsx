@@ -1,5 +1,5 @@
 import BookCard from "@/components/Book/BookCard";
-import { getReadingBooks } from "@/lib/actions/book.actions";
+import { getReadingBooks } from "@/lib/data/book.data";
 import Link from "next/link";
 import { auth } from "../../../../../auth";
 

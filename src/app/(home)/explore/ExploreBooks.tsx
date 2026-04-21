@@ -5,7 +5,7 @@ import {
   getBooks,
   getBooksByGenre,
   getGenres,
-} from "@/lib/actions/book.actions";
+} from "@/lib/data/book.data";
 import Link from "next/link";
 import BookCard from "@/components/Book/BookCard";
 import {
