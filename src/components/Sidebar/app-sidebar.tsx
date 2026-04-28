@@ -2,8 +2,10 @@
 import * as React from "react";
 import {
   Earth,
+  Heart,
   House,
   Library,
+  NotepadText,
   PieChart,
   Settings,
   UserRound,
@@ -87,25 +89,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
     ],
     projects: [
-      // {
-      //   name: "Notes & Quotes",
-
-      //   url: "/notes",
-      //   isActive: pathname === "/notes",
-      //   icon: NotepadText,
-      // },
+      {
+        name: "Notes & Quotes",
+        url: "/notes",
+        isActive: pathname === "/notes",
+        icon: NotepadText,
+      },
       {
         name: "Statistics",
         url: "/stats",
         isActive: pathname === "/stats",
         icon: PieChart,
       },
-      // {
-      //   name: "Favorites",
-      //   url: "/favorites",
-      //   isActive: pathname === "/favorites",
-      //   icon: Heart,
-      // },
+      {
+        name: "Favorites",
+        url: "/favorites",
+        isActive: pathname === "/favorites",
+        icon: Heart,
+      },
     ],
   };
 

@@ -18,7 +18,7 @@ export default function BookCard({
   status,
   className,
 }: BookCardProps) {
-  const imageSrc = coverUrl || "fg";
+  const imageSrc = coverUrl || "/book_cover1.jpg";
 
   type TrackingStatus = "FINISHED" | "READING" | "WANT_TO_READ" | "DEFAULT";
   type TrackingStatusWithDefault = TrackingStatus | "DEFAULT";
@@ -54,7 +54,7 @@ export default function BookCard({
           className="rounded-2xl object-cover" // object-cover to cover entire or object-contain to respect ratio
         />
 
-        {status && (
+        {status && label !== "Not Tracked" && (
           <div className="p-2">
             <div
               className={`absolute p-2 px-2.5 text-xs rounded-full backdrop-blur-xs

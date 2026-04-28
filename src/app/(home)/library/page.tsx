@@ -1,6 +1,5 @@
-import BookCard from "@/components/Book/BookCard";
-import { getAllTrackedBooks } from "@/lib/data/book.data";
-import Link from "next/link";
+import { LibraryView } from "@/components/library/LibraryView";
+import { getTrackedBooksWithDetails } from "@/lib/data/book.data";
 import { auth } from "../../../../auth";
 import { Metadata } from "next";
 
@@ -8,8 +7,14 @@ export const metadata: Metadata = {
   title: "Library - Smart Chapters",
 };
 
-async function page() {
+type LibrarySearchParams = Promise<{
+  q?: string;
+  sort?: "updated" | "title" | "author" | "rating" | "progress";
+}>;
+
+async function page({ searchParams }: { searchParams: LibrarySearchParams }) {
   const session = await auth();
+  const params = await searchParams;
 
   if (!session || !session.user?.id) {
     return (
@@ -19,28 +24,8 @@ async function page() {
     );
   }
 
-  const books = await getAllTrackedBooks(session.user.id);
+  const books = await getTrackedBooksWithDetails(session.user.id);
 
-  if (books.length === 0) {
-    return <p className="text-center">No books added yet.</p>;
-  }
-
-  return (
-    <>
-      {books.map((book) => {
-        const status = book.bookTrackings[0]?.status ?? "WANT_TO_READ";
-        return (
-          <Link href={`/book/${book.id}`} key={book.id}>
-            <BookCard
-              title={book.title}
-              author={book.author}
-              coverUrl={book.coverUrl}
-              status={status}
-            />
-          </Link>
-        );
-      })}
-    </>
-  );
+  return <LibraryView books={books} query={params.q} sort={params.sort} />;
 }
 export default page;

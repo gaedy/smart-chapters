@@ -9,6 +9,8 @@ const bookSelectFields = {
   title: true,
   author: true,
   coverUrl: true,
+  genre: true,
+  pageCount: true,
   isFeatured: true,
 } as const;
 
@@ -82,11 +84,67 @@ export async function getAllTrackedBooks(userId: string) {
     },
     select: {
       ...bookSelectFields,
+      createdAt: true,
+      updatedAt: true,
       bookTrackings: {
         where: { userId },
-        select: { status: true },
+        select: {
+          status: true,
+          currentPage: true,
+          rating: true,
+          notes: true,
+          createdAt: true,
+          updatedAt: true,
+          startedAt: true,
+          finishedAt: true,
+        },
       },
     },
+    orderBy: { updatedAt: "desc" },
+  });
+
+  return convertToPlainObject(books);
+}
+
+export async function getTrackedBooksWithDetails(userId: string) {
+  const books = await prisma.book.findMany({
+    where: {
+      bookTrackings: { some: { userId } },
+    },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      coverUrl: true,
+      genre: true,
+      pageCount: true,
+      createdAt: true,
+      updatedAt: true,
+      bookTrackings: {
+        where: { userId },
+        select: {
+          status: true,
+          currentPage: true,
+          rating: true,
+          notes: true,
+          createdAt: true,
+          updatedAt: true,
+          startedAt: true,
+          finishedAt: true,
+        },
+      },
+      Review: {
+        where: { userId },
+        select: {
+          id: true,
+          rating: true,
+          content: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+    orderBy: { updatedAt: "desc" },
   });
 
   return convertToPlainObject(books);
