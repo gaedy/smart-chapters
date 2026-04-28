@@ -25,7 +25,7 @@ export function CurrentReading({ books, className = "" }: BooksSectionProps) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <p className=" text-xl">Current Reading</p>
+        <p className=" text-lg font-bold">Current Reading</p>
          <Link href="/library/currently-reading">
             <Button
               variant="ghost"

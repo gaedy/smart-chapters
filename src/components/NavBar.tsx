@@ -16,18 +16,19 @@ export default async function Navbar() {
   };
 
   return (
-    <div className="h-12 flex justify-between gap-2 items-center">
-      <div className="block md:hidden">
+    <div className="h-12 flex justify-between  gap-2 items-center">
+
+      {/* <div className="block md:hidden">
         <SidebarMenuButton asChild>
           <SidebarTrigger />
         </SidebarMenuButton>
-      </div>
+      </div> */}
 
-      <NavHeader
+      {/* <NavHeader
         defaultText={`Welcome Back, ${session?.user?.name?.split(" ")[0]}!`}
-      />
+      /> */}
 
-      <div className="w-sm ml-auto">
+      <div className="w-sm ">
         <SearchBar />
       </div>
 

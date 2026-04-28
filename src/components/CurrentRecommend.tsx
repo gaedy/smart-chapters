@@ -25,7 +25,7 @@ export async function CurrentRecommend({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className=" text-xl">Books You May Read</p>
+      <p className=" text-lg font-bold">Books You May Read</p>
 
       {/* <Card className={`p-6 border-none ${className}`}> */}
       <div className="flex flex-col gap-4">

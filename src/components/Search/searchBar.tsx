@@ -46,7 +46,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div ref={ref} className="relative w-full max-w-md">
+    <div ref={ref} className="relative w-full max-w-md ">
       <div className="relative w-full max-w-md">
         <div className="relative">
           <SearchIcon
@@ -58,7 +58,7 @@ export default function SearchBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by title or author..."
-            className="w-full rounded-full border px-10 text-sm py-2 pr-10 bg-background"
+            className="w-full rounded-full border px-10 text-sm py-2 pr-10  bg-foreground"
           />
 
           {query && (
