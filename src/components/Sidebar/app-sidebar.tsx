@@ -18,21 +18,10 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
   SidebarTrigger,
   useSidebar,
 } from "@/components/Sidebar/sidebar";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useSession } from "next-auth/react";
@@ -112,26 +101,36 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar variant="inset" {...props}>
-      <SidebarHeader>
-        {/* <SidebarMenu>
-          <SidebarMenuButton
-            className={`flex justify-between w-full items-center relative ${
-              isMobile ? "p-2" : "p-0"
+      <SidebarHeader className="px-2 pt-2">
+        <div
+          className={`grid h-12 items-center rounded-lg transition-[width,grid-template-columns] duration-300 ease-in-out ${
+            state === "collapsed" && !isMobile
+              ? "mx-auto w-8 grid-cols-[0rem_2rem]"
+              : "w-full grid-cols-[minmax(0,1fr)_2rem] gap-2"
+          }`}
+        >
+          <div
+            className={`min-w-0 overflow-hidden text-sm leading-tight transition-[opacity,transform] duration-200 ease-out ${
+              state === "collapsed" && !isMobile
+                ? "-translate-x-1 opacity-0"
+                : "translate-x-0 opacity-100 delay-75"
             }`}
+            aria-hidden={state === "collapsed" && !isMobile}
           >
-            <div className="h-12 flex items-center">
-              {state !== "collapsed" || isMobile ? (
-                <div className="text-sm leading-tight">
-                  <Logo />
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+            <Logo className="block whitespace-nowrap" />
+          </div>
 
-            <SidebarTrigger className="absolute right-0 " />
-          </SidebarMenuButton>
-        </SidebarMenu> */}
+          <SidebarTrigger
+            aria-label={
+              isMobile
+                ? "Close sidebar"
+                : state === "collapsed"
+                ? "Expand sidebar"
+                : "Collapse sidebar"
+            }
+            className="shrink-0 rounded-full bg-foreground text-muted-foreground hover:bg-foreground hover:text-primary"
+          />
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
