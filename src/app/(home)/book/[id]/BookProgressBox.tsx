@@ -83,7 +83,7 @@ export function BookProgressBox({
             label="Update progress"
           />
         </PopoverTrigger>
-        <PopoverContent className="rounded-3xl bg-background font-merriweather">
+        <PopoverContent className="rounded-3xl bg-background">
           <div className="flex flex-col gap-4 p-4 w-full">
             <p className="font-medium">Current page</p>
             <div className="flex justify-start gap-2 text-sm items-center">
@@ -99,10 +99,10 @@ export function BookProgressBox({
               <p>/{pageCount}</p>
             </div>
 
-          <ActionButton
-            label={isPending ? "Updating..." : "Update"}
-            onClick={handleUpdate}
-            disabled={isPending}
+            <ActionButton
+              label={isPending ? "Updating..." : "Update"}
+              onClick={handleUpdate}
+              disabled={isPending}
               color="bg-primary text-primary-foreground hover:bg-primary/90"
               className="rounded-full hover:scale-100 hover:shadow-md"
             />

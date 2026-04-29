@@ -94,16 +94,16 @@ export function LibraryView({
       />
 
       <div className="flex flex-col gap-4 rounded-3xl bg-background p-3 sm:p-4">
-        <div className="flex gap-2 overflow-x-auto rounded-full bg-foreground p-2">
+        <div className="flex gap-2 overflow-x-auto p-2">
           {tabs.map((tab) => (
             <Button
               asChild
               key={tab.status}
-              size="sm"
-              className={`shrink-0 rounded-full shadow-none ${
+              size="lg"
+              className={`shrink-0 rounded-full   shadow-none  ${
                 status === tab.status
                   ? "bg-primary text-primary-foreground hover:bg-primary"
-                  : "bg-background text-primary/80 hover:bg-background hover:text-primary"
+                  : "bg-foreground text-primary/80 hover:bg-foreground-dark hover:text-primary"
               }`}
             >
               <Link href={tab.href}>{tab.label}</Link>
@@ -111,14 +111,14 @@ export function LibraryView({
           ))}
         </div>
 
-        <form className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
+        {/* <form className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               name="q"
               defaultValue={query}
               placeholder="Search your library..."
-              className="rounded-full bg-foreground pl-9"
+              className="rounded-full bg-foreground pl-9  "
             />
           </div>
           <select
@@ -136,7 +136,7 @@ export function LibraryView({
             <SlidersHorizontal className="mr-2 h-4 w-4" />
             Apply
           </Button>
-        </form>
+        </form> */}
       </div>
 
       <BookGrid

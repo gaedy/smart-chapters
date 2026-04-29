@@ -58,7 +58,7 @@ export default function SearchBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by title or author..."
-            className="h-10 w-full rounded-full border bg-foreground px-10 pr-10 text-sm"
+            className="h-10 outline-none transition focus-within:bg-foreground-dark w-full rounded-full bg-foreground px-10 pr-10 text-sm"
           />
 
           {query && (
@@ -97,7 +97,7 @@ export default function SearchBar() {
             ))
           ) : (
             <p className="p-3 text-sm text-muted-foreground text-center">
-              مفيش كتب بالاسم ده
+              مفيش كتاب بالاسم ده
             </p>
           )}
         </div>

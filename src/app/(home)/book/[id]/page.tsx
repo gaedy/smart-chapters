@@ -86,7 +86,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
         <div className="rounded-3xl bg-background p-4 sm:p-6">
           <div className="grid gap-6 lg:grid-cols-[180px_minmax(0,1fr)]">
             <aside className="flex flex-col items-center gap-5">
-              <div className="relative h-72 w-48 overflow-hidden rounded-3xl shadow-lg">
+              <div className="relative h-72 w-48 overflow-hidden rounded-xl shadow-lg">
                 <Image
                   src={imgSource}
                   alt={`${book.title} cover`}
@@ -96,7 +96,7 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                 />
               </div>
 
-              <div className="flex w-full max-w-48 flex-col items-center gap-3 rounded-3xl bg-foreground p-4">
+              <div className="flex w-full max-w-48 flex-col items-center gap-3 p-2">
                 <Rating
                   bookId={book.id}
                   canModified={true}
@@ -173,14 +173,14 @@ export default async function theDetailedBookPage({ params }: PageProps) {
               <div className="grid gap-3 sm:grid-cols-3">
                 {book.genre && (
                   <div className="rounded-2xl bg-foreground p-4">
-                    <Layers className="mb-3 h-4 w-4 text-muted-foreground" />
+                    <Layers className="mb-2 h-4 w-4 text-muted-foreground" />
                     <p className="text-xs text-muted-foreground">Genre</p>
                     <p className="mt-1 text-sm font-medium">{book.genre}</p>
                   </div>
                 )}
                 {book.pageCount && (
                   <div className="rounded-2xl bg-foreground p-4">
-                    <BookOpen className="mb-3 h-4 w-4 text-muted-foreground" />
+                    <BookOpen className="mb-2 h-4 w-4 text-muted-foreground" />
                     <p className="text-xs text-muted-foreground">Length</p>
                     <p className="mt-1 text-sm font-medium">
                       {book.pageCount} pages
@@ -189,7 +189,9 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                 )}
                 {publishedYear && (
                   <div className="rounded-2xl bg-foreground p-4">
-                    <Calendar className="mb-3 h-4 w-4 text-muted-foreground" />
+                    
+                    
+                    <Calendar className="mb-2 h-4 w-4 text-muted-foreground" />
                     <p className="text-xs text-muted-foreground">Published</p>
                     <p className="mt-1 text-sm font-medium">{publishedYear}</p>
                   </div>
