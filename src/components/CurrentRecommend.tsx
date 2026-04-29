@@ -21,5 +21,12 @@ export async function CurrentRecommend({
     return null;
   }
 
-  return <BookShelf title="Books You May Read" books={books} />;
+  return (
+    <BookShelf
+      title="Recommended For You"
+      description="A quieter shelf of books that match your reading mood."
+      books={books}
+      itemClassName="basis-[10.75rem]"
+    />
+  );
 }

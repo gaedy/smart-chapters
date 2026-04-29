@@ -19,10 +19,17 @@ export function CurrentReading({ books, className = "" }: BooksSectionProps) {
   }
 
   return (
-    <BookShelf
-      title="Current Reading"
-      books={books}
-      href="/library/currently-reading"
-    />
+    <div
+      className={` ${className}`}
+    >
+      <BookShelf
+        title="Currently Reading"
+        description="Your active shelf, ready to pick up where you left off."
+        books={books}
+        href="/library/currently-reading"
+        // itemClassName="basis-[11.75rem] sm:basis-[12.5rem]"
+        featured
+      />
+    </div>
   );
 }

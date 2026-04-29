@@ -2,6 +2,7 @@ import {
   getAllTrackedBooks,
   getReadingBooks,
   getSuggestedBooks,
+  getTrackedBooksWithDetails,
   getUserBookCounts,
 } from "@/lib/data/book.data";
 import { auth } from "../../../auth";
@@ -10,8 +11,7 @@ import { redirect } from "next/navigation";
 import { CurrentReading } from "@/components/currentReading";
 import { CurrentRecommend } from "@/components/CurrentRecommend";
 import { BookStats } from "@/components/booksStats";
-
-import GoalTracker from "@/components/goal";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export default async function Home() {
   const session = await auth();
@@ -20,28 +20,38 @@ export default async function Home() {
     redirect("/sign-in");
   }
   const readingBooks = await getReadingBooks(session.user.id);
-  const books = await getAllTrackedBooks(session.user.id);
+  // const books = await getAllTrackedBooks(session.user.id);
   const suggestBooks = await getSuggestedBooks(session.user.id, 4);
   const booksCount = await getUserBookCounts(session.user.id);
-  return (
-    <>
-      <div className="flex flex-col w-full h-full gap-10">
-        <div className="flex flex-col gap-4 ">
-          <div className="flex flex-col gap-10">
-            {/* <GoalTracker /> */}
-            <BookStats
-              bookFinished={booksCount.TOTAL}
-              pagesThisMonth={54}
-              currentlyReading={booksCount.READING}
-              wantToRead={booksCount.WANT_TO_READ}
-              isLink={false}
-            />
-            <CurrentReading books={readingBooks} />
+  const books = await getTrackedBooksWithDetails(session.user.id);
 
-            <CurrentRecommend books={suggestBooks} />
-          </div>
-        </div>
-      </div>
-    </>
+  const pagesRead = books.reduce((total, book) => {
+    const tracking = book.bookTrackings[0];
+    if (tracking?.status === "FINISHED") return total + (book.pageCount ?? 0);
+    return total + (tracking?.currentPage ?? 0);
+  }, 0);
+
+  return (
+    <div className="mx-auto flex h-full w-full max-w-7xl flex-col gap-8">
+      
+
+      <PageHeader
+        title="Welcome back to Smart Chapters"
+        description="A calm view of what you are reading now, what is waiting next, and
+              the shape of your library."
+      />
+
+      <BookStats
+        bookFinished={booksCount.TOTAL}
+        pagesThisMonth={pagesRead}
+        currentlyReading={booksCount.READING}
+        wantToRead={booksCount.WANT_TO_READ}
+        isLink={false}
+      />
+
+      <CurrentReading books={readingBooks} />
+
+      <CurrentRecommend books={suggestBooks} />
+    </div>
   );
 }

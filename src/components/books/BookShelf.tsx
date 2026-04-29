@@ -26,6 +26,7 @@ interface BookShelfProps {
   href?: string;
   limit?: number;
   itemClassName?: string;
+  featured?: boolean;
 }
 
 export function BookShelf({
@@ -35,6 +36,7 @@ export function BookShelf({
   href,
   limit,
   itemClassName,
+  featured = false,
 }: BookShelfProps) {
   const visibleBooks = limit ? books.slice(0, limit) : books;
   const showControls = visibleBooks.length > 2;
@@ -53,11 +55,20 @@ export function BookShelf({
         }}
         className="w-full"
       >
-        <div className="mb-4 flex items-start justify-between gap-4">
-          <div className="flex min-w-0 flex-col gap-1">
-            <h2 className="text-lg font-bold">{title}</h2>
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div className="flex min-w-0 flex-col gap-1.5">
+            <h2
+              className={cn(
+                " font-semibold tracking-normal text-primary",
+                featured ? "text-xl" : "text-xl"
+              )}
+            >
+              {title}
+            </h2>
             {description && (
-              <p className="text-sm text-muted-foreground">{description}</p>
+              <p className="max-w-xl text-sm leading-6 text-secondary">
+                {description}
+              </p>
             )}
           </div>
 
@@ -67,7 +78,7 @@ export function BookShelf({
                 asChild
                 variant="ghost"
                 size="sm"
-                className="rounded-full border-primary/30 bg-transparent text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                className="rounded-full border border-background bg-background/70 px-4 text-secondary shadow-sm shadow-primary/5 hover:bg-background hover:text-primary"
               >
                 <Link href={href}>
                   View all
@@ -77,35 +88,36 @@ export function BookShelf({
             )}
             {showControls && (
               <div className="hidden items-center gap-2 sm:flex">
-                <CarouselPrevious className="static size-8 translate-y-0 border-border bg-background text-muted-foreground shadow-none hover:bg-background hover:text-primary disabled:hidden" />
-                <CarouselNext className="static size-8 translate-y-0 border-border bg-background text-muted-foreground shadow-none hover:bg-background hover:text-primary disabled:hidden" />
+                <CarouselPrevious className="static size-9 translate-y-0 border-background bg-background/70 text-secondary shadow-sm shadow-primary/5 hover:bg-background hover:text-primary disabled:hidden" />
+                <CarouselNext className="static size-9 translate-y-0 border-background bg-background/70 text-secondary shadow-sm shadow-primary/5 hover:bg-background hover:text-primary disabled:hidden" />
               </div>
             )}
           </div>
         </div>
 
         <div className="relative">
-          <CarouselContent className="-ml-4 py-2">
+          <CarouselContent className="-ml-5 py-2">
             {visibleBooks.map((book) => (
               <CarouselItem
                 key={book.id}
-                className={cn("basis-[11rem]", itemClassName)}
+                className={cn("pl-5", "basis-44", itemClassName)}
               >
                 <Link
                   href={`/book/${book.id}`}
-                  className="block w-40 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                  className="block rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                 >
                   <BookCard
                     title={book.title}
                     author={book.author}
                     coverUrl={book.coverUrl}
                     status={book.status}
+                    
                   />
                 </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-10 bg-gradient-to-l from-foreground to-transparent sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-14 bg-gradient-to-l from-foreground via-foreground/70 to-transparent sm:block" />
         </div>
       </Carousel>
     </section>
