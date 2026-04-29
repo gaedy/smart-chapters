@@ -80,6 +80,7 @@
 .dark {
   --background: oklch(0.285 0.0056 91.57);
   --foreground: oklch(0.2276 0.0065 78.19);
+  --foreground-dark: oklch(18.711% 0.00427 84.566);
 
   
   /* --primaryText: #e9e9e9;
@@ -133,6 +134,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-dark: var(--foreground-dark);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);

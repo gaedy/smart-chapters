@@ -19,7 +19,7 @@ type ActionButtonProps = {
 
 export function ActionButton({
   label,
-  color = "bg-foreground text-primary/80 hover:text-primary hover:bg-foreground",
+  color = "bg-foreground text-primary/80 hover:text-primary hover:bg-foreground-dark",
   activeColor = "bg-primary text-primary-foreground",
   icon: IconComponent,
   href,

@@ -30,7 +30,7 @@ export function BookLibraryBox({ isTracked, status, book }: Props) {
         className={cn(
           "flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-foreground px-4 py-2.5 text-sm transition-all duration-200 hover:shadow-md active:scale-100",
           isTracked &&
-            "bg-green-color-1 text-green-color-2 hover:bg-green-color-1"
+            "bg-green-color-1  hover:bg-green-color-1/80"
         )}
       >
         {isTracked ? (
