@@ -5,6 +5,7 @@ import { SidebarProvider } from "@/components/Sidebar/sidebar";
 import { SessionProvider } from "next-auth/react";
 import React from "react";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,16 +28,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.variable}   ${merriweather.variable} antialiased`}
       >
-        <SessionProvider>
-          <SidebarProvider>
-            {children}
-            <Toaster />
-          </SidebarProvider>
-        </SessionProvider>
+        <ThemeProvider>
+          <SessionProvider>
+            <SidebarProvider>
+              {children}
+              <Toaster />
+            </SidebarProvider>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

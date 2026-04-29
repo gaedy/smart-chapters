@@ -2,6 +2,7 @@ import { auth } from "auth";
 import SearchBar from "./Search/searchBar";
 import { NavUser } from "./Sidebar/nav-user";
 import { SidebarTrigger } from "./Sidebar/sidebar";
+import { ThemeToggleButton } from "./theme-toggle-button";
 
 export default async function Navbar() {
   const session = await auth();
@@ -28,8 +29,9 @@ export default async function Navbar() {
           <SearchBar />
         </div>
       </div>
-
-      <div className="flex h-12 items-center">
+      <ThemeToggleButton />
+      <div className="flex  items-center gap-2">
+        {/*  */}
         <NavUser onlyAvatar={true} user={data.user} />
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Bell, Lock, Palette, Shield, Target, UserRound } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ThemeToggle } from "@/components/settings/ThemeToggle";
 
 function SettingsSection({
   title,
@@ -137,13 +138,9 @@ export default function Settings() {
         >
           <SettingsRow
             label="Appearance"
-            description="Use the existing soft light or dark reading palette."
+            description="Switch between the soft light palette and the warm dark reading palette."
           >
-            <select className="h-10 rounded-full border border-input bg-background px-4 text-sm">
-              <option>System</option>
-              <option>Light</option>
-              <option>Dark</option>
-            </select>
+            <ThemeToggle />
           </SettingsRow>
           <SettingsRow
             label="Compact shelves"
