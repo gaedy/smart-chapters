@@ -29,7 +29,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   return (
     <div
       className={cn(
-        "flex items-start  rounded-2xl bg-background gap-2 p-4 max-w-2xl lg:max-w-2xl h-fit",
+        "flex h-fit max-w-3xl items-start gap-2 rounded-3xl bg-background p-5",
         className
       )}
     >
@@ -56,14 +56,14 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             </div>
           </div>
 
-          <div className="flex w-full self-center  h-fit items-center sm:justify-end justify-start ">
+          <div className="flex w-full self-center h-fit items-center justify-start sm:justify-end">
             <Rating size="sm" canModified={false} value={rating} />
           </div>
         </div>
 
         {comment && (
-          <div className="w-full  h-fit flex">
-            <p className="text-sm text-pretty">{comment}</p>
+          <div className="flex h-fit w-full rounded-2xl bg-foreground p-4">
+            <p className="text-sm leading-7 text-primary/85">{comment}</p>
           </div>
         )}
         {reviewBookId && comment && (

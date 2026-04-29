@@ -46,7 +46,9 @@ export function NavMain({
                 asChild
                 tooltip={item.title}
                 className={
-                  item.isActive ? "bg-foreground rounded-full" : "rounded-full"
+                  item.isActive
+                    ? "bg-foreground rounded-full text-primary"
+                    : "rounded-full text-secondary"
                 }
               >
                 <Link href={item.url}>

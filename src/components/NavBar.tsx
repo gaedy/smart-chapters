@@ -15,7 +15,7 @@ export default async function Navbar() {
   };
 
   return (
-    <div className="h-12 flex justify-between gap-2 items-center">
+    <div className="flex h-12 items-center justify-between gap-2">
       <div className="flex min-w-0 flex-1 items-center gap-2">
         <div className="block md:hidden">
           <SidebarTrigger
@@ -24,12 +24,12 @@ export default async function Navbar() {
           />
         </div>
 
-        <div className="w-sm max-w-full">
+        <div className="w-full max-w-md">
           <SearchBar />
         </div>
       </div>
 
-      <div>
+      <div className="flex h-12 items-center">
         <NavUser onlyAvatar={true} user={data.user} />
       </div>
     </div>

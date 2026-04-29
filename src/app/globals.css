@@ -73,6 +73,8 @@
   --sidebar-ring: oklch(0.708 0 0);
   --progress: oklch(0.8041 0.0981 263.24);
   --library-color-1: oklch(79.406% 0.10877 156.468);
+  --green-color-1: oklch(0.916 0.081 145);
+  --green-color-2: oklch(0.36 0.105 145);
 }
 
 .dark {
@@ -86,7 +88,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.9277 0.0154 77.07);
+  --primary: oklch(0.905 0.0154 77.07);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.7587 0.0175 70.47);
   --secondary-foreground: oklch(0.985 0 0);

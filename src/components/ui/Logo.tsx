@@ -5,7 +5,7 @@ interface logoProps {
 export default function Logo({ className }: logoProps) {
   return (
     <span
-      className={`truncate text-lg font-medium font-merriweather ${className}`}
+      className={`truncate text-lg font-medium font-merriweather text-primary ${className}`}
     >
       Smart Chapters
     </span>

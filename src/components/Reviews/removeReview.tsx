@@ -28,7 +28,8 @@ export default function RemoveReviewButton({ bookId }: { bookId: string }) {
         size="sm"
         onClick={handleRemove}
         disabled={isPending}
-        variant="secondary"
+        variant="destructive"
+        className="rounded-full text-white"
       >
         {isPending ? "Removing..." : "Remove"}
       </Button>

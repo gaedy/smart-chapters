@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/popover";
 import { Progress } from "@/components/ui/progress";
 import { ActionButton } from "@/components/ui/actionButton";
+import { BookOpenCheck } from "lucide-react";
 
 interface Props {
   currentPage: number;
@@ -51,15 +52,25 @@ export function BookProgressBox({
   };
 
   return (
-    <div className="flex flex-col items-center w-full gap-4 ">
-      <span className="self-start">Your Reading Progress</span>
+    <aside className="flex h-fit w-full flex-col gap-5 rounded-3xl bg-background p-5">
+      <div className="flex items-center gap-3">
+        <div className="rounded-full bg-foreground p-3 text-muted-foreground">
+          <BookOpenCheck className="h-5 w-5" />
+        </div>
+        <div>
+          <h2 className="font-semibold">Reading progress</h2>
+          <p className="text-sm text-muted-foreground">
+            Keep your current page up to date.
+          </p>
+        </div>
+      </div>
 
       <Progress value={pageCount ? Math.round((page / pageCount) * 100) : 0} />
 
-      <div className="flex bg-background text-sm rounded-2xl gap-4 flex-col p-4 w-full h-fit">
-        <div className="flex justify-between items-center"> 
-          <p>Current Page</p>
-          <p>
+      <div className="flex rounded-2xl bg-foreground p-4 text-sm">
+        <div className="flex w-full items-center justify-between gap-4">
+          <p className="text-muted-foreground">Current page</p>
+          <p className="font-medium">
             {page}/{pageCount}
           </p>
         </div>
@@ -67,11 +78,14 @@ export function BookProgressBox({
 
       <Popover>
         <PopoverTrigger asChild>
-          <ActionButton className="w-fit" label="Update your progress" />
+          <ActionButton
+            className="w-full rounded-full hover:scale-100"
+            label="Update progress"
+          />
         </PopoverTrigger>
-        <PopoverContent className="bg-background rounded-2xl font-merriweather">
+        <PopoverContent className="rounded-3xl bg-background font-merriweather">
           <div className="flex flex-col gap-4 p-4 w-full">
-            <p>Current Page</p>
+            <p className="font-medium">Current page</p>
             <div className="flex justify-start gap-2 text-sm items-center">
               <input
                 type="number"
@@ -79,21 +93,22 @@ export function BookProgressBox({
                 onChange={(e) => setPage(Number(e.target.value))}
                 min={0}
                 max={pageCount}
-                className="border rounded-md p-1 px-2 w-24"
+                className="w-24 rounded-full border bg-foreground px-3 py-2"
               />
 
               <p>/{pageCount}</p>
             </div>
 
-            <ActionButton
-              label={isPending ? "Updating..." : "Update"}
-              onClick={handleUpdate}
-              disabled={isPending}
-              className="bg-foreground hover:bg-foreground"
+          <ActionButton
+            label={isPending ? "Updating..." : "Update"}
+            onClick={handleUpdate}
+            disabled={isPending}
+              color="bg-primary text-primary-foreground hover:bg-primary/90"
+              className="rounded-full hover:scale-100 hover:shadow-md"
             />
           </div>
         </PopoverContent>
       </Popover>
-    </div>
+    </aside>
   );
 }

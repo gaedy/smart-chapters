@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Check, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   isTracked: boolean;
@@ -26,11 +27,11 @@ export function BookLibraryBox({ isTracked, status, book }: Props) {
   return (
     <Dialog>
       <DialogTrigger
-        className={`flex justify-center gap-1 items-center bg-background p-2.5 text-[13px] 
-        rounded-full cursor-pointer active:scale-100 hover:scale-105 hover:shadow-lg 
-        transition-all duration-200 ${
-          isTracked ? "bg-library-color-1 text-accent-foreground" : ""
-        }`}
+        className={cn(
+          "flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-foreground px-4 py-2.5 text-sm transition-all duration-200 hover:shadow-md active:scale-100",
+          isTracked &&
+            "bg-green-color-1 text-green-color-2 hover:bg-green-color-1"
+        )}
       >
         {isTracked ? (
           <>
@@ -45,10 +46,10 @@ export function BookLibraryBox({ isTracked, status, book }: Props) {
         )}
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="rounded-3xl bg-background">
         <DialogHeader className="flex gap-4">
-          <DialogTitle>Choose a List for this book</DialogTitle>
-          <DialogDescription className="flex flex-col self-center gap-2 min-w-1/2 max-w-72">
+          <DialogTitle>Choose a shelf</DialogTitle>
+          <DialogDescription className="flex flex-col self-center gap-3 min-w-1/2 max-w-72">
             <AddToLibrary
               iconName={status === "WANT_TO_READ" ? "check" : "wantToRead"}
               item={{
@@ -59,7 +60,7 @@ export function BookLibraryBox({ isTracked, status, book }: Props) {
               label="Want to Read"
               className={`${
                 status === "WANT_TO_READ"
-                  ? "bg-library-color-1 text-primary pointer-events-none"
+                  ? "bg-green-color-1  pointer-events-none"
                   : ""
               }`}
             />
@@ -74,7 +75,7 @@ export function BookLibraryBox({ isTracked, status, book }: Props) {
               label="Currently Reading"
               className={`${
                 status === "READING"
-                  ? "bg-library-color-1 text-primary pointer-events-none"
+                  ? "bg-green-color-1 pointer-events-none"
                   : ""
               }`}
             />
@@ -89,7 +90,7 @@ export function BookLibraryBox({ isTracked, status, book }: Props) {
               label="Finished"
               className={`${
                 status === "FINISHED"
-                  ? "bg-library-color-1 text-primary pointer-events-none"
+                  ? "bg-green-color-1  pointer-events-none"
                   : ""
               }`}
             />

@@ -101,11 +101,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar variant="inset" {...props}>
-      <SidebarHeader className="px-2 pt-2">
+      <SidebarHeader className="p-0">
         <div
-          className={`grid h-12 items-center rounded-lg transition-[width,grid-template-columns] duration-300 ease-in-out ${
+          className={`grid h-12 items-center rounded-lg px-2 transition-[width,grid-template-columns] duration-300 ease-in-out ${
             state === "collapsed" && !isMobile
-              ? "mx-auto w-8 grid-cols-[0rem_2rem]"
+              ? "mx-auto w-12 grid-cols-[0rem_2rem] justify-center px-0"
               : "w-full grid-cols-[minmax(0,1fr)_2rem] gap-2"
           }`}
         >
