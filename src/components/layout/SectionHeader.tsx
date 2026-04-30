@@ -28,7 +28,7 @@ export function SectionHeader({
           asChild
           variant="ghost"
           size="sm"
-          className="shrink-0 rounded-full border-primary/30 bg-transparent text-muted-foreground hover:bg-primary/10 hover:text-primary"
+          className="shrink-0 rounded-full bg-transparent text-muted-foreground shadow-none hover:bg-accent hover:text-primary"
         >
           <Link href={href}>
             {actionLabel}

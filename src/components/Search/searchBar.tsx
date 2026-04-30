@@ -115,14 +115,16 @@ export default function SearchBar() {
           />
 
           {hasQuery && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon"
               aria-label="Clear search"
               onClick={clearSearch}
-              className="absolute right-1 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-secondary transition-colors hover:bg-background/80 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="absolute right-1 top-1/2 size-7 -translate-y-1/2 rounded-full text-secondary hover:bg-background/80 hover:text-primary"
             >
               <XIcon className="size-4" />
-            </button>
+            </Button>
           )}
         </div>
 
@@ -133,7 +135,7 @@ export default function SearchBar() {
               variant="ghost"
               size="sm"
               aria-label={`Search filter: ${activeFilterLabel}`}
-              className="h-full shrink-0 rounded-full border border-background/80 bg-background/55 px-3 text-xs font-medium text-secondary hover:bg-background hover:text-primary"
+              className="h-full shrink-0 rounded-full bg-background/55 px-3 text-xs font-medium text-secondary shadow-none hover:bg-accent hover:text-primary"
             >
               <SlidersHorizontal className="size-4" />
               <span className="hidden sm:inline">{activeFilterLabel}</span>

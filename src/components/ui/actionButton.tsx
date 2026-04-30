@@ -19,8 +19,8 @@ type ActionButtonProps = {
 
 export function ActionButton({
   label,
-  color = "bg-foreground text-primary/80 hover:text-primary hover:bg-foreground-dark",
-  activeColor = "bg-primary text-primary-foreground",
+  color = "bg-foreground text-primary/80 hover:bg-foreground-dark hover:text-primary",
+  activeColor = "bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90",
   icon: IconComponent,
   href,
   className,
@@ -29,22 +29,26 @@ export function ActionButton({
 }: ActionButtonProps) {
   const pathname = usePathname();
   const isActive = href && pathname === href;
+  const content = (
+    <>
+      {IconComponent && <IconComponent className="mr-0 h-5 w-5" />}
+      {label}
+    </>
+  );
 
-  const buttonContent = (
+  return (
     <Button
-      variant="default"
+      asChild={Boolean(href)}
+      variant={isActive ? "default" : "secondary"}
       size="lg"
       className={cn(
-        "w-full rounded-full cursor-pointer active:scale-100 hover:scale-105 hover:shadow-lg transition-all duration-200",
+        "w-full cursor-pointer rounded-full",
         isActive ? activeColor : color,
         className
       )}
       {...props}
     >
-      {IconComponent && <IconComponent className="mr-0 h-5 w-5" />}
-      {label}
+      {href ? <Link href={href}>{content}</Link> : content}
     </Button>
   );
-
-  return href ? <Link href={href}>{buttonContent}</Link> : buttonContent;
 }

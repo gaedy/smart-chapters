@@ -122,8 +122,10 @@ export default async function NotesPage({
               asChild
               key={item.value}
               variant="ghost"
-              className={`shrink-0 rounded-full bg-foreground hover:bg-foreground hover:text-primary ${
-                selectedType === item.value ? "text-primary" : "text-muted-foreground"
+              className={`shrink-0 rounded-full shadow-none ${
+                selectedType === item.value
+                  ? "bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90"
+                  : "bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary"
               }`}
             >
               <Link href={buildNotesHref(item.value)}>{item.label}</Link>

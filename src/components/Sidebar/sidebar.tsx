@@ -275,7 +275,7 @@ function SidebarTrigger({
       variant="ghost"
       size="icon"
       className={cn(
-        "size-8 cursor-pointer transition-[background-color,color,transform] duration-200 ease-out hover:scale-105 active:scale-95",
+        "size-8 cursor-pointer shadow-none transition-colors duration-200 active:brightness-95",
         className,
       )}
       aria-expanded={isMobile ? openMobile : state === "expanded"}
@@ -493,7 +493,7 @@ const sidebarMenuButtonVariants = cva(
       variant: {
         default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         outline:
-          "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+          "bg-background hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
       },
       size: {
         default: "h-8 text-sm",

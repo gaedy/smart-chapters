@@ -34,7 +34,7 @@ function RemoveFromLibrary({
 
   return (
     <ActionButton
-      className="rounded-full bg-red-500 text-primary hover:scale-100 hover:bg-red-600"
+      className="rounded-full bg-destructive text-white hover:bg-destructive/90"
       onClick={handleRemove}
       label={label}
       icon={icon}

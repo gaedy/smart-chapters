@@ -78,7 +78,7 @@ export function BookShelf({
                 asChild
                 variant="ghost"
                 size="sm"
-                className="rounded-full border border-background bg-background/70 px-4 text-secondary shadow-sm shadow-primary/5 hover:bg-background hover:text-primary"
+                className="rounded-full bg-background/70 px-4 text-secondary shadow-none hover:bg-accent hover:text-primary"
               >
                 <Link href={href}>
                   View all
@@ -88,8 +88,8 @@ export function BookShelf({
             )}
             {showControls && (
               <div className="hidden items-center gap-2 sm:flex">
-                <CarouselPrevious className="static size-9 translate-y-0 border-background bg-background/70 text-secondary shadow-sm shadow-primary/5 hover:bg-background hover:text-primary disabled:hidden" />
-                <CarouselNext className="static size-9 translate-y-0 border-background bg-background/70 text-secondary shadow-sm shadow-primary/5 hover:bg-background hover:text-primary disabled:hidden" />
+                <CarouselPrevious className="static size-9 translate-y-0 bg-background/70 text-secondary shadow-none hover:bg-accent hover:text-primary disabled:hidden" />
+                <CarouselNext className="static size-9 translate-y-0 bg-background/70 text-secondary shadow-none hover:bg-accent hover:text-primary disabled:hidden" />
               </div>
             )}
           </div>

@@ -60,9 +60,7 @@ function AddToLibrary({
   return (
     <ActionButton
       onClick={handleClick}
-      className={`rounded-full hover:scale-100 hover:shadow-md ${
-        className ?? ""
-      }`}
+      className={`rounded-full ${className ?? ""}`}
       color={color}
       label={label}
       icon={icon}

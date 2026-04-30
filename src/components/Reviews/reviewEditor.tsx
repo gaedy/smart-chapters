@@ -57,8 +57,8 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
           <ActionButton
             onClick={handleSubmit}
             disabled={loading}
-            color="bg-primary text-primary-foreground hover:bg-primary/90"
-            className="w-fit rounded-full hover:scale-100 hover:shadow-md"
+            color="bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90"
+            className="w-fit rounded-full"
             label={loading ? "Submitting..." : "Submit"}
           />
         </div>

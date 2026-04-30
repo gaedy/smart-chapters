@@ -173,8 +173,10 @@ export default async function ExplorePage({
                 asChild
                 key={genre}
                 variant="ghost"
-                className={`shrink-0 rounded-full bg-background px-5 hover:bg-background hover:text-primary ${
-                  selectedGenre === genre ? "text-primary" : "text-muted-foreground"
+                className={`shrink-0 rounded-full px-5 shadow-none ${
+                  selectedGenre === genre
+                    ? "bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90"
+                    : "bg-background text-muted-foreground hover:bg-accent hover:text-primary"
                 }`}
               >
                 <Link href={buildExploreHref({ genre, collection: "", shelf: "" })}>
@@ -186,7 +188,7 @@ export default async function ExplorePage({
               <Button
                 asChild
                 variant="ghost"
-                className="shrink-0 rounded-full bg-background px-5 text-muted-foreground hover:bg-background hover:text-primary"
+                className="shrink-0 rounded-full bg-background px-5 text-muted-foreground shadow-none hover:bg-accent hover:text-primary"
               >
                 <Link href={buildExploreHref({ genre: "" })}>All genres</Link>
               </Button>

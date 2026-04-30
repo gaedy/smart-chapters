@@ -79,7 +79,7 @@ export function BookProgressBox({
       <Popover>
         <PopoverTrigger asChild>
           <ActionButton
-            className="w-full rounded-full hover:scale-100"
+            className="w-full rounded-full"
             label="Update progress"
           />
         </PopoverTrigger>
@@ -103,8 +103,8 @@ export function BookProgressBox({
               label={isPending ? "Updating..." : "Update"}
               onClick={handleUpdate}
               disabled={isPending}
-              color="bg-primary text-primary-foreground hover:bg-primary/90"
-              className="rounded-full hover:scale-100 hover:shadow-md"
+              color="bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90"
+              className="rounded-full"
             />
           </div>
         </PopoverContent>

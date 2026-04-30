@@ -57,23 +57,22 @@ export function AppearanceSettings() {
             const active = preferences.accent === option.value;
 
             return (
-              <button
+              <Button
                 key={option.value}
                 type="button"
+                variant={active ? "default" : "outline"}
                 aria-pressed={active}
                 onClick={() =>
                   setPreference("accent", option.value as AccentPreference)
                 }
-                className={`flex h-10 items-center gap-2 rounded-full border px-3 text-sm transition ${
-                  active
-                    ? "border-primary bg-background text-primary"
-                    : "border-transparent bg-background text-muted-foreground hover:text-primary"
+                className={`h-10 rounded-full px-3 ${
+                  active ? "" : "text-muted-foreground hover:text-primary"
                 }`}
               >
                 <span className={`size-4 rounded-full ${option.swatch}`} />
                 {option.label}
                 {active && <Check className="h-4 w-4" />}
-              </button>
+              </Button>
             );
           })}
         </div>

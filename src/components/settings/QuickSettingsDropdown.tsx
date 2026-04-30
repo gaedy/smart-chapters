@@ -45,10 +45,10 @@ function PreferenceButton({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`flex h-9 items-center justify-center gap-2 rounded-full border px-3 text-xs font-medium transition ${
+      className={`flex h-9 items-center justify-center gap-2 rounded-full px-3 text-xs font-medium transition ${
         active
-          ? "border-theme-accent bg-theme-accent-soft text-accent-foreground"
-          : "border-transparent bg-foreground text-muted-foreground hover:text-primary"
+          ? " bg-theme-accent/80 text-accent"
+          : " bg-foreground hover:bg-foreground-dark text-muted-foreground hover:text-primary"
       } ${className}`}
     >
       {children}
@@ -69,7 +69,7 @@ export function QuickSettingsDropdown() {
 
   function setPreference<T extends keyof SettingsPreferences>(
     key: T,
-    value: SettingsPreferences[T]
+    value: SettingsPreferences[T],
   ) {
     setPreferences((current) => {
       const next = { ...current, [key]: value };
@@ -123,7 +123,10 @@ export function QuickSettingsDropdown() {
                 <Sun className="h-4 w-4" />
                 Light
               </PreferenceButton>
-              <PreferenceButton active={isDark} onClick={() => setTheme("dark")}>
+              <PreferenceButton
+                active={isDark}
+                onClick={() => setTheme("dark")}
+              >
                 <Moon className="h-4 w-4" />
                 Dark
               </PreferenceButton>
@@ -144,7 +147,9 @@ export function QuickSettingsDropdown() {
                     active={active}
                     onClick={() => setPreference("accent", option.value)}
                   >
-                    <span className={`size-3.5 rounded-full ${option.swatch}`} />
+                    <span
+                      className={`size-3.5 rounded-full ${option.swatch}`}
+                    />
                     {option.label}
                     {active && <Check className="h-3.5 w-3.5" />}
                   </PreferenceButton>
@@ -192,10 +197,13 @@ export function QuickSettingsDropdown() {
 
         <DropdownMenuSeparator className="my-3" />
 
-        <DropdownMenuItem asChild className="rounded-2xl p-0 focus:bg-transparent">
+        <DropdownMenuItem
+          asChild
+          className="rounded-2xl p-0 focus:bg-transparent"
+        >
           <Link
             href="/settings"
-            className="flex h-10 w-full items-center justify-center gap-2 rounded-2xl bg-theme-accent px-4 text-sm font-medium text-theme-accent-foreground transition hover:bg-theme-accent/90"
+            className="flex h-10 w-full items-center justify-center gap-2 rounded-2xl bg-foreground px-4 text-sm font-medium text-theme-accent transition "
           >
             <Settings className="h-4 w-4" />
             Open full settings

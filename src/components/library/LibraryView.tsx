@@ -100,9 +100,9 @@ export function LibraryView({
               asChild
               key={tab.status}
               size="lg"
-              className={`shrink-0 rounded-full   shadow-none  ${
+              className={`shrink-0 rounded-full shadow-none ${
                 status === tab.status
-                  ? "bg-primary text-primary-foreground hover:bg-primary"
+                  ? "bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90"
                   : "bg-foreground text-primary/80 hover:bg-foreground-dark hover:text-primary"
               }`}
             >
