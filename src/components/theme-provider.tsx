@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { SettingsPreferenceProvider } from "@/components/settings/settings-preferences";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
@@ -11,7 +12,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       enableSystem={false}
       enableColorScheme
     >
-      {children}
+      <SettingsPreferenceProvider>{children}</SettingsPreferenceProvider>
     </NextThemesProvider>
   );
 }

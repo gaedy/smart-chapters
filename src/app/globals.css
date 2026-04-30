@@ -39,7 +39,11 @@
 
   --primaryText: #383838; */
   --font-sans: inter;
+  --app-font-family: var(--font-inter), Arial, sans-serif;
   --radius: 0.625rem;
+  --theme-accent: oklch(0.205 0 0);
+  --theme-accent-foreground: oklch(0.985 0 0);
+  --theme-accent-soft: oklch(93.44% 0.101 94.39);
 
   --background: oklch(98.22% 0.074 111.77);
 
@@ -86,10 +90,99 @@
   --green-color-2: oklch(0.36 0.105 145);
 }
 
+:root[data-accent="sage"] {
+  --background: oklch(98.2% 0.055 145);
+  --foreground: oklch(94.2% 0.066 145);
+  --foreground-dark: oklch(91.5% 0.06 145);
+  --theme-accent: oklch(0.38 0.105 145);
+  --theme-accent-foreground: oklch(0.985 0 0);
+  --theme-accent-soft: oklch(91.5% 0.06 145);
+  --accent: oklch(91.5% 0.06 145);
+  --accent-foreground: oklch(0.27 0.075 145);
+  --input: oklch(91.8% 0.038 145);
+  --ring: oklch(0.62 0.12 145);
+  --progress: oklch(0.57 0.13 145);
+  --sidebar-accent: oklch(91.5% 0.06 145);
+  --sidebar-accent-foreground: oklch(0.27 0.075 145);
+}
+
+:root[data-accent="ink"] {
+  --background: oklch(98.4% 0.035 245);
+  --foreground: oklch(94.5% 0.045 245);
+  --foreground-dark: oklch(91.8% 0.043 245);
+  --theme-accent: oklch(0.39 0.12 245);
+  --theme-accent-foreground: oklch(0.985 0 0);
+  --theme-accent-soft: oklch(91.8% 0.043 245);
+  --accent: oklch(91.8% 0.043 245);
+  --accent-foreground: oklch(0.28 0.085 245);
+  --input: oklch(92.2% 0.032 245);
+  --ring: oklch(0.62 0.11 245);
+  --progress: oklch(0.58 0.13 245);
+  --sidebar-accent: oklch(91.8% 0.043 245);
+  --sidebar-accent-foreground: oklch(0.28 0.085 245);
+}
+
+:root[data-accent="plum"] {
+  --background: oklch(98.3% 0.036 325);
+  --foreground: oklch(94.3% 0.048 325);
+  --foreground-dark: oklch(91.6% 0.045 325);
+  --theme-accent: oklch(0.4 0.13 325);
+  --theme-accent-foreground: oklch(0.985 0 0);
+  --theme-accent-soft: oklch(91.6% 0.045 325);
+  --accent: oklch(91.6% 0.045 325);
+  --accent-foreground: oklch(0.29 0.09 325);
+  --input: oklch(92.1% 0.032 325);
+  --ring: oklch(0.62 0.12 325);
+  --progress: oklch(0.58 0.14 325);
+  --sidebar-accent: oklch(91.6% 0.045 325);
+  --sidebar-accent-foreground: oklch(0.29 0.09 325);
+}
+
+:root[data-font="inter"] {
+  --app-font-family: var(--font-inter), Arial, sans-serif;
+}
+
+:root[data-font="merriweather"] {
+  --app-font-family: var(--font-merriweather), Georgia, serif;
+}
+
+:root[data-font="system"] {
+  --app-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+body[data-font="inter"] {
+  --app-font-family: var(--font-inter), Arial, sans-serif;
+}
+
+body[data-font="merriweather"] {
+  --app-font-family: var(--font-merriweather), Georgia, serif;
+}
+
+body[data-font="system"] {
+  --app-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+:root[data-font-size="compact"] {
+  font-size: 15px;
+}
+
+:root[data-font-size="comfortable"] {
+  font-size: 16px;
+}
+
+:root[data-font-size="large"] {
+  font-size: 17px;
+}
+
 .dark {
   --background: oklch(0.285 0.0056 91.57);
   --foreground: oklch(0.2276 0.0065 78.19);
   --foreground-dark: oklch(18.711% 0.00427 84.566);
+  --theme-accent: oklch(0.905 0.0154 77.07);
+  --theme-accent-foreground: oklch(0.205 0 0);
+  --theme-accent-soft: oklch(0.269 0 0);
 
   /* --primaryText: #e9e9e9;
   --foregroundClicked: #35312b; */
@@ -126,6 +219,54 @@
   --green-color-1: oklch(0.5269 0.1105 143.81);
   --green-color-2: oklch(0.8845 0.0651 145);
 }
+
+.dark[data-accent="sage"] {
+  --background: oklch(0.27 0.012 145);
+  --foreground: oklch(0.22 0.014 145);
+  --foreground-dark: oklch(0.18 0.012 145);
+  --theme-accent: oklch(0.82 0.075 145);
+  --theme-accent-foreground: oklch(0.18 0.03 145);
+  --theme-accent-soft: oklch(0.31 0.026 145);
+  --accent: oklch(0.31 0.026 145);
+  --accent-foreground: oklch(0.88 0.06 145);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.72 0.085 145);
+  --progress: oklch(0.62 0.09 145);
+  --sidebar-accent: oklch(0.31 0.026 145);
+  --sidebar-accent-foreground: oklch(0.88 0.06 145);
+}
+
+.dark[data-accent="ink"] {
+  --background: oklch(0.265 0.012 245);
+  --foreground: oklch(0.215 0.014 245);
+  --foreground-dark: oklch(0.18 0.012 245);
+  --theme-accent: oklch(0.82 0.07 245);
+  --theme-accent-foreground: oklch(0.18 0.03 245);
+  --theme-accent-soft: oklch(0.305 0.026 245);
+  --accent: oklch(0.305 0.026 245);
+  --accent-foreground: oklch(0.88 0.055 245);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.72 0.08 245);
+  --progress: oklch(0.62 0.09 245);
+  --sidebar-accent: oklch(0.305 0.026 245);
+  --sidebar-accent-foreground: oklch(0.88 0.055 245);
+}
+
+.dark[data-accent="plum"] {
+  --background: oklch(0.268 0.014 325);
+  --foreground: oklch(0.218 0.016 325);
+  --foreground-dark: oklch(0.18 0.014 325);
+  --theme-accent: oklch(0.83 0.075 325);
+  --theme-accent-foreground: oklch(0.18 0.035 325);
+  --theme-accent-soft: oklch(0.31 0.03 325);
+  --accent: oklch(0.31 0.03 325);
+  --accent-foreground: oklch(0.88 0.06 325);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.72 0.085 325);
+  --progress: oklch(0.63 0.095 325);
+  --sidebar-accent: oklch(0.31 0.03 325);
+  --sidebar-accent-foreground: oklch(0.88 0.06 325);
+}
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -155,6 +296,9 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-theme-accent: var(--theme-accent);
+  --color-theme-accent-foreground: var(--theme-accent-foreground);
+  --color-theme-accent-soft: var(--theme-accent-soft);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);
@@ -168,7 +312,7 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -182,6 +326,7 @@
     @apply border-border outline-ring/50;
   }
   body {
+    font-family: var(--app-font-family);
     @apply bg-background text-primary transition-colors duration-200;
   }
 }
