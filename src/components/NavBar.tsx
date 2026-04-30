@@ -2,7 +2,7 @@ import { auth } from "auth";
 import SearchBar from "./Search/searchBar";
 import { NavUser } from "./Sidebar/nav-user";
 import { SidebarTrigger } from "./Sidebar/sidebar";
-import { ThemeToggleButton } from "./theme-toggle-button";
+import { QuickSettingsDropdown } from "./settings/QuickSettingsDropdown";
 
 export default async function Navbar() {
   const session = await auth();
@@ -29,7 +29,7 @@ export default async function Navbar() {
           <SearchBar />
         </div>
       </div>
-      <ThemeToggleButton />
+      <QuickSettingsDropdown />
       <div className="flex items-center">
         <NavUser onlyAvatar={true} user={data.user} />
       </div>
