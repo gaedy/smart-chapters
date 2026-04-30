@@ -128,7 +128,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 ? "Expand sidebar"
                 : "Collapse sidebar"
             }
-            className="shrink-0 rounded-full bg-foreground text-muted-foreground hover:bg-foreground hover:text-primary"
+            className="size-9 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary"
           />
         </div>
       </SidebarHeader>

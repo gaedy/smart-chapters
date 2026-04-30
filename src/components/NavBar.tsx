@@ -16,12 +16,12 @@ export default async function Navbar() {
   };
 
   return (
-    <div className="flex h-12 items-center justify-between gap-2">
+    <div className="flex h-12 px-2 md:px-0 items-center justify-between gap-2">
       <div className="flex min-w-0 flex-1 items-center gap-2">
         <div className="block md:hidden">
           <SidebarTrigger
             aria-label="Open sidebar"
-            className="rounded-full bg-foreground text-muted-foreground hover:bg-foreground hover:text-primary"
+            className="size-9 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground hover:text-primary"
           />
         </div>
 
@@ -30,8 +30,7 @@ export default async function Navbar() {
         </div>
       </div>
       <ThemeToggleButton />
-      <div className="flex  items-center gap-2">
-        {/*  */}
+      <div className="flex items-center">
         <NavUser onlyAvatar={true} user={data.user} />
       </div>
     </div>

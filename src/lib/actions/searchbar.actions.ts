@@ -2,16 +2,29 @@
 
 import { prisma } from "../prisma";
 
-export async function searchBarBooks(query: string, limit = 5) {
+export type SearchFilter = "all" | "title" | "author";
+
+export async function searchBarBooks(
+  query: string,
+  limit = 5,
+  filter: SearchFilter = "all"
+) {
   if (!query) return [];
 
+  const where =
+    filter === "title"
+      ? { title: { contains: query, mode: "insensitive" as const } }
+      : filter === "author"
+        ? { author: { contains: query, mode: "insensitive" as const } }
+        : {
+            OR: [
+              { title: { contains: query, mode: "insensitive" as const } },
+              { author: { contains: query, mode: "insensitive" as const } },
+            ],
+          };
+
   const books = await prisma.book.findMany({
-    where: {
-      OR: [
-        { title: { contains: query, mode: "insensitive" } },
-        { author: { contains: query, mode: "insensitive" } },
-      ],
-    },
+    where,
     take: 20,
     select: {
       id: true,

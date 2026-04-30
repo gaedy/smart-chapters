@@ -65,35 +65,35 @@ export function NavUser({
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground 
-                ${onlyAvatar && "rounded-full"} ${
-                state === "collapsed" && !isMobile && "rounded-full"
-              }`}
-            >
-              {!onlyAvatar ? (
-                <>
-                  <Avatar className="rounded-full border border-border">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
+            {onlyAvatar ? (
+              <SidebarMenuButton
+                size="lg"
+                className="rounded-full cursor-pointer p-0 w-9 h-9 flex items-center justify-center"
+              >
+                <Avatar className="size-9 rounded-full">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </SidebarMenuButton>
+            ) : (
+              <SidebarMenuButton
+                size="lg"
+                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground 
+        ${state === "collapsed" && !isMobile && "rounded-full"}`}
+              >
+                <Avatar className="rounded-full border border-border">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
 
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
-                    <span className="truncate text-xs">{user.email}</span>
-                  </div>
-                  <ChevronsUpDown className="ml-auto size-4" />
-                </>
-              ) : (
-                <>
-                  <Avatar className=" rounded-full border border-border">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </>
-              )}
-            </SidebarMenuButton>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate text-xs">{user.email}</span>
+                </div>
+
+                <ChevronsUpDown className="ml-auto size-4" />
+              </SidebarMenuButton>
+            )}
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
