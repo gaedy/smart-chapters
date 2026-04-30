@@ -1,13 +1,22 @@
 import { auth } from "../../../../auth";
 import { BookShelf } from "@/components/books/BookShelf";
+import { EmptyState } from "@/components/layout/EmptyState";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getBooks, getGenres, getSuggestedBooks } from "@/lib/data/book.data";
 import { BookOpenCheck, LibraryBig, Search, Sparkles } from "lucide-react";
+import Link from "next/link";
 
-type ExploreSearchParams = Promise<{ q?: string }>;
+type ExploreSearchParams = Promise<{
+  q?: string;
+  genre?: string;
+  collection?: string;
+  shelf?: string;
+}>;
+
+type ExploreCollection = "featured" | "weekend" | "";
 
 export default async function ExplorePage({
   searchParams,
@@ -38,14 +47,74 @@ export default async function ExplorePage({
     .filter((genre): genre is string => Boolean(genre))
     .slice(0, 8);
   const query = params.q?.trim() ?? "";
-  const searchResults = query
-    ? allBooks.filter(
-        (book) =>
-          book.title.toLowerCase().includes(query.toLowerCase()) ||
-          book.author.toLowerCase().includes(query.toLowerCase()) ||
-          book.genre?.toLowerCase().includes(query.toLowerCase())
-      )
-    : [];
+  const selectedGenre = params.genre?.trim() ?? "";
+  const selectedCollection: ExploreCollection =
+    params.collection === "featured" || params.collection === "weekend"
+      ? params.collection
+      : "";
+  const selectedShelf = params.shelf === "classics" ? "classics" : "";
+  const searchTerm = query.toLowerCase();
+  const filteredBooks = allBooks.filter((book) => {
+    const matchesQuery =
+      !searchTerm ||
+      book.title.toLowerCase().includes(searchTerm) ||
+      book.author.toLowerCase().includes(searchTerm) ||
+      book.genre?.toLowerCase().includes(searchTerm);
+    const matchesGenre = !selectedGenre || book.genre === selectedGenre;
+    const matchesCollection =
+      !selectedCollection ||
+      (selectedCollection === "featured" && book.isFeatured) ||
+      (selectedCollection === "weekend" &&
+        book.pageCount !== null &&
+        book.pageCount <= 400);
+    const matchesShelf =
+      !selectedShelf ||
+      book.genre === "Fiction" ||
+      book.genre === "Historical Fiction" ||
+      book.genre === "Science Fiction" ||
+      (book.pageCount !== null && book.pageCount >= 450);
+
+    return matchesQuery && matchesGenre && matchesCollection && matchesShelf;
+  });
+  const hasActiveFilters =
+    Boolean(query) ||
+    Boolean(selectedGenre) ||
+    Boolean(selectedCollection) ||
+    Boolean(selectedShelf);
+  const filteredTitle = [
+    query ? `Search results for "${query}"` : "Filtered books",
+    selectedGenre,
+    selectedCollection === "featured" ? "Featured for quiet reading" : "",
+    selectedCollection === "weekend" ? "Weekend reading list" : "",
+    selectedShelf ? "Classics shelf" : "",
+  ].filter(Boolean);
+
+  const buildExploreHref = (
+    nextParams: Partial<{
+      q: string;
+      genre: string;
+      collection: ExploreCollection;
+      shelf: string;
+    }>
+  ) => {
+    const next = new URLSearchParams();
+    const values = {
+      q: query,
+      genre: selectedGenre,
+      collection: selectedCollection,
+      shelf: selectedShelf,
+      ...nextParams,
+    };
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        next.set(key, value);
+      }
+    });
+
+    const qs = next.toString();
+    return qs ? `/explore?${qs}` : "/explore";
+  };
 
   return (
     <div className="flex w-full flex-col gap-10">
@@ -63,6 +132,11 @@ export default async function ExplorePage({
             placeholder="Search books, authors, or genres..."
             className="h-12 rounded-full bg-foreground pl-11"
           />
+          {selectedGenre && <input type="hidden" name="genre" value={selectedGenre} />}
+          {selectedCollection && (
+            <input type="hidden" name="collection" value={selectedCollection} />
+          )}
+          {selectedShelf && <input type="hidden" name="shelf" value={selectedShelf} />}
         </div>
         <Button className="h-12 rounded-full">
           <Sparkles className="mr-2 h-4 w-4" />
@@ -70,12 +144,21 @@ export default async function ExplorePage({
         </Button>
       </form>
 
-      {query && (
-        <BookShelf
-          title={`Search results for "${query}"`}
-          description="Matches from titles, authors, and genres."
-          books={searchResults}
-        />
+      {hasActiveFilters && (
+        filteredBooks.length > 0 ? (
+          <BookShelf
+            title={filteredTitle.join(" / ")}
+            description={`${filteredBooks.length} matching ${
+              filteredBooks.length === 1 ? "book" : "books"
+            } from titles, authors, genres, and shelves.`}
+            books={filteredBooks}
+          />
+        ) : (
+          <EmptyState
+            title="No books matched"
+            description="Try a different search term, genre, or shelf filter."
+          />
+        )
       )}
 
       {genreLabels.length > 0 && (
@@ -87,13 +170,27 @@ export default async function ExplorePage({
           <div className="flex gap-2 overflow-x-auto pb-1">
             {genreLabels.map((genre) => (
               <Button
+                asChild
                 key={genre}
+                variant="ghost"
+                className={`shrink-0 rounded-full bg-background px-5 hover:bg-background hover:text-primary ${
+                  selectedGenre === genre ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                <Link href={buildExploreHref({ genre, collection: "", shelf: "" })}>
+                  {genre}
+                </Link>
+              </Button>
+            ))}
+            {selectedGenre && (
+              <Button
+                asChild
                 variant="ghost"
                 className="shrink-0 rounded-full bg-background px-5 text-muted-foreground hover:bg-background hover:text-primary"
               >
-                {genre}
+                <Link href={buildExploreHref({ genre: "" })}>All genres</Link>
               </Button>
-            ))}
+            )}
           </div>
         </section>
       )}
@@ -102,7 +199,7 @@ export default async function ExplorePage({
         title="Featured for quiet reading"
         description="A calm starting shelf for your next read."
         books={featuredBooks.length > 0 ? featuredBooks : allBooks.slice(0, 8)}
-        href="/library/want-to-read"
+        href={buildExploreHref({ collection: "featured", shelf: "" })}
       />
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -118,8 +215,14 @@ export default async function ExplorePage({
               </p>
             </div>
           </div>
-          <Button variant="ghost" className="mt-6 w-fit rounded-full bg-foreground">
-            View collection
+          <Button
+            asChild
+            variant="ghost"
+            className="mt-6 w-fit rounded-full bg-foreground"
+          >
+            <Link href={buildExploreHref({ collection: "weekend", shelf: "" })}>
+              View collection
+            </Link>
           </Button>
         </div>
         <div className="flex min-h-44 flex-col justify-between rounded-3xl bg-background p-5">
@@ -134,8 +237,14 @@ export default async function ExplorePage({
               </p>
             </div>
           </div>
-          <Button variant="ghost" className="mt-6 w-fit rounded-full bg-foreground">
-            Browse shelf
+          <Button
+            asChild
+            variant="ghost"
+            className="mt-6 w-fit rounded-full bg-foreground"
+          >
+            <Link href={buildExploreHref({ shelf: "classics", collection: "" })}>
+              Browse shelf
+            </Link>
           </Button>
         </div>
       </div>
