@@ -3,7 +3,9 @@ import { BookType } from "@/types";
 import { prisma } from "../prisma";
 import { auth } from "../../../auth";
 import { TrackingStatus } from "@prisma/client";
-import { updateCurrentPageSchema } from "../validators";
+import { revalidatePath } from "next/cache";
+import { customBookSchema, updateCurrentPageSchema } from "../validators";
+import { z } from "zod";
 
 // ─── Auth helper ──────────────────────────────────────────────────────────────
 
@@ -58,6 +60,87 @@ export async function addBookToLib(book: BookType, status: TrackingStatus) {
   });
 
   return { success: true };
+}
+
+export async function addCustomBookToLibrary(
+  data: z.input<typeof customBookSchema> | z.output<typeof customBookSchema>,
+) {
+  const user = await getAuthenticatedUser();
+  if (!user) return { success: false, message: "Unauthorized" };
+
+  const parsed = customBookSchema.safeParse(data);
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Please check the highlighted fields.",
+      errors: parsed.error.flatten().fieldErrors,
+    };
+  }
+
+  const {
+    publicationYear,
+    status,
+    rating,
+    notes,
+    ...bookData
+  } = parsed.data;
+
+  const publishedAt = new Date(Date.UTC(publicationYear, 0, 1));
+  const now = new Date();
+
+  const optionalDetails = [
+    bookData.subtitle && `Subtitle: ${bookData.subtitle}`,
+    bookData.contributors && `Contributors: ${bookData.contributors}`,
+    bookData.publisher && `Publisher: ${bookData.publisher}`,
+    bookData.language && `Language: ${bookData.language}`,
+    bookData.isbn && `ISBN: ${bookData.isbn}`,
+    bookData.tags && `Tags: ${bookData.tags}`,
+  ].filter(Boolean);
+
+  const trackingNotes = [notes, ...optionalDetails].filter(Boolean).join("\n\n");
+
+  const book = await prisma.book.create({
+    data: {
+      title: bookData.title,
+      author: bookData.author,
+      coverUrl: bookData.coverUrl,
+      description: bookData.description,
+      pageCount: bookData.pageCount,
+      publishedAt,
+      genre: bookData.genre,
+      isFeatured: false,
+    },
+  });
+
+  await prisma.bookTracking.create({
+    data: {
+      userId: user.id,
+      bookId: book.id,
+      status,
+      rating: rating ?? null,
+      notes: trackingNotes || null,
+      startedAt: status === "READING" ? now : null,
+      finishedAt: status === "FINISHED" ? now : null,
+    },
+  });
+
+  if (rating) {
+    await prisma.review.create({
+      data: {
+        userId: user.id,
+        bookId: book.id,
+        rating,
+        content: trackingNotes,
+      },
+    });
+  }
+
+  revalidatePath("/library");
+  revalidatePath("/library/want-to-read");
+  revalidatePath("/library/currently-reading");
+  revalidatePath("/library/finished");
+
+  return { success: true, bookId: book.id };
 }
 
 export async function removeBookFromLib(bookId: string) {

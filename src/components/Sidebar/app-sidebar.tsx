@@ -26,6 +26,7 @@ import { usePathname } from "next/navigation";
 
 import { useSession } from "next-auth/react";
 import Logo from "../ui/Logo";
+import { AddCustomBookDialog } from "./add-custom-book-dialog";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, isMobile } = useSidebar();
@@ -131,6 +132,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             className="size-9 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary"
           />
         </div>
+        <AddCustomBookDialog />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
