@@ -80,13 +80,19 @@ const shelfLabels = {
 
 export function AddCustomBookDialog() {
   const [open, setOpen] = React.useState(false);
+
   const [selectedCover, setSelectedCover] = React.useState<{
     name: string;
     size: number;
     previewUrl: string;
   } | null>(null);
+
   const [isSubmitting, startTransition] = React.useTransition();
+
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+
   const router = useRouter();
+
   const { state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
 
@@ -105,9 +111,12 @@ export function AddCustomBookDialog() {
       }
 
       toast.success("Custom book added to your library.");
+
       form.reset(defaultValues);
       setSelectedCover(null);
+
       setOpen(false);
+
       router.refresh();
     });
   }
@@ -120,11 +129,12 @@ export function AddCustomBookDialog() {
           title="Add Custom Book"
           aria-label="Add Custom Book"
           className={cn(
-            "mx-2 h-9 justify-start rounded-md px-3 shadow-none transition-[width,padding] duration-300",
+            "mx-2 h-9 justify-start gap-2 rounded-md px-3 shadow-none transition-[width,padding] duration-300",
             isCollapsed && "mx-auto size-9 justify-center px-0",
           )}
         >
-          <Plus className="size-4" />
+          <Plus className="size-4 shrink-0" />
+
           <span
             className={cn(
               "truncate transition-opacity duration-200",
@@ -136,15 +146,19 @@ export function AddCustomBookDialog() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-h-[calc(100dvh-1rem)] max-w-[calc(100vw-1rem)] overflow-hidden bg-background p-0 sm:max-h-[calc(100dvh-2rem)] sm:max-w-2xl lg:max-w-5xl">
-        <DialogHeader className="border-b border-border px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
+      <DialogContent className="flex max-h-[calc(100dvh-1rem)] max-w-[calc(100vw-1rem)] flex-col overflow-hidden rounded-xl border bg-background p-0 shadow-xl sm:max-h-[calc(100dvh-2rem)] sm:max-w-2xl lg:max-w-5xl">
+        <DialogHeader className="shrink-0 border-b bg-muted/20 px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
           <div className="flex items-start gap-3">
-            <span className="rounded-md bg-theme-accent-soft p-2 text-theme-accent">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-theme-accent-soft text-theme-accent">
               <BookPlus className="size-5" />
             </span>
-            <div className="space-y-1">
-              <DialogTitle>Add a custom book</DialogTitle>
-              <DialogDescription>
+
+            <div className="min-w-0 space-y-1">
+              <DialogTitle className="text-base sm:text-lg">
+                Add a custom book
+              </DialogTitle>
+
+              <DialogDescription className="max-w-2xl text-sm leading-6">
                 Create a book entry and place it on one of your existing library
                 shelves.
               </DialogDescription>
@@ -155,13 +169,14 @@ export function AddCustomBookDialog() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex min-h-0 flex-col"
+            className="flex min-h-0 flex-1 flex-col"
           >
-            <div className="scrollbar-overlay max-h-[calc(100dvh-12rem)] overflow-y-auto px-4 py-5 sm:max-h-[calc(100dvh-13rem)] sm:px-6 lg:px-8">
-              <div className="grid gap-8">
-                <section className="grid gap-5">
-                  <div>
+            <div className="scrollbar-overlay min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:px-6 lg:px-8">
+              <div className="flex flex-col gap-8">
+                <section className="flex flex-col gap-5">
+                  <div className="space-y-1">
                     <h3 className="text-sm font-medium">Book details</h3>
+
                     <p className="text-sm text-muted-foreground">
                       Required fields establish the library card.
                     </p>
@@ -169,14 +184,19 @@ export function AddCustomBookDialog() {
 
                   <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                     <TextField name="title" label="Book title" required />
+
                     <TextField name="subtitle" label="Subtitle" optional />
+
                     <TextField name="author" label="Author" required />
+
                     <TextField
                       name="contributors"
                       label="Co-author / contributors"
                       optional
                     />
+
                     <TextField name="genre" label="Genre / category" required />
+
                     <TextField
                       name="pageCount"
                       label="Number of pages"
@@ -184,6 +204,7 @@ export function AddCustomBookDialog() {
                       min={1}
                       required
                     />
+
                     <TextField
                       name="publicationYear"
                       label="Publication year"
@@ -192,8 +213,11 @@ export function AddCustomBookDialog() {
                       max={new Date().getFullYear() + 1}
                       required
                     />
+
                     <TextField name="publisher" label="Publisher" optional />
+
                     <TextField name="language" label="Language" optional />
+
                     <TextField name="isbn" label="ISBN" optional />
                   </div>
 
@@ -206,36 +230,46 @@ export function AddCustomBookDialog() {
                           Book avatar / cover image
                           <span className="text-destructive"> *</span>
                         </FormLabel>
+
                         <FormControl>
-                          <div className="grid gap-3">
-                            <label
-                              htmlFor="custom-book-cover"
+                          <div className="flex flex-col gap-3">
+                            <div
                               className={cn(
-                                "flex min-h-48 cursor-pointer flex-col items-center justify-center gap-3 rounded-md border border-dashed border-input bg-foreground p-5 text-center transition-colors hover:bg-foreground-dark focus-within:ring-2 focus-within:ring-ring/50",
+                                "flex min-h-[260px] flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border bg-muted/30 p-6 text-center transition-colors",
                                 form.formState.errors.coverUrl &&
                                   "border-destructive bg-destructive/5",
                               )}
                             >
-                              <span className="rounded-md bg-theme-accent-soft p-2 text-theme-accent">
+                              <span className="flex size-10 items-center justify-center rounded-lg bg-theme-accent-soft text-theme-accent">
                                 <ImagePlus className="size-5" />
                               </span>
-                              <span className="grid gap-1">
-                                <span className="text-sm font-medium">
+
+                              <div className="space-y-1">
+                                <p className="text-sm font-medium">
                                   Upload cover image
-                                </span>
-                                <span className="text-xs text-muted-foreground">
+                                </p>
+
+                                <p className="max-w-md text-xs leading-5 text-muted-foreground">
                                   PNG, JPG, WEBP, or GIF up to 1 MB. Portrait
                                   ratio near 2:3.
-                                </span>
-                              </span>
+                                </p>
+                              </div>
+
+                              <Button
+                                type="button"
+                                variant="secondary"
+                                onClick={() => fileInputRef.current?.click()}
+                              >
+                                Choose image
+                              </Button>
+
                               <Input
-                                id="custom-book-cover"
+                                ref={fileInputRef}
                                 type="file"
                                 accept={acceptedImageTypes.join(",")}
-                                className="sr-only"
+                                className="hidden"
                                 onBlur={field.onBlur}
                                 name={field.name}
-                                ref={field.ref}
                                 onChange={(event) => {
                                   const file = event.target.files?.[0];
 
@@ -262,22 +296,27 @@ export function AddCustomBookDialog() {
                                   if (validationErrors.length > 0) {
                                     field.onChange("");
                                     setSelectedCover(null);
+
                                     form.setError("coverUrl", {
                                       type: "manual",
                                       message: validationErrors.join(" "),
                                     });
+
                                     event.target.value = "";
                                     return;
                                   }
 
                                   const reader = new FileReader();
+
                                   reader.onload = () => {
                                     const previewUrl = String(reader.result);
+
                                     const image = new Image();
 
                                     image.onload = () => {
                                       const ratio =
-                                        image.naturalWidth / image.naturalHeight;
+                                        image.naturalWidth /
+                                        image.naturalHeight;
 
                                       if (
                                         ratio < minCoverRatio ||
@@ -285,17 +324,21 @@ export function AddCustomBookDialog() {
                                       ) {
                                         field.onChange("");
                                         setSelectedCover(null);
+
                                         form.setError("coverUrl", {
                                           type: "manual",
                                           message:
                                             "Use a portrait book-cover image near a 2:3 ratio. Square or landscape images are not accepted.",
                                         });
+
                                         event.target.value = "";
                                         return;
                                       }
 
                                       field.onChange(previewUrl);
+
                                       form.clearErrors("coverUrl");
+
                                       setSelectedCover({
                                         name: file.name,
                                         size: file.size,
@@ -306,68 +349,79 @@ export function AddCustomBookDialog() {
                                     image.onerror = () => {
                                       field.onChange("");
                                       setSelectedCover(null);
+
                                       form.setError("coverUrl", {
                                         type: "manual",
                                         message:
                                           "Could not validate that image. Try another cover file.",
                                       });
+
                                       event.target.value = "";
                                     };
 
                                     image.src = previewUrl;
                                   };
+
                                   reader.onerror = () => {
                                     field.onChange("");
                                     setSelectedCover(null);
+
                                     form.setError("coverUrl", {
                                       type: "manual",
                                       message:
                                         "Could not read that image. Try another file.",
                                     });
+
                                     event.target.value = "";
                                   };
+
                                   reader.readAsDataURL(file);
                                 }}
                               />
-                            </label>
 
-                            {selectedCover && (
-                              <div className="flex items-center gap-3 rounded-md border border-border bg-foreground p-3">
-                                <img
-                                  src={selectedCover.previewUrl}
-                                  alt=""
-                                  className="h-24 w-16 rounded-sm object-cover shadow-sm"
-                                />
-                                <div className="min-w-0 flex-1">
-                                  <p className="truncate text-sm font-medium">
-                                    {selectedCover.name}
-                                  </p>
-                                  <p className="text-xs text-muted-foreground">
-                                    {(selectedCover.size / 1024).toFixed(0)} KB
-                                    selected
-                                  </p>
+                              {selectedCover && (
+                                <div className="flex w-full max-w-md items-center gap-3 rounded-xl border bg-card p-3 shadow-sm">
+                                  <img
+                                    src={selectedCover.previewUrl}
+                                    alt=""
+                                    className="h-20 w-14 shrink-0 rounded-md object-cover shadow-sm"
+                                  />
+
+                                  <div className="min-w-0 flex-1 text-left">
+                                    <p className="truncate text-sm font-medium">
+                                      {selectedCover.name}
+                                    </p>
+
+                                    <p className="text-xs text-muted-foreground">
+                                      {(selectedCover.size / 1024).toFixed(0)}{" "}
+                                      KB selected
+                                    </p>
+                                  </div>
+
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="size-8 shrink-0"
+                                    aria-label="Remove selected cover image"
+                                    onClick={() => {
+                                      field.onChange("");
+                                      setSelectedCover(null);
+                                    }}
+                                  >
+                                    <X className="size-4" />
+                                  </Button>
                                 </div>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="icon"
-                                  className="size-8"
-                                  aria-label="Remove selected cover image"
-                                  onClick={() => {
-                                    field.onChange("");
-                                    setSelectedCover(null);
-                                  }}
-                                >
-                                  <X className="size-4" />
-                                </Button>
-                              </div>
-                            )}
+                              )}
+                            </div>
                           </div>
                         </FormControl>
+
                         <FormDescription>
                           The selected image is saved as the book cover in your
                           library.
                         </FormDescription>
+
                         <FormMessage />
                       </FormItem>
                     )}
@@ -379,24 +433,27 @@ export function AddCustomBookDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Description / summary</FormLabel>
+
                         <FormControl>
                           <Textarea
                             {...field}
                             value={field.value ?? ""}
                             rows={4}
-                            className="resize-none bg-foreground"
+                            className="resize-none bg-card"
                             placeholder="A short summary for your library"
                           />
                         </FormControl>
+
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </section>
 
-                <section className="grid gap-5">
-                  <div>
+                <section className="flex flex-col gap-5">
+                  <div className="space-y-1">
                     <h3 className="text-sm font-medium">Library placement</h3>
+
                     <p className="text-sm text-muted-foreground">
                       Uses the same shelves as the rest of your library.
                     </p>
@@ -409,15 +466,17 @@ export function AddCustomBookDialog() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Library shelf</FormLabel>
+
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger className="w-full bg-foreground">
+                              <SelectTrigger className="w-full bg-card">
                                 <SelectValue placeholder="Choose a shelf" />
                               </SelectTrigger>
                             </FormControl>
+
                             <SelectContent>
                               {Object.entries(shelfLabels).map(
                                 ([value, label]) => (
@@ -428,9 +487,11 @@ export function AddCustomBookDialog() {
                               )}
                             </SelectContent>
                           </Select>
-                          <FormDescription>
+
+                          {/* <FormDescription>
                             This controls where the book appears after saving.
-                          </FormDescription>
+                          </FormDescription> */}
+
                           <FormMessage />
                         </FormItem>
                       )}
@@ -447,9 +508,10 @@ export function AddCustomBookDialog() {
                   </div>
                 </section>
 
-                <section className="grid gap-5">
-                  <div>
+                <section className="flex flex-col gap-5">
+                  <div className="space-y-1">
                     <h3 className="text-sm font-medium">Optional extras</h3>
+
                     <p className="text-sm text-muted-foreground">
                       Add only what helps you find or remember the book later.
                     </p>
@@ -468,15 +530,17 @@ export function AddCustomBookDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Notes</FormLabel>
+
                         <FormControl>
                           <Textarea
                             {...field}
                             value={field.value ?? ""}
                             rows={3}
-                            className="resize-none bg-foreground"
+                            className="resize-none bg-card"
                             placeholder="Private notes, shelf labels, or collection context"
                           />
                         </FormControl>
+
                         <FormMessage />
                       </FormItem>
                     )}
@@ -485,7 +549,7 @@ export function AddCustomBookDialog() {
               </div>
             </div>
 
-            <DialogFooter className="border-t border-border px-4 py-4 sm:px-6 lg:px-8">
+            <DialogFooter className="shrink-0 gap-2 border-t bg-muted/20 px-4 py-4 sm:flex-row sm:justify-end sm:px-6 lg:px-8">
               <Button
                 type="button"
                 variant="secondary"
@@ -493,6 +557,7 @@ export function AddCustomBookDialog() {
               >
                 Cancel
               </Button>
+
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <>
@@ -533,21 +598,25 @@ function TextField({
         <FormItem>
           <FormLabel>
             {label}
+
             {required && <span className="text-destructive"> *</span>}
+
             {optional && (
               <span className="ml-1 text-xs font-normal text-muted-foreground">
                 Optional
               </span>
             )}
           </FormLabel>
+
           <FormControl>
             <Input
               {...inputProps}
               {...field}
               value={String(field.value ?? "")}
-              className={cn("bg-foreground", inputProps.className)}
+              className={cn("bg-card", inputProps.className)}
             />
           </FormControl>
+
           <FormMessage />
         </FormItem>
       )}
