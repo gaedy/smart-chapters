@@ -19,6 +19,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/Sidebar/sidebar";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 export function NavMain({
   items,
@@ -55,7 +56,14 @@ export function NavMain({
                   <item.icon />
                   <div className="flex w-full justify-between items-center">
                     <span>{item.title}</span>
-                    <span>{item.count}</span>
+                    {typeof item.count === "number" && (
+                      <Badge
+                        variant="secondary"
+                        className="  min-w-5 px-2.5 bg-background text-[0.7rem]"
+                      >
+                        {item.count}
+                      </Badge>
+                    )}
                   </div>
                 </Link>
               </SidebarMenuButton>

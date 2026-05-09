@@ -88,7 +88,7 @@ export function QuickSettingsDropdown() {
           aria-label="Open quick settings"
           className="flex size-9  items-center justify-center rounded-full bg-foreground text-muted-foreground transition-all duration-200 hover:text-primary hover:shadow-sm active:scale-95 data-[state=open]:bg-theme-accent-soft data-[state=open]:text-accent-foreground"
         >
-          <SlidersHorizontal className="h-4 w-4" />
+          <Settings className="h-4 w-4" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

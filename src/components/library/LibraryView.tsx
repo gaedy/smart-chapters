@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { BookPlus, Plus } from "lucide-react";
 import { BookGrid } from "@/components/books/BookGrid";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { AddCustomBookDialog } from "@/components/Sidebar/add-custom-book-dialog";
 
 type StatusFilter = "all" | "READING" | "FINISHED" | "WANT_TO_READ";
 type SortKey = "updated" | "title" | "author" | "rating" | "progress";
@@ -33,7 +36,11 @@ interface LibraryViewProps {
 
 const tabs: { label: string; status: StatusFilter; href: string }[] = [
   { label: "All Books", status: "all", href: "/library" },
-  { label: "Want to Read", status: "WANT_TO_READ", href: "/library/want-to-read" },
+  {
+    label: "Want to Read",
+    status: "WANT_TO_READ",
+    href: "/library/want-to-read",
+  },
   {
     label: "Currently Reading",
     status: "READING",
@@ -73,10 +80,15 @@ export function LibraryView({
 
       if (sort === "title") return a.title.localeCompare(b.title);
       if (sort === "author") return a.author.localeCompare(b.author);
-      if (sort === "rating") return (bTracking?.rating ?? 0) - (aTracking?.rating ?? 0);
+      if (sort === "rating")
+        return (bTracking?.rating ?? 0) - (aTracking?.rating ?? 0);
       if (sort === "progress") {
-        const aProgress = a.pageCount ? (aTracking?.currentPage ?? 0) / a.pageCount : 0;
-        const bProgress = b.pageCount ? (bTracking?.currentPage ?? 0) / b.pageCount : 0;
+        const aProgress = a.pageCount
+          ? (aTracking?.currentPage ?? 0) / a.pageCount
+          : 0;
+        const bProgress = b.pageCount
+          ? (bTracking?.currentPage ?? 0) / b.pageCount
+          : 0;
         return bProgress - aProgress;
       }
 
@@ -84,13 +96,38 @@ export function LibraryView({
     });
 
   const countLabel = `${filtered.length} ${filtered.length === 1 ? "book" : "books"}`;
+  const counts = books.reduce<Record<StatusFilter, number>>(
+    (acc, book) => {
+      acc.all += 1;
+      const trackingStatus = book.bookTrackings[0]?.status;
+
+      if (trackingStatus) {
+        acc[trackingStatus] += 1;
+      }
+
+      return acc;
+    },
+    { all: 0, READING: 0, FINISHED: 0, WANT_TO_READ: 0 },
+  );
 
   return (
     <div className="flex w-full flex-col gap-8">
       <PageHeader
         title="Library"
         description="Search, sort, and move through every book you are tracking."
-        action={<span className="rounded-full bg-background px-4 py-2 text-sm">{countLabel}</span>}
+        action={
+          <div className="flex flex-wrap items-center gap-2">
+            <AddCustomBookDialog
+              compactOnCollapse={false}
+              triggerClassName="mx-0 h-9 rounded-full px-4"
+              triggerLabel="Add Custom Book"
+              triggerIcon={Plus}
+            />
+            {/* <Badge variant="outline" className="px-3 py-1 text-sm">
+              {countLabel}
+            </Badge> */}
+          </div>
+        }
       />
 
       <div className="flex flex-col gap-4 rounded-3xl bg-background p-3 sm:p-4">
@@ -100,13 +137,24 @@ export function LibraryView({
               asChild
               key={tab.status}
               size="lg"
-              className={`shrink-0 rounded-full shadow-none ${
+              className={`group shrink-0 rounded-full shadow-none ${
                 status === tab.status
                   ? "bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90"
                   : "bg-foreground text-primary/80 hover:bg-foreground-dark hover:text-primary"
               }`}
             >
-              <Link href={tab.href}>{tab.label}</Link>
+              <Link href={tab.href}>
+                <span>{tab.label}</span>
+                <span
+                  className={`ml-1.5 text-sm font-medium tabular-nums ${
+                    status === tab.status
+                      ? "text-primary bg-theme-accent-soft p-1 px-2.5 rounded-full text-xs"
+                      : "text-secondary group-hover:text-primary text-xs"
+                  }`}
+                >
+                  {counts[tab.status]}
+                </span>
+              </Link>
             </Button>
           ))}
         </div>
@@ -143,7 +191,9 @@ export function LibraryView({
         books={filtered.map((book) => ({
           ...book,
           status: book.bookTrackings[0]?.status,
+          currentPage: book.bookTrackings[0]?.currentPage,
         }))}
+        showProgress={status === "READING"}
         emptyTitle="No books in this shelf"
         emptyDescription="Try another shelf or adjust your search to find the book you want."
       />

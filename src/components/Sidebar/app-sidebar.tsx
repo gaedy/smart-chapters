@@ -28,7 +28,12 @@ import { useSession } from "next-auth/react";
 import Logo from "../ui/Logo";
 import { AddCustomBookDialog } from "./add-custom-book-dialog";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  libraryCount = 0,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & {
+  libraryCount?: number;
+}) {
   const { state, isMobile } = useSidebar();
 
   const pathname = usePathname();
@@ -61,6 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
         url: "/library",
         icon: Library,
+        count: libraryCount,
         isActive: pathname.startsWith("/library"),
       },
     ],

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookPlus, ImagePlus, Loader2, Plus, X } from "lucide-react";
+import { BookPlus, ImagePlus, Loader2, Plus, X, type LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { Resolver, useForm, useFormContext } from "react-hook-form";
@@ -78,7 +78,17 @@ const shelfLabels = {
   FINISHED: "Finished",
 } as const;
 
-export function AddCustomBookDialog() {
+export function AddCustomBookDialog({
+  compactOnCollapse = true,
+  triggerClassName,
+  triggerLabel = "Add Custom Book",
+  triggerIcon: TriggerIcon = Plus,
+}: {
+  compactOnCollapse?: boolean;
+  triggerClassName?: string;
+  triggerLabel?: string;
+  triggerIcon?: LucideIcon;
+}) {
   const [open, setOpen] = React.useState(false);
 
   const [selectedCover, setSelectedCover] = React.useState<{
@@ -94,7 +104,7 @@ export function AddCustomBookDialog() {
   const router = useRouter();
 
   const { state, isMobile } = useSidebar();
-  const isCollapsed = state === "collapsed" && !isMobile;
+  const isCollapsed = compactOnCollapse && state === "collapsed" && !isMobile;
 
   const form = useForm<CustomBookFormValues>({
     resolver: zodResolver(customBookSchema) as Resolver<CustomBookFormValues>,
@@ -126,14 +136,15 @@ export function AddCustomBookDialog() {
       <DialogTrigger asChild>
         <Button
           type="button"
-          title="Add Custom Book"
-          aria-label="Add Custom Book"
+          title={triggerLabel}
+          aria-label={triggerLabel}
           className={cn(
             "mx-2 h-9 justify-start gap-2 rounded-md px-3 shadow-none transition-[width,padding] duration-300",
             isCollapsed && "mx-auto size-9 justify-center px-0",
+            triggerClassName,
           )}
         >
-          <Plus className="size-4 shrink-0" />
+          <TriggerIcon className="size-4 shrink-0" />
 
           <span
             className={cn(
@@ -141,7 +152,7 @@ export function AddCustomBookDialog() {
               isCollapsed && "sr-only opacity-0",
             )}
           >
-            Add Custom Book
+            {triggerLabel}
           </span>
         </Button>
       </DialogTrigger>
