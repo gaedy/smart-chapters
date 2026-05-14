@@ -2,18 +2,18 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 import Rating from "../ui/rating";
-import Image from "next/image";
 import RemoveReviewButton from "./removeReview";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ReviewCardProps {
   name: string;
   date?: string;
   rating: number;
   comment: string;
-
   className?: string;
   avatar?: string;
   reviewBookId?: string | null;
+  isCurrentUser?: boolean;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
@@ -21,53 +21,64 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   date,
   rating,
   comment,
-
   className,
   avatar,
   reviewBookId,
+  isCurrentUser = false,
 }) => {
+  const initials = name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <div
       className={cn(
-        "flex h-fit max-w-3xl items-start gap-2 rounded-3xl bg-background p-5",
-        className
+        "flex h-fit items-start gap-4 rounded-2xl border border-transparent bg-background p-5 shadow-sm",
+        className,
       )}
     >
-      <div className="flex  flex-col w-full h-full gap-4">
-        <div className="flex sm:flex-row flex-col gap-4 h-fit">
-          <div className="flex items-center gap-3 w-full">
-            <div className="  w-fit h-full  flex items-center">
-              <div className="flex justify-center items-center border w-10 h-10 overflow-hidden rounded-full">
-                <Image
-                  className=" object-cover rounded-full w-full h-full"
-                  alt={name}
-                  src={avatar || ""}
-                  width={96}
-                  height={96}
-                  objectFit="fill"
-                ></Image>
-              </div>
+      <Avatar className="size-10 border bg-foreground">
+        {avatar && <AvatarImage src={avatar} alt={name} />}
+        <AvatarFallback className="text-xs font-medium">
+          {initials || "R"}
+        </AvatarFallback>
+      </Avatar>
+
+      <div className="flex min-w-0 flex-1 flex-col gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="truncate text-sm font-semibold">{name}</h3>
+              {isCurrentUser && (
+                <span className="rounded-full bg-foreground px-2 py-0.5 text-xs text-muted-foreground">
+                  You
+                </span>
+              )}
             </div>
-            <div className="flex justify-center gap-1 text-sm h-full w-full  flex-col ">
-              <span className="font-medium">{name}</span>
-              <span className="text-xs text-muted-foreground">
-                {date || "01/01/2025"}
-              </span>
-            </div>
+            {date && (
+              <p className="mt-1 text-xs text-muted-foreground">{date}</p>
+            )}
           </div>
 
-          <div className="flex w-full self-center h-fit items-center justify-start sm:justify-end">
+          <div className="flex shrink-0 items-center gap-2">
             <Rating size="sm" canModified={false} value={rating} />
+            <span className="text-sm font-medium tabular-nums">
+              {rating > 0 ? rating.toFixed(1) : "Unrated"}
+            </span>
           </div>
         </div>
 
         {comment && (
-          <div className="flex h-fit w-full rounded-2xl bg-foreground p-4">
-            <p className="text-sm leading-7 text-primary/85">{comment}</p>
-          </div>
+          <p className="whitespace-pre-line text-sm leading-7 text-primary/85">
+            {comment}
+          </p>
         )}
-        {reviewBookId && comment && (
-          <div className="self-end">
+
+        {reviewBookId && (
+          <div className="flex justify-end border-t pt-3">
             <RemoveReviewButton bookId={reviewBookId ?? ""} />
           </div>
         )}

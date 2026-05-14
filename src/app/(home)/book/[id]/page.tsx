@@ -2,6 +2,7 @@ import ReviewCard from "@/components/Reviews/reviewCard";
 import Rating from "@/components/ui/rating";
 
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { auth } from "auth";
@@ -24,6 +25,24 @@ import { BookOpen, Calendar, Layers, MessageSquare, Star } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  searchParams?: Promise<{ reviewSort?: string | string[] }>;
+}
+
+type ReviewSort = "newest" | "highest" | "lowest";
+
+const reviewSortOptions: { label: string; value: ReviewSort }[] = [
+  { label: "Newest", value: "newest" },
+  { label: "Highest rated", value: "highest" },
+  { label: "Lowest rated", value: "lowest" },
+];
+
+function getReviewSort(value?: string | string[]): ReviewSort {
+  const sort = Array.isArray(value) ? value[0] : value;
+  return sort === "highest" || sort === "lowest" ? sort : "newest";
+}
+
+function formatCount(value: number, singular: string, plural = `${singular}s`) {
+  return `${value} ${value === 1 ? singular : plural}`;
 }
 
 export async function generateMetadata({
@@ -44,8 +63,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function theDetailedBookPage({ params }: PageProps) {
+export default async function theDetailedBookPage({
+  params,
+  searchParams,
+}: PageProps) {
   const { id } = await params;
+  const search = await searchParams;
+  const reviewSort = getReviewSort(search?.reviewSort);
 
   const book = await getBookById(id);
   if (!book) notFound();
@@ -73,9 +97,18 @@ export default async function theDetailedBookPage({ params }: PageProps) {
   const communityReviews = reviews.filter(
     (review) => review.userId !== session?.user?.id,
   );
+  const sortedCommunityReviews = [...communityReviews].sort((a, b) => {
+    if (reviewSort === "highest") return (b.rating ?? 0) - (a.rating ?? 0);
+    if (reviewSort === "lowest") return (a.rating ?? 0) - (b.rating ?? 0);
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 
   const ratingsNumber = reviews.filter((r) => r.rating != null).length;
   const reviewsNumber = reviews.filter((r) => r.content?.trim()).length;
+  const ratingDistribution = [5, 4, 3, 2, 1].map((star) => ({
+    star,
+    count: reviews.filter((review) => review.rating === star).length,
+  }));
   const publishedYear = book.publishedAt
     ? new Date(book.publishedAt).getFullYear()
     : null;
@@ -150,7 +183,6 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                         size="sm"
                         canModified={false}
                         value={averageRating}
-                        bookId={book.id}
                       />
                       <span className="font-medium">
                         {averageRating.toFixed(1)}
@@ -230,6 +262,79 @@ export default async function theDetailedBookPage({ params }: PageProps) {
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="flex max-w-3xl flex-col gap-5">
+          <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium text-theme-accent">
+              Reader reviews
+            </p>
+            <div>
+              <h2 className="text-2xl font-semibold">What readers think</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {reviewsNumber > 0
+                  ? `${formatCount(reviewsNumber, "review")} from ${formatCount(
+                      ratingsNumber,
+                      "rating",
+                    )}`
+                  : ratingsNumber > 0
+                  ? `${formatCount(ratingsNumber, "rating")} so far`
+                  : "No reader feedback yet"}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 rounded-2xl bg-background p-5 shadow-sm md:grid-cols-[220px_minmax(0,1fr)]">
+            <div className="flex flex-col justify-center gap-3 border-b pb-4 md:border-b-0 md:border-r md:pb-0 md:pr-5">
+              <div>
+                <p className="text-sm text-muted-foreground">Average rating</p>
+                <div className="mt-1 flex items-baseline gap-2">
+                  <span className="text-4xl font-semibold tabular-nums">
+                    {ratingsNumber > 0 ? averageRating.toFixed(1) : "-"}
+                  </span>
+                  <span className="text-sm text-muted-foreground">/ 5</span>
+                </div>
+              </div>
+              <Rating
+                size="sm"
+                canModified={false}
+                value={averageRating}
+                label={`Average rating ${averageRating.toFixed(1)} out of 5`}
+              />
+              <p className="text-sm text-muted-foreground">
+                {formatCount(ratingsNumber, "rating")} and{" "}
+                {formatCount(reviewsNumber, "review")}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              {ratingDistribution.map(({ star, count }) => {
+                const percentage =
+                  ratingsNumber > 0
+                    ? Math.round((count / ratingsNumber) * 100)
+                    : 0;
+
+                return (
+                  <div
+                    key={star}
+                    className="grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3 text-sm"
+                  >
+                    <span className="text-muted-foreground">{star} star</span>
+                    <div
+                      className="h-2 overflow-hidden rounded-full bg-foreground"
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="h-full rounded-full bg-yellow-500"
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
+                    <span className="text-right text-muted-foreground tabular-nums">
+                      {count}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           {!myReview ? (
             <ReviewEditor bookId={book.id} />
           ) : (
@@ -253,27 +358,49 @@ export default async function theDetailedBookPage({ params }: PageProps) {
                   },
                 )}
                 reviewBookId={book.id}
+                isCurrentUser
               />
 
               {!myReview.content && <ReviewEditor bookId={book.id} />}
             </div>
           )}
 
-          <div className="flex items-center gap-2 pt-2">
-            <h2 className="text-lg font-semibold">Community reviews</h2>
-            {communityReviews.length !== 0 && (
-              <span className="rounded-full bg-background px-3 py-1 text-xs text-muted-foreground">
-                {communityReviews.length}
-              </span>
+          <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold">Community reviews</h2>
+              {communityReviews.length !== 0 && (
+                <span className="rounded-full bg-background px-3 py-1 text-xs text-muted-foreground">
+                  {communityReviews.length}
+                </span>
+              )}
+            </div>
+
+            {communityReviews.length > 1 && (
+              <div className="flex flex-wrap gap-2" aria-label="Sort reviews">
+                {reviewSortOptions.map((option) => (
+                  <Link
+                    key={option.value}
+                    href={`/book/${book.id}?reviewSort=${option.value}`}
+                    className={`rounded-full px-3 py-1.5 text-xs transition-colors ${
+                      reviewSort === option.value
+                        ? "bg-theme-accent text-theme-accent-foreground"
+                        : "bg-background text-muted-foreground hover:bg-foreground hover:text-primary"
+                    }`}
+                  >
+                    {option.label}
+                  </Link>
+                ))}
+              </div>
             )}
           </div>
 
           {communityReviews.length === 0 ? (
-            <div className="rounded-3xl bg-background p-6 text-sm text-muted-foreground">
-              No community reviews yet.
+            <div className="rounded-2xl bg-background p-6 text-sm text-muted-foreground shadow-sm">
+              No community reviews yet. Your review can help future readers decide
+              whether this belongs on their shelf.
             </div>
           ) : (
-            communityReviews.map((review) => (
+            sortedCommunityReviews.map((review) => (
               <ReviewCard
                 key={review.id}
                 name={review.user.name ?? "Reader"}

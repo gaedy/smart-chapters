@@ -29,15 +29,15 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-3xl bg-background p-5">
+    <div className="flex flex-col gap-4 rounded-2xl bg-background p-5 shadow-sm">
       <div>
         <h2 className="text-lg font-semibold">Write your review</h2>
         <p className="text-sm text-muted-foreground">
-          Capture what stayed with you after reading.
+          Share what worked, what stayed with you, and who might enjoy it.
         </p>
       </div>
 
-      <div className="flex items-start gap-2 ">
+      <div className="flex items-start gap-2">
         {/* <div className="flex justify-center items-center border w-10 h-10 overflow-hidden rounded-full">
           <Image
             className=" object-cover rounded-full w-full h-full"
@@ -52,7 +52,8 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
           <Textarea
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
-            className="min-h-28 rounded-2xl bg-foreground"
+            className="min-h-32 resize-none rounded-xl bg-foreground leading-7"
+            placeholder="Write a few thoughts about the book..."
           />
           <ActionButton
             onClick={handleSubmit}
