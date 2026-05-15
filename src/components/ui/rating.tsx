@@ -78,8 +78,10 @@ export default function Rating({
     >
       <Star className="size-full text-muted-foreground/35" strokeWidth={1.8} />
       <span
-        className="absolute inset-0 overflow-hidden text-yellow-500"
-        style={{ width: `${filledAmount * 100}%` }}
+        className="absolute inset-0 text-yellow-500"
+        style={{
+          clipPath: `inset(0 ${100 - filledAmount * 100}% 0 0)`,
+        }}
       >
         <Star className="size-full fill-current" strokeWidth={1.8} />
       </span>

@@ -21,7 +21,7 @@ import {
   getUserBookTrackingRating,
   getUserBookTrackingStatus,
 } from "@/lib/data/book.data";
-import { BookOpen, Calendar, Layers, MessageSquare, Star } from "lucide-react";
+import { BookOpen, Calendar, Layers, MessageSquare } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -176,7 +176,6 @@ export default async function theDetailedBookPage({
 
               <div className="flex flex-wrap gap-3">
                 <div className="flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm">
-                  <Star className="h-4 w-4 text-muted-foreground" />
                   {totalRatings > 0 ? (
                     <>
                       <Rating
