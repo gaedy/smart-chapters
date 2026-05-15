@@ -80,11 +80,13 @@ const shelfLabels = {
 
 export function AddCustomBookDialog({
   compactOnCollapse = true,
+  showTriggerLabel = true,
   triggerClassName,
   triggerLabel = "Add Custom Book",
   triggerIcon: TriggerIcon = Plus,
 }: {
   compactOnCollapse?: boolean;
+  showTriggerLabel?: boolean;
   triggerClassName?: string;
   triggerLabel?: string;
   triggerIcon?: LucideIcon;
@@ -149,7 +151,7 @@ export function AddCustomBookDialog({
           <span
             className={cn(
               "truncate transition-opacity duration-200",
-              isCollapsed && "sr-only opacity-0",
+              (!showTriggerLabel || isCollapsed) && "sr-only opacity-0",
             )}
           >
             {triggerLabel}

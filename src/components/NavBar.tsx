@@ -1,4 +1,5 @@
 import { auth } from "auth";
+import { AddCustomBookNavbarAction } from "./AddCustomBookNavbarAction";
 import SearchBar from "./Search/searchBar";
 import { NavUser } from "./Sidebar/nav-user";
 import { SidebarTrigger } from "./Sidebar/sidebar";
@@ -29,7 +30,10 @@ export default async function Navbar() {
           <SearchBar />
         </div>
       </div>
-      <QuickSettingsDropdown />
+      <div className="flex shrink-0 items-center gap-2">
+        <AddCustomBookNavbarAction />
+        <QuickSettingsDropdown />
+      </div>
       <div className="flex items-center">
         <NavUser onlyAvatar={true} user={data.user} />
       </div>
