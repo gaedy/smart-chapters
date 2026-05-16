@@ -1,5 +1,7 @@
 import Navbar from "@/components/NavBar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
+import { AppEntryMotion } from "@/components/auth/app-entry-motion";
+import { MainPageTransition } from "@/components/auth/main-page-transition";
 import { getUserBookCounts } from "@/lib/data/book.data";
 import { auth } from "../../../auth";
 
@@ -12,12 +14,17 @@ export default async function HomeLayout({
   const libraryCount = session?.user?.id
     ? (await getUserBookCounts(session.user.id)).TOTAL
     : 0;
+  const initialUser = {
+    name: session?.user?.name ?? "Guest",
+    email: session?.user?.email ?? "guest@example.com",
+    avatar: session?.user?.image ?? "/avatar.jpg",
+  };
 
   return (
-    <div className="flex flex-col h-screen w-full">
+    <AppEntryMotion className="flex h-screen w-full flex-col">
       <div className="flex justify-between w-full h-screen overflow-hidden bg-background ">
         <div>
-          <AppSidebar libraryCount={libraryCount} />
+          <AppSidebar libraryCount={libraryCount} initialUser={initialUser} />
         </div>
 
         {/* main content */}
@@ -25,11 +32,11 @@ export default async function HomeLayout({
           <Navbar />
           <div className="sticky top-0 bg-foreground rounded-3xl flex-1 flex flex-col scrollbar-overlay">
             <div className="p-6 flex flex-col gap-4 overflow-x-hidden">
-              {children}
+              <MainPageTransition>{children}</MainPageTransition>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </AppEntryMotion>
   );
 }

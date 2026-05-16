@@ -30,7 +30,7 @@ export default async function Navbar() {
           <SearchBar />
         </div>
       </div>
-      <div className="flex shrink-0 items-center gap-2">
+      <div className="flex shrink-0 items-center ">
         <AddCustomBookNavbarAction />
         <QuickSettingsDropdown />
       </div>

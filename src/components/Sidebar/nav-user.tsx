@@ -37,8 +37,16 @@ export function NavUser({
 }) {
   const { isMobile, state } = useSidebar();
   const { data: session, status } = useSession();
+  const displayUser = {
+    name: session?.user?.name ?? user.name,
+    email: session?.user?.email ?? user.email,
+    avatar: session?.user?.image ?? user.avatar,
+  };
+  const hasInitialUser = user.email !== "guest@example.com";
+  const isSignedIn =
+    status === "authenticated" || (status === "loading" && hasInitialUser);
 
-  if (!session) {
+  if (!isSignedIn) {
     return (
       <SidebarMenu>
         <SidebarMenuItem>
@@ -71,8 +79,8 @@ export function NavUser({
                 className="rounded-full cursor-pointer p-0 w-9 h-9 flex items-center justify-center"
               >
                 <Avatar className="size-9 rounded-full">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarImage src={displayUser.avatar} alt={displayUser.name} />
+                  <AvatarFallback>{getInitials(displayUser.name)}</AvatarFallback>
                 </Avatar>
               </SidebarMenuButton>
             ) : (
@@ -82,13 +90,13 @@ export function NavUser({
         ${state === "collapsed" && !isMobile && "rounded-full"}`}
               >
                 <Avatar className="rounded-full border border-border">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarImage src={displayUser.avatar} alt={displayUser.name} />
+                  <AvatarFallback>{getInitials(displayUser.name)}</AvatarFallback>
                 </Avatar>
 
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">{displayUser.name}</span>
+                  <span className="truncate text-xs">{displayUser.email}</span>
                 </div>
 
                 <ChevronsUpDown className="ml-auto size-4" />
@@ -104,12 +112,12 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 border border-border">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarImage src={displayUser.avatar} alt={displayUser.name} />
+                  <AvatarFallback>{getInitials(displayUser.name)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">{displayUser.name}</span>
+                  <span className="truncate text-xs">{displayUser.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -143,4 +151,13 @@ export function NavUser({
       </SidebarMenuItem>
     </SidebarMenu>
   );
+}
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
 }

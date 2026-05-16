@@ -29,22 +29,29 @@ import Logo from "../ui/Logo";
 
 export function AppSidebar({
   libraryCount = 0,
+  initialUser,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {
   libraryCount?: number;
+  initialUser?: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
   const { state, isMobile } = useSidebar();
 
   const pathname = usePathname();
 
   const { data: session } = useSession();
+  const user = {
+    name: session?.user?.name ?? initialUser?.name ?? "Guest",
+    email: session?.user?.email ?? initialUser?.email ?? "guest@example.com",
+    avatar: session?.user?.image ?? initialUser?.avatar ?? "/avatar.jpg",
+  };
 
   const data = {
-    user: {
-      name: session?.user?.name ?? "Guest",
-      email: session?.user?.email ?? "guest@example.com",
-      avatar: session?.user?.image ?? "/avatar.jpg",
-    },
+    user,
     navMain: [
       {
         title: "Home",

@@ -1,3 +1,4 @@
+import { AppEntryMotion } from "@/components/auth/app-entry-motion";
 import Logo from "@/components/ui/Logo";
 import Image from "next/image";
 
@@ -7,7 +8,10 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center ">
+    <AppEntryMotion
+      animateOnMount={false}
+      className="w-full min-h-screen flex flex-col justify-center items-center bg-background"
+    >
       {/* <Logo /> */}
 
       <div
@@ -35,6 +39,6 @@ export default function AuthLayout({
           </div>
         </div>
       </div>
-    </div>
+    </AppEntryMotion>
   );
 }
