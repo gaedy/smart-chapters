@@ -1,7 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookPlus, ImagePlus, Loader2, Plus, X, type LucideIcon } from "lucide-react";
+import {
+  BookPlus,
+  ImagePlus,
+  Loader2,
+  Plus,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { Resolver, useForm, useFormContext } from "react-hook-form";
@@ -158,7 +165,7 @@ export function AddCustomBookDialog({
                 triggerClassName,
               )}
             >
-              <TriggerIcon className="size-4 shrink-0" />
+              <TriggerIcon className=" shrink-0" />
 
               <span
                 className={cn(
