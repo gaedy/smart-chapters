@@ -141,7 +141,7 @@ export function AddCustomBookDialog({
           title={triggerLabel}
           aria-label={triggerLabel}
           className={cn(
-            "mx-2 h-9 justify-start gap-2 rounded-md px-3 shadow-none transition-[width,padding] duration-300",
+            "mx-2 min-h-10 justify-start gap-2 rounded-md px-3 shadow-none transition-[width,padding] duration-300 md:min-h-9",
             isCollapsed && "mx-auto size-9 justify-center px-0",
             triggerClassName,
           )}

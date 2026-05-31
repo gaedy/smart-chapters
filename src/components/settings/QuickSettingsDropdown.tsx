@@ -45,7 +45,7 @@ function PreferenceButton({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`flex h-9 items-center justify-center gap-2 rounded-full px-3 text-xs font-medium transition ${
+      className={`flex min-h-10 items-center justify-center gap-2 rounded-full px-3 text-xs font-medium transition ${
         active
           ? " bg-theme-accent/80 text-accent"
           : " bg-foreground hover:bg-foreground-dark text-muted-foreground hover:text-primary"
@@ -86,7 +86,7 @@ export function QuickSettingsDropdown() {
         <button
           type="button"
           aria-label="Open quick settings"
-          className="flex size-9  items-center justify-center rounded-full bg-foreground text-muted-foreground transition-all duration-200 hover:text-primary hover:shadow-sm active:scale-95 data-[state=open]:bg-theme-accent-soft data-[state=open]:text-accent-foreground"
+          className="flex size-11 items-center justify-center rounded-full bg-foreground text-muted-foreground transition-all duration-200 hover:text-primary hover:shadow-sm active:scale-95 data-[state=open]:bg-theme-accent-soft data-[state=open]:text-accent-foreground md:size-9"
         >
           <Settings className="h-4 w-4" />
         </button>

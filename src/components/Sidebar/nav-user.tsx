@@ -76,9 +76,9 @@ export function NavUser({
             {onlyAvatar ? (
               <SidebarMenuButton
                 size="lg"
-                className="rounded-full cursor-pointer p-0 w-9 h-9 flex items-center justify-center"
+                className="flex size-11 cursor-pointer items-center justify-center rounded-full p-0 md:size-9"
               >
-                <Avatar className="size-9 rounded-full">
+                <Avatar className="size-11 rounded-full md:size-9">
                   <AvatarImage src={displayUser.avatar} alt={displayUser.name} />
                   <AvatarFallback>{getInitials(displayUser.name)}</AvatarFallback>
                 </Avatar>

@@ -55,7 +55,7 @@ export function BookShelf({
         }}
         className="w-full"
       >
-        <div className="mb-5 flex items-start justify-between gap-4">
+        <div className="mb-4 flex flex-col gap-3 sm:mb-5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <div className="flex min-w-0 flex-col gap-1.5">
             <h2
               className={cn(
@@ -72,7 +72,7 @@ export function BookShelf({
             )}
           </div>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2 self-start">
             {href && (
               <Button
                 asChild
@@ -96,11 +96,11 @@ export function BookShelf({
         </div>
 
         <div className="relative">
-          <CarouselContent className="-ml-5 py-2">
+          <CarouselContent className="-ml-4 py-2 sm:-ml-5">
             {visibleBooks.map((book) => (
               <CarouselItem
                 key={book.id}
-                className={cn("pl-5", "basis-44", itemClassName)}
+                className={cn("pl-4 sm:pl-5", "basis-[min(10.75rem,46vw)] sm:basis-44", itemClassName)}
               >
                 <Link
                   href={`/book/${book.id}`}

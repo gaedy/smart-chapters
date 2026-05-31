@@ -94,7 +94,7 @@ export default async function StatsPage() {
       />
 
       <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="flex flex-col gap-5 rounded-3xl bg-background p-5">
+        <div className="flex flex-col gap-5 rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
           <div className="flex items-center gap-3">
             <div className="rounded-full bg-foreground p-3 text-muted-foreground">
               <Target className="h-5 w-5" />
@@ -110,7 +110,7 @@ export default async function StatsPage() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-          <div className="rounded-3xl bg-background p-5">
+          <div className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
             <div className="flex items-center gap-2 text-muted-foreground">
               <Star className="h-4 w-4" />
               <span className="text-sm">Average rating</span>
@@ -119,7 +119,7 @@ export default async function StatsPage() {
               {averageRating ? averageRating.toFixed(1) : "-"}
             </p>
           </div>
-          <div className="rounded-3xl bg-background p-5">
+          <div className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
             <div className="flex items-center gap-2 text-muted-foreground">
               <BookOpen className="h-4 w-4" />
               <span className="text-sm">Pages read</span>
@@ -130,7 +130,7 @@ export default async function StatsPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-3xl bg-background p-5">
+        <div className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
           <div className="mb-5 flex items-center gap-2">
             <ChartNoAxesColumn className="h-4 w-4 text-muted-foreground" />
             <h2 className="font-semibold">Favorite genres</h2>
@@ -153,15 +153,15 @@ export default async function StatsPage() {
           </div>
         </div>
 
-        <div className="rounded-3xl bg-background p-5">
+        <div className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
           <h2 className="mb-5 font-semibold">Top authors</h2>
           <div className="flex flex-col gap-3">
             {topAuthors.map(([author, count]) => (
               <div
                 key={author}
-                className="flex items-center justify-between rounded-2xl bg-foreground px-4 py-3"
+                className="flex min-w-0 items-center justify-between gap-3 rounded-2xl bg-foreground px-4 py-3"
               >
-                <span className="text-sm font-medium">{author}</span>
+                <span className="truncate text-sm font-medium">{author}</span>
                 <span className="text-xs text-muted-foreground">
                   {count} {count === 1 ? "book" : "books"}
                 </span>

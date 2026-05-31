@@ -119,7 +119,7 @@ export function LibraryView({
           <div className="flex flex-wrap items-center gap-2">
             <AddCustomBookDialog
               compactOnCollapse={false}
-              triggerClassName="mx-0 h-9 rounded-full px-4"
+              triggerClassName="mx-0 min-h-10 rounded-full px-4"
               triggerLabel="Add Custom Book"
               triggerIcon={Plus}
             />
@@ -130,8 +130,8 @@ export function LibraryView({
         }
       />
 
-      <div className="flex flex-col gap-4 rounded-3xl bg-background p-3 sm:p-4">
-        <div className="flex gap-2 overflow-x-auto p-2">
+      <div className="flex flex-col gap-4 rounded-2xl bg-background p-2 sm:rounded-3xl sm:p-4">
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 py-2">
           {tabs.map((tab) => (
             <Button
               asChild

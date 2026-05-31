@@ -48,11 +48,10 @@ export default function BookCard({
 
   return (
     <div
-      className={`flex flex-col w-fit gap-2 rounded-3xl group cursor-pointer ${className}`}
+      className={`group flex w-[min(10rem,42vw)] cursor-pointer flex-col gap-2 rounded-2xl sm:w-40 sm:rounded-3xl ${className}`}
     >
       <div
-        className="flex w-40 shadow-lg hover:shadow-xl transition-all duration-300
-        relative h-60 rounded-2xl overflow-hidden group-hover:scale-105"
+        className="relative flex aspect-[2/3] w-full overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl group-hover:scale-[1.02] sm:rounded-2xl sm:group-hover:scale-105"
       >
         <Image
           src={imageSrc}
@@ -89,8 +88,12 @@ export default function BookCard({
       </div>
 
       <div className="flex flex-col gap-1">
-        <div className="w-40 text-sm group-hover:underline">{title}</div>
-        <div className="w-40 text-xs group-hover:underline">{author}</div>
+        <div className="line-clamp-2 text-sm leading-5 group-hover:underline">
+          {title}
+        </div>
+        <div className="truncate text-xs text-muted-foreground group-hover:underline">
+          {author}
+        </div>
       </div>
     </div>
   );

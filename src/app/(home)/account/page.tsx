@@ -54,9 +54,9 @@ export default async function AccountPage() {
       />
 
       <div className="grid gap-4 lg:grid-cols-[1fr_1.1fr]">
-        <section className="rounded-3xl bg-background p-5">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-20 w-20">
+        <section className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
+          <div className="flex min-w-0 items-center gap-4">
+            <Avatar className="h-16 w-16 shrink-0 sm:h-20 sm:w-20">
               {session.user.image ? (
                 <AvatarImage src={session.user.image} alt="User avatar" />
               ) : (
@@ -65,11 +65,11 @@ export default async function AccountPage() {
                 </AvatarFallback>
               )}
             </Avatar>
-            <div>
+            <div className="min-w-0">
               <h2 className="text-xl font-semibold">
                 {session.user.name ?? "Reader"}
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="truncate text-sm text-muted-foreground">
                 {session.user.email}
               </p>
             </div>
@@ -96,17 +96,17 @@ export default async function AccountPage() {
         </section>
 
         <section className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-3xl bg-background p-5">
+          <div className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
             <BookOpen className="mb-4 h-5 w-5 text-muted-foreground" />
             <p className="text-3xl font-bold">{counts.READING}</p>
             <p className="text-sm text-muted-foreground">Currently reading</p>
           </div>
-          <div className="rounded-3xl bg-background p-5">
+          <div className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
             <Heart className="mb-4 h-5 w-5 text-muted-foreground" />
             <p className="text-3xl font-bold">{counts.WANT_TO_READ}</p>
             <p className="text-sm text-muted-foreground">Want to read</p>
           </div>
-          <div className="rounded-3xl bg-background p-5">
+          <div className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
             <Target className="mb-4 h-5 w-5 text-muted-foreground" />
             <p className="text-3xl font-bold">{counts.FINISHED}</p>
             <p className="text-sm text-muted-foreground">Finished</p>
@@ -115,7 +115,7 @@ export default async function AccountPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <section className="rounded-3xl bg-background p-5">
+        <section className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
           <h2 className="mb-4 font-semibold">Reading goal snapshot</h2>
           <p className="mb-5 text-sm text-muted-foreground">
             {counts.FINISHED} of {goal} books finished this year
@@ -123,7 +123,7 @@ export default async function AccountPage() {
           <Progress value={progress} />
         </section>
 
-        <section className="rounded-3xl bg-background p-5">
+        <section className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
           <h2 className="mb-4 font-semibold">Favorite genres</h2>
           <div className="flex flex-wrap gap-2">
             {favoriteGenres.length > 0 ? (

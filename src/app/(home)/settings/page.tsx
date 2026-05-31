@@ -22,7 +22,7 @@ function SettingsSection({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-3xl bg-background p-5">
+    <section className="rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
       <div className="mb-5 flex items-start gap-3">
         <div className="rounded-full bg-foreground p-3 text-muted-foreground">
           <Icon className="h-5 w-5" />
@@ -49,12 +49,12 @@ function SettingsRow({
   children: ReactNode;
 }) {
   return (
-    <div className="grid gap-3 rounded-2xl bg-foreground p-4 md:grid-cols-[1fr_auto] md:items-center">
+    <div className="grid gap-3 rounded-2xl bg-foreground p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
       <div>
         <p className="text-sm font-medium">{label}</p>
         <p className="text-xs leading-5 text-muted-foreground">{description}</p>
       </div>
-      {children}
+      <div className="flex min-w-0 justify-start md:justify-end">{children}</div>
     </div>
   );
 }

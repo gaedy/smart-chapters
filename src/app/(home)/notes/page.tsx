@@ -103,7 +103,7 @@ export default async function NotesPage({
         }
       />
 
-      <form className="grid gap-3 rounded-3xl bg-background p-4 md:grid-cols-[1fr_auto]">
+      <form className="grid gap-3 rounded-2xl bg-background p-3 sm:rounded-3xl sm:p-4 md:grid-cols-[1fr_auto]">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -116,7 +116,7 @@ export default async function NotesPage({
             <input type="hidden" name="type" value={selectedType} />
           )}
         </div>
-        <div className="flex gap-2 overflow-x-auto">
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1">
           {filterItems.map((item) => (
             <Button
               asChild
@@ -151,7 +151,7 @@ export default async function NotesPage({
             {filteredNotes.map((note) => (
               <article
                 key={note.id}
-                className="rounded-3xl bg-background p-5 transition hover:shadow-md"
+                className="rounded-2xl bg-background p-4 transition hover:shadow-md sm:rounded-3xl sm:p-5"
               >
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div className="flex items-center gap-3">
@@ -183,7 +183,7 @@ export default async function NotesPage({
             ))}
           </div>
 
-          <aside className="h-fit rounded-3xl bg-background p-5">
+          <aside className="h-fit rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
             <div className="mb-4 flex items-center gap-2">
               <BookMarked className="h-4 w-4 text-muted-foreground" />
               <h2 className="font-semibold">Books with notes</h2>

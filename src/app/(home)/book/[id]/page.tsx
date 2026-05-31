@@ -114,12 +114,12 @@ export default async function theDetailedBookPage({
     : null;
 
   return (
-    <div className="flex w-full flex-col gap-8">
+    <div className="flex w-full flex-col gap-6 sm:gap-8">
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="rounded-3xl bg-background p-4 sm:p-6">
+        <div className="rounded-2xl bg-background p-3 sm:rounded-3xl sm:p-6">
           <div className="grid gap-6 lg:grid-cols-[180px_minmax(0,1fr)]">
             <aside className="flex flex-col items-center gap-5">
-              <div className="relative h-72 w-48 overflow-hidden rounded-xl shadow-lg">
+              <div className="relative aspect-[2/3] w-40 max-w-full overflow-hidden rounded-xl shadow-lg sm:w-48">
                 <Image
                   src={imgSource}
                   alt={`${book.title} cover`}
@@ -165,7 +165,7 @@ export default async function theDetailedBookPage({
                   </span>
                 )}
                 <div className="flex flex-col gap-2">
-                  <h1 className="text-3xl font-medium leading-tight sm:text-4xl">
+                  <h1 className="text-2xl font-medium leading-tight sm:text-4xl">
                     {book.title}
                   </h1>
                   <p className="text-base text-muted-foreground sm:text-lg">
@@ -174,8 +174,8 @@ export default async function theDetailedBookPage({
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                <div className="flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                <div className="flex min-h-10 items-center gap-2 rounded-full bg-foreground px-3 py-2 text-sm sm:px-4">
                   {totalRatings > 0 ? (
                     <>
                       <Rating
@@ -192,7 +192,7 @@ export default async function theDetailedBookPage({
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-muted-foreground">
+                <div className="flex min-h-10 items-center gap-2 rounded-full bg-foreground px-3 py-2 text-sm text-muted-foreground sm:px-4">
                   <MessageSquare className="h-4 w-4" />
                   <span>
                     {ratingsNumber} ratings
@@ -248,7 +248,7 @@ export default async function theDetailedBookPage({
             userId={session.user.id}
           />
         ) : (
-          <aside className="flex h-fit flex-col gap-3 rounded-3xl bg-background p-5">
+          <aside className="flex h-fit flex-col gap-3 rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
             <h2 className="font-semibold">Reading status</h2>
             <p className="text-sm leading-6 text-muted-foreground">
               {isTracked
@@ -280,7 +280,7 @@ export default async function theDetailedBookPage({
             </div>
           </div>
 
-          <div className="grid gap-4 rounded-2xl bg-background p-5 shadow-sm md:grid-cols-[220px_minmax(0,1fr)]">
+          <div className="grid gap-4 rounded-2xl bg-background p-4 shadow-sm sm:p-5 md:grid-cols-[220px_minmax(0,1fr)]">
             <div className="flex flex-col justify-center gap-3 border-b pb-4 md:border-b-0 md:border-r md:pb-0 md:pr-5">
               <div>
                 <p className="text-sm text-muted-foreground">Average rating</p>
@@ -313,7 +313,7 @@ export default async function theDetailedBookPage({
                 return (
                   <div
                     key={star}
-                    className="grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3 text-sm"
+                    className="grid grid-cols-[42px_minmax(0,1fr)_32px] items-center gap-2 text-sm sm:grid-cols-[44px_minmax(0,1fr)_44px] sm:gap-3"
                   >
                     <span className="text-muted-foreground">{star} star</span>
                     <div

@@ -117,13 +117,13 @@ export default async function ExplorePage({
   };
 
   return (
-    <div className="flex w-full flex-col gap-10">
+    <div className="flex w-full flex-col gap-8 sm:gap-10">
       <PageHeader
         title="Explore Books"
         description="Discover thoughtful picks, familiar genres, and warm shelves of books to add to your next chapter."
       />
 
-      <form className="grid gap-4 rounded-3xl bg-background p-4 lg:grid-cols-[1fr_auto]">
+      <form className="grid gap-3 rounded-2xl bg-background p-3 sm:rounded-3xl sm:p-4 lg:grid-cols-[1fr_auto]">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -138,7 +138,7 @@ export default async function ExplorePage({
           )}
           {selectedShelf && <input type="hidden" name="shelf" value={selectedShelf} />}
         </div>
-        <Button className="h-12 rounded-full">
+        <Button className="h-12 w-full rounded-full lg:w-auto">
           <Sparkles className="mr-2 h-4 w-4" />
           Find a book
         </Button>
@@ -167,7 +167,7 @@ export default async function ExplorePage({
             title="Browse by genre"
             description="Quick paths into the shelves you return to most."
           />
-          <div className="flex gap-2 overflow-x-auto pb-1">
+          <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
             {genreLabels.map((genre) => (
               <Button
                 asChild
@@ -205,7 +205,7 @@ export default async function ExplorePage({
       />
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="flex min-h-44 flex-col justify-between rounded-3xl bg-background p-5">
+        <div className="flex min-h-44 flex-col justify-between rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
           <div className="flex items-center gap-3">
             <div className="rounded-full bg-foreground p-3 text-muted-foreground">
               <BookOpenCheck className="h-5 w-5" />
@@ -220,14 +220,14 @@ export default async function ExplorePage({
           <Button
             asChild
             variant="ghost"
-            className="mt-6 w-fit rounded-full bg-foreground"
+            className="mt-6 w-full rounded-full bg-foreground sm:w-fit"
           >
             <Link href={buildExploreHref({ collection: "weekend", shelf: "" })}>
               View collection
             </Link>
           </Button>
         </div>
-        <div className="flex min-h-44 flex-col justify-between rounded-3xl bg-background p-5">
+        <div className="flex min-h-44 flex-col justify-between rounded-2xl bg-background p-4 sm:rounded-3xl sm:p-5">
           <div className="flex items-center gap-3">
             <div className="rounded-full bg-foreground p-3 text-muted-foreground">
               <LibraryBig className="h-5 w-5" />
@@ -242,7 +242,7 @@ export default async function ExplorePage({
           <Button
             asChild
             variant="ghost"
-            className="mt-6 w-fit rounded-full bg-foreground"
+            className="mt-6 w-full rounded-full bg-foreground sm:w-fit"
           >
             <Link href={buildExploreHref({ shelf: "classics", collection: "" })}>
               Browse shelf

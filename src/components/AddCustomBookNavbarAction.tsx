@@ -7,10 +7,10 @@ export function AddCustomBookNavbarAction() {
   return (
     <AddCustomBookDialog
       compactOnCollapse={true}
-      showTriggerLabel={true}
+      showTriggerLabel={false}
       triggerIcon={Plus}
       triggerLabel="Add book"
-      triggerClassName=" justify-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary"
+      triggerClassName="mx-0 size-11 justify-center rounded-full bg-foreground px-0 text-muted-foreground hover:bg-foreground-dark hover:text-primary md:h-9 md:w-auto md:px-3"
     />
   );
 }

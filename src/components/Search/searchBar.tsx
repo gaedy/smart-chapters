@@ -97,10 +97,10 @@ export default function SearchBar() {
 
   return (
     <div ref={ref} className="relative w-full">
-      <div className="flex h-11 p-1 w-full items-center gap-1 rounded-full bg-foreground transition-colors duration-200 focus-within:bg-foreground-dark ">
+      <div className="flex h-11 w-full items-center gap-1 rounded-full bg-foreground p-1 transition-colors duration-200 focus-within:bg-foreground-dark sm:h-11">
         <SearchIcon
-          size={20}
-          className="pointer-events-none text-secondary ml-3"
+          size={18}
+          className="pointer-events-none ml-2 shrink-0 text-secondary sm:ml-3"
         />
 
         <div className="relative min-w-0 flex-1">
@@ -110,8 +110,8 @@ export default function SearchBar() {
             onFocus={() => {
               if (hasQuery) setOpen(true);
             }}
-            placeholder="Search by title or author..."
-            className="h-10 w-full rounded-full px-2 pr-10 text-sm text-primary outline-none placeholder:text-secondary/70"
+            placeholder="Search books..."
+            className="h-10 w-full rounded-full px-1.5 pr-9 text-sm text-primary outline-none placeholder:text-secondary/70 sm:px-2 sm:pr-10"
           />
 
           {hasQuery && (
@@ -121,7 +121,7 @@ export default function SearchBar() {
               size="icon"
               aria-label="Clear search"
               onClick={clearSearch}
-              className="absolute right-1 top-1/2 size-7 -translate-y-1/2 rounded-full text-secondary hover:bg-background/80 hover:text-primary"
+              className="absolute right-0.5 top-1/2 size-8 -translate-y-1/2 rounded-full text-secondary hover:bg-background/80 hover:text-primary sm:right-1 sm:size-7"
             >
               <XIcon className="size-4" />
             </Button>
@@ -135,7 +135,7 @@ export default function SearchBar() {
               variant="ghost"
               size="sm"
               aria-label={`Search filter: ${activeFilterLabel}`}
-              className="h-full shrink-0 rounded-full bg-background/55 px-3 text-xs font-medium text-secondary shadow-none hover:bg-accent hover:text-primary"
+              className="h-9 w-9 shrink-0 rounded-full bg-background/55 px-0 text-xs font-medium text-secondary shadow-none hover:bg-accent hover:text-primary sm:w-auto sm:px-3"
             >
               <SlidersHorizontal className="size-4" />
               <span className="hidden sm:inline">{activeFilterLabel}</span>
@@ -160,14 +160,14 @@ export default function SearchBar() {
       </div>
 
       {open && (
-        <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-2xl bg-foreground-dark p-2">
+        <div className="absolute z-50 mt-1 max-h-[min(24rem,calc(100dvh-7rem))] w-full overflow-y-auto rounded-2xl bg-foreground-dark p-1.5 shadow-xl shadow-primary/10 sm:p-2">
           {results.length > 0 ? (
             results.map((b) => (
               <Link
                 key={b.id}
                 href={`/book/${b.id}`}
                 onClick={closeResults}
-                className="flex items-center gap-3 rounded-xl p-2.5 transition-colors hover:bg-foreground focus-visible:bg-foreground focus-visible:outline-none"
+                className="flex min-h-16 items-center gap-3 rounded-xl p-2.5 transition-colors hover:bg-foreground focus-visible:bg-foreground focus-visible:outline-none"
               >
                 <div className="relative h-14 w-10 shrink-0 overflow-hidden rounded-md bg-foreground shadow-sm">
                   <Image

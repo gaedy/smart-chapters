@@ -58,7 +58,7 @@ export function BookStats({
         {stats.map((item, index) => (
           <div
             key={index}
-            className="group flex min-h-36 w-full flex-col justify-between rounded-2xl border border-background/70 bg-background/90 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-background"
+            className="group flex min-h-32 w-full flex-col justify-between rounded-2xl border border-background/70 bg-background/90 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:bg-background sm:min-h-36 sm:p-5"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex min-w-0 flex-col gap-1">

@@ -21,17 +21,17 @@ export default async function HomeLayout({
   };
 
   return (
-    <AppEntryMotion className="flex h-screen w-full flex-col">
-      <div className="flex justify-between w-full h-screen overflow-hidden bg-background ">
+    <AppEntryMotion className="flex h-dvh w-full flex-col">
+      <div className="flex h-dvh w-full justify-between overflow-hidden bg-background">
         <div>
           <AppSidebar libraryCount={libraryCount} initialUser={initialUser} />
         </div>
 
         {/* main content */}
-        <div className="flex flex-col gap-2  flex-1 py-2 md:py-2 md:pr-2 md:px-0 px-2 overflow-hidden">
+        <div className="flex min-w-0 flex-1 flex-col gap-2 overflow-hidden px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-[max(0.5rem,env(safe-area-inset-top))] md:px-0 md:py-2 md:pr-2">
           <Navbar />
-          <div className="sticky top-0 bg-foreground rounded-3xl flex-1 flex flex-col scrollbar-overlay">
-            <div className="p-6 flex flex-col gap-4 overflow-x-hidden">
+          <div className="sticky top-0 flex min-h-0 flex-1 flex-col rounded-2xl bg-foreground scrollbar-overlay sm:rounded-3xl">
+            <div className="flex min-w-0 flex-col gap-4 overflow-x-hidden p-3 sm:p-5 lg:p-6">
               <MainPageTransition>{children}</MainPageTransition>
             </div>
           </div>

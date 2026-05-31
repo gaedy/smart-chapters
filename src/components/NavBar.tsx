@@ -17,24 +17,28 @@ export default async function Navbar() {
   };
 
   return (
-    <div className="flex h-12 px-2 md:px-0 items-center justify-between gap-2">
-      <div className="flex min-w-0 flex-1 items-center gap-2">
+    <div className="grid w-full gap-2 px-0 sm:px-2 md:flex md:h-12 md:items-center md:justify-between md:px-0">
+      <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 md:flex md:flex-1">
         <div className="block md:hidden">
           <SidebarTrigger
             aria-label="Open sidebar"
-            className="size-9 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground hover:text-primary"
+            className="size-11 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary"
           />
         </div>
 
-        <div className="w-full max-w-md">
+        <div className="min-w-0 md:w-full md:max-w-md">
           <SearchBar />
         </div>
+
+        <div className="flex md:hidden">
+          <NavUser onlyAvatar={true} user={data.user} />
+        </div>
       </div>
-      <div className="flex shrink-0 items-center ">
+      <div className="flex min-w-0 items-center justify-end gap-2 md:shrink-0">
         <AddCustomBookNavbarAction />
         <QuickSettingsDropdown />
       </div>
-      <div className="flex items-center">
+      <div className="hidden items-center md:flex">
         <NavUser onlyAvatar={true} user={data.user} />
       </div>
     </div>
