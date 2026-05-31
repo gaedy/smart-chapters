@@ -8,7 +8,13 @@ import {
   searchBarBooks,
   type SearchFilter,
 } from "@/lib/actions/searchbar.actions";
-import { CheckIcon, SearchIcon, SlidersHorizontal, XIcon } from "lucide-react";
+import {
+  CheckIcon,
+  Funnel,
+  SearchIcon,
+  SlidersHorizontal,
+  XIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -132,12 +138,12 @@ export default function SearchBar() {
           <DropdownMenuTrigger asChild>
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               size="sm"
               aria-label={`Search filter: ${activeFilterLabel}`}
-              className="h-9 w-9 shrink-0 rounded-full bg-background/55 px-0 text-xs font-medium text-secondary shadow-none hover:bg-accent hover:text-primary sm:w-auto sm:px-3"
+              className=" shrink-0 rounded-full text-xs sm:mr-0.5 mr-0"
             >
-              <SlidersHorizontal className="size-4" />
+              <Funnel className="size-4" />
               <span className="hidden sm:inline">{activeFilterLabel}</span>
             </Button>
           </DropdownMenuTrigger>

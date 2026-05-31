@@ -33,12 +33,13 @@ export default async function Home() {
 
   return (
     <div className="mx-auto flex h-full w-full max-w-7xl flex-col gap-8">
-      
-
       <PageHeader
-        title="Welcome back to Smart Chapters"
-        description="A calm view of what you are reading now, what is waiting next, and
-              the shape of your library."
+        title={
+          session.user?.name
+            ? `Good to see you, ${session.user.name.split(" ")[0]}!`
+            : "Welcome to Smart Chapters"
+        }
+        description="A calm view of what you're reading now, what's next, and your growing library."
       />
 
       <BookStats

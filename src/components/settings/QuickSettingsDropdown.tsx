@@ -28,6 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 function PreferenceButton({
   active,
@@ -83,13 +84,13 @@ export function QuickSettingsDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button
-          type="button"
+        <Button
+          variant="secondary"
           aria-label="Open quick settings"
           className="flex size-11 items-center justify-center rounded-full bg-foreground text-muted-foreground transition-all duration-200 hover:text-primary hover:shadow-sm active:scale-95 data-[state=open]:bg-theme-accent-soft data-[state=open]:text-accent-foreground md:size-9"
         >
           <Settings className="h-4 w-4" />
-        </button>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
