@@ -31,7 +31,7 @@ export default async function HomeLayout({
         <div className="flex min-w-0 flex-1 flex-col gap-2 overflow-hidden px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-[max(0.5rem,env(safe-area-inset-top))] md:px-0 md:py-2 md:pr-2">
           <Navbar />
           <div className="sticky top-0 flex min-h-0 flex-1 flex-col rounded-2xl bg-foreground scrollbar-overlay sm:rounded-3xl">
-            <div className="flex min-w-0 flex-col gap-4 overflow-x-hidden p-3 sm:p-5 lg:p-6">
+            <div className="flex min-w-0 flex-col gap-4 overflow-x-hidden p-4 sm:p-5 lg:p-6">
               <MainPageTransition>{children}</MainPageTransition>
             </div>
           </div>

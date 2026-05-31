@@ -138,10 +138,10 @@ export function AppSidebar({
               isMobile
                 ? "Close sidebar"
                 : state === "collapsed"
-                ? "Expand sidebar"
-                : "Collapse sidebar"
+                  ? "Expand sidebar"
+                  : "Collapse sidebar"
             }
-            className="size-11 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary md:size-9"
+            className="size-9 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary md:size-9"
           />
         </div>
       </SidebarHeader>

@@ -22,7 +22,7 @@ export default async function Navbar() {
         <div className="block md:hidden">
           <SidebarTrigger
             aria-label="Open sidebar"
-            className="size-11 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary"
+            className="size-10 shrink-0 place-self-center rounded-full bg-foreground text-muted-foreground hover:bg-foreground-dark hover:text-primary"
           />
         </div>
 

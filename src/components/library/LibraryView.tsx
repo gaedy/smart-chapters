@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AddCustomBookDialog } from "@/components/Sidebar/add-custom-book-dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type StatusFilter = "all" | "READING" | "FINISHED" | "WANT_TO_READ";
 type SortKey = "updated" | "title" | "author" | "rating" | "progress";
@@ -115,76 +116,39 @@ export function LibraryView({
       <PageHeader
         title="Library"
         description="Search, sort, and move through every book you are tracking."
-        action={
-          <div className="flex flex-wrap items-center gap-2">
-            <AddCustomBookDialog
-              compactOnCollapse={false}
-              triggerClassName="mx-0 min-h-10 rounded-full px-4"
-              triggerLabel="Add Custom Book"
-              triggerIcon={Plus}
-            />
-            {/* <Badge variant="outline" className="px-3 py-1 text-sm">
-              {countLabel}
-            </Badge> */}
-          </div>
-        }
       />
 
-      <div className="flex flex-col gap-4 rounded-2xl bg-background p-2 sm:rounded-3xl sm:p-4">
-        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 py-2">
-          {tabs.map((tab) => (
+      {/* <AddCustomBookDialog
+          compactOnCollapse={false}
+          triggerClassName="mx-0 rounded-full px-4"
+          triggerLabel="Add Custom Book"
+          triggerIcon={Plus}
+        /> */}
+
+      <div className="flex flex-wrap gap-2 py-2">
+        {tabs.map((tab) => {
+          const active = status === tab.status;
+
+          return (
             <Button
-              asChild
               key={tab.status}
-              size="lg"
-              className={`group shrink-0 rounded-full shadow-none ${
-                status === tab.status
-                  ? "bg-theme-accent text-theme-accent-foreground hover:bg-theme-accent/90"
-                  : "bg-foreground text-primary/80 hover:bg-foreground-dark hover:text-primary"
-              }`}
+              asChild
+              variant={active ? "default" : "outline"}
+              size="default"
+              className=" rounded-full h-9 text-sm"
             >
-              <Link href={tab.href}>
+              <Link href={tab.href} className="flex items-center gap-2">
                 <span>{tab.label}</span>
+
                 <span
-                  className={`ml-1.5 text-sm font-medium tabular-nums ${
-                    status === tab.status
-                      ? "text-primary bg-theme-accent-soft p-1 px-2.5 rounded-full text-xs"
-                      : "text-secondary group-hover:text-primary text-xs"
-                  }`}
+                  className={`text-xs tabular-nums  ${active ? "opacity-100 font-semibold" : "opacity-70"}`}
                 >
                   {counts[tab.status]}
                 </span>
               </Link>
             </Button>
-          ))}
-        </div>
-
-        {/* <form className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              name="q"
-              defaultValue={query}
-              placeholder="Search your library..."
-              className="rounded-full bg-foreground pl-9  "
-            />
-          </div>
-          <select
-            name="sort"
-            defaultValue={sort}
-            className="h-10 rounded-full border border-input bg-foreground px-4 text-sm"
-          >
-            <option value="updated">Recently updated</option>
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="rating">Rating</option>
-            <option value="progress">Progress</option>
-          </select>
-          <Button type="submit" className="rounded-full">
-            <SlidersHorizontal className="mr-2 h-4 w-4" />
-            Apply
-          </Button>
-        </form> */}
+          );
+        })}
       </div>
 
       <BookGrid
