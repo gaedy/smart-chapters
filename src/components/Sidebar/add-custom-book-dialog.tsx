@@ -80,18 +80,28 @@ const shelfLabels = {
 
 export function AddCustomBookDialog({
   compactOnCollapse = true,
+  hideTrigger = false,
+  onOpenChange,
+  open: controlledOpen,
   showTriggerLabel = true,
+  trigger,
   triggerClassName,
   triggerLabel = "Add Custom Book",
   triggerIcon: TriggerIcon = Plus,
 }: {
   compactOnCollapse?: boolean;
+  hideTrigger?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  open?: boolean;
   showTriggerLabel?: boolean;
+  trigger?: React.ReactNode;
   triggerClassName?: string;
   triggerLabel?: string;
   triggerIcon?: LucideIcon;
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false);
+  const open = controlledOpen ?? uncontrolledOpen;
+  const setOpen = onOpenChange ?? setUncontrolledOpen;
 
   const [selectedCover, setSelectedCover] = React.useState<{
     name: string;
@@ -135,31 +145,35 @@ export function AddCustomBookDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          type="button"
-          title={triggerLabel}
-          aria-label={triggerLabel}
-          className={cn(
-            "mx-2 min-h-10 justify-start gap-2 rounded-md px-3 shadow-none transition-[width,padding] duration-300 md:min-h-9",
-            isCollapsed && "mx-auto size-9 justify-center px-0",
-            triggerClassName,
+      {!hideTrigger && (
+        <DialogTrigger asChild>
+          {trigger ?? (
+            <Button
+              type="button"
+              title={triggerLabel}
+              aria-label={triggerLabel}
+              className={cn(
+                "mx-2 min-h-10 justify-start gap-2 rounded-md px-3 shadow-none transition-[width,padding] duration-300 md:min-h-9",
+                isCollapsed && "mx-auto size-9 justify-center px-0",
+                triggerClassName,
+              )}
+            >
+              <TriggerIcon className="size-4 shrink-0" />
+
+              <span
+                className={cn(
+                  "truncate transition-opacity duration-200",
+                  (!showTriggerLabel || isCollapsed) && "sr-only opacity-0",
+                )}
+              >
+                {triggerLabel}
+              </span>
+            </Button>
           )}
-        >
-          <TriggerIcon className="size-4 shrink-0" />
+        </DialogTrigger>
+      )}
 
-          <span
-            className={cn(
-              "truncate transition-opacity duration-200",
-              (!showTriggerLabel || isCollapsed) && "sr-only opacity-0",
-            )}
-          >
-            {triggerLabel}
-          </span>
-        </Button>
-      </DialogTrigger>
-
-      <DialogContent className="flex max-h-[calc(100dvh-1rem)] max-w-[calc(100vw-1rem)] flex-col overflow-hidden rounded-xl border bg-background p-0 shadow-xl sm:max-h-[calc(100dvh-2rem)] sm:max-w-2xl lg:max-w-5xl">
+      <DialogContent className="flex max-h-[calc(100dvh-1rem)] max-w-[calc(100vw-1rem)] flex-col overflow-hidden rounded-xl border bg-background p-0  sm:max-h-[calc(100dvh-2rem)] sm:max-w-2xl lg:max-w-5xl">
         <DialogHeader className="shrink-0 border-b bg-muted/20 px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
           <div className="flex items-start gap-3">
             <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-theme-accent-soft text-theme-accent">
@@ -248,7 +262,7 @@ export function AddCustomBookDialog({
                           <div className="flex flex-col gap-3">
                             <div
                               className={cn(
-                                "flex min-h-[260px] flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border bg-muted/30 p-6 text-center transition-colors",
+                                "flex min-h-65 flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border bg-muted/30 p-6 text-center transition-colors",
                                 form.formState.errors.coverUrl &&
                                   "border-destructive bg-destructive/5",
                               )}

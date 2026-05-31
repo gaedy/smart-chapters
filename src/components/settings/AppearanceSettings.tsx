@@ -16,10 +16,18 @@ import {
 } from "@/components/settings/settings-preferences";
 import { Button } from "@/components/ui/button";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 function updatePreference<T extends keyof SettingsPreferences>(
   preferences: SettingsPreferences,
   key: T,
-  value: SettingsPreferences[T]
+  value: SettingsPreferences[T],
 ) {
   return { ...preferences, [key]: value };
 }
@@ -34,7 +42,7 @@ export function AppearanceSettings() {
 
   function setPreference<T extends keyof SettingsPreferences>(
     key: T,
-    value: SettingsPreferences[T]
+    value: SettingsPreferences[T],
   ) {
     setPreferences((current) => {
       const next = updatePreference(current, key, value);
@@ -49,7 +57,7 @@ export function AppearanceSettings() {
         <div>
           <p className="text-sm font-medium">Accent color</p>
           <p className="text-xs leading-5 text-muted-foreground">
-            Tune buttons, focus rings, progress, and selected navigation states.
+            Applies to buttons, focus rings, progress, and active states
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -82,29 +90,34 @@ export function AppearanceSettings() {
         <div>
           <p className="text-sm font-medium">Font family</p>
           <p className="text-xs leading-5 text-muted-foreground">
-            Choose the typography voice used across the app shell and reading text.
+            Choose your font style
           </p>
         </div>
-        <select
+        <Select
           value={preferences.font}
-          onChange={(event) =>
-            setPreference("font", event.target.value as FontPreference)
+          onValueChange={(value) =>
+            setPreference("font", value as FontPreference)
           }
-          className="h-10 rounded-full border border-input bg-background px-4 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
         >
-          {fontOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          <SelectTrigger className="h-10 rounded-full px-4">
+            <SelectValue placeholder="Select a font" />
+          </SelectTrigger>
+
+          <SelectContent>
+            {fontOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid gap-3 rounded-2xl bg-foreground p-4">
         <div>
           <p className="text-sm font-medium">Font size</p>
           <p className="text-xs leading-5 text-muted-foreground">
-            Adjust the app text scale without changing the page layout density.
+            Adjust text size without affecting layout
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -115,12 +128,12 @@ export function AppearanceSettings() {
               <Button
                 key={option.value}
                 type="button"
-                variant="ghost"
+                variant={active ? "default" : "outline"}
                 onClick={() =>
                   setPreference("fontSize", option.value as FontSizePreference)
                 }
-                className={`rounded-full bg-background ${
-                  active ? "text-primary" : "text-muted-foreground"
+                className={`rounded-full bg-theme-accent ${
+                  active ? "" : "text-muted-foreground"
                 }`}
               >
                 {option.label}

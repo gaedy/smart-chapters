@@ -45,10 +45,10 @@ function PreferenceButton({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`flex min-h-10 items-center justify-center gap-2 rounded-full px-3 text-xs font-medium transition ${
+      className={`flex min-h-10 items-center justify-center gap-2 rounded-full px-3 text-xs font-medium ${
         active
-          ? " bg-theme-accent/80 text-accent"
-          : " bg-foreground hover:bg-foreground-dark text-muted-foreground hover:text-primary"
+          ? " bg-theme-accent/80 text-accent "
+          : " bg-foreground hover:bg-foreground-dark cursor-pointer text-muted-foreground hover:text-primary"
       } ${className}`}
     >
       {children}
@@ -94,7 +94,7 @@ export function QuickSettingsDropdown() {
       <DropdownMenuContent
         align="end"
         sideOffset={10}
-        className="w-[min(22rem,calc(100vw-1.5rem))] rounded-3xl border-border bg-background p-3 text-primary shadow-xl shadow-primary/10"
+        className="w-[min(22rem,calc(100vw-1.5rem))] rounded-3xl border-border bg-background p-3 text-primary "
       >
         <DropdownMenuLabel className="flex items-center gap-2 px-2 py-2">
           <span className="flex size-8 items-center justify-center rounded-full bg-foreground text-muted-foreground">
@@ -199,11 +199,11 @@ export function QuickSettingsDropdown() {
 
         <DropdownMenuItem
           asChild
-          className="rounded-2xl p-0 focus:bg-transparent"
+          className="rounded-2xl p-0 focus:bg-foreground-dark"
         >
           <Link
             href="/settings"
-            className="flex h-10 w-full items-center justify-center gap-2 rounded-2xl bg-foreground px-4 text-sm font-medium text-theme-accent transition "
+            className="flex h-10 w-full items-center justify-center gap-2 rounded-2xl bg-foreground px-4 text-sm font-medium text-theme-accent "
           >
             <Settings className="h-4 w-4" />
             Open full settings

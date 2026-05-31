@@ -54,7 +54,9 @@ function SettingsRow({
         <p className="text-sm font-medium">{label}</p>
         <p className="text-xs leading-5 text-muted-foreground">{description}</p>
       </div>
-      <div className="flex min-w-0 justify-start md:justify-end">{children}</div>
+      <div className="flex min-w-0 justify-start md:justify-end">
+        {children}
+      </div>
     </div>
   );
 }
@@ -79,7 +81,7 @@ export default async function Settings() {
     })),
   };
   const exportHref = `data:application/json;charset=utf-8,${encodeURIComponent(
-    JSON.stringify(exportPayload, null, 2)
+    JSON.stringify(exportPayload, null, 2),
   )}`;
 
   return (
@@ -92,12 +94,12 @@ export default async function Settings() {
       <div className="grid gap-4 xl:grid-cols-2">
         <SettingsSection
           title="Appearance"
-          description="Control the visual details that shape your daily reading space."
+          description="Control the visual style of your reading experience"
           icon={Palette}
         >
           <SettingsRow
             label="Theme"
-            description="Switch between the soft light palette and the warm dark reading palette."
+            description="Select your preferred color theme"
           >
             <ThemeToggle />
           </SettingsRow>
@@ -131,7 +133,11 @@ export default async function Settings() {
             label="Profile details"
             description="Review your account profile, shelves, and reading snapshot."
           >
-            <Button asChild variant="ghost" className="rounded-full bg-foreground">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full bg-foreground"
+            >
               <Link href="/account">Open account</Link>
             </Button>
           </SettingsRow>
@@ -139,14 +145,18 @@ export default async function Settings() {
 
         <SettingsSection
           title="Preferences"
-          description="Keep useful app-level actions close without adding noise."
+          description="Keep useful app-level actions close without adding noise"
           icon={Download}
         >
           <SettingsRow
             label="Export library"
-            description="Download your books, tracking details, ratings, reviews, and notes."
+            description="Download your books and related data"
           >
-            <Button asChild variant="ghost" className="rounded-full bg-foreground">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full bg-foreground"
+            >
               <a href={exportHref} download="smart-chapters-library.json">
                 Export
               </a>
@@ -163,7 +173,11 @@ export default async function Settings() {
             label="Password"
             description="Password changes are handled through sign-in and account recovery."
           >
-            <Button asChild variant="ghost" className="rounded-full bg-foreground">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full bg-foreground"
+            >
               <Link href="/sign-in">Open sign in</Link>
             </Button>
           </SettingsRow>
@@ -171,7 +185,11 @@ export default async function Settings() {
             label="Data privacy"
             description="Export your data before making any account-level changes."
           >
-            <Button asChild variant="ghost" className="rounded-full bg-foreground">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full bg-foreground"
+            >
               <Link href="/account">Review account</Link>
             </Button>
           </SettingsRow>

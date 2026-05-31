@@ -34,7 +34,7 @@ export default async function Navbar() {
           <NavUser onlyAvatar={true} user={data.user} />
         </div>
       </div>
-      <div className="flex min-w-0 items-center justify-end gap-2 md:shrink-0">
+      <div className="hidden min-w-0 items-center justify-end gap-2 md:flex md:shrink-0">
         <AddCustomBookNavbarAction />
         <QuickSettingsDropdown />
       </div>

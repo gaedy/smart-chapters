@@ -1,7 +1,16 @@
 "use client";
 
-import { BadgeCheck, ChevronsUpDown, LogIn, LogOut } from "lucide-react";
+import {
+  BadgeCheck,
+  BookPlus,
+  ChevronsUpDown,
+  LogIn,
+  LogOut,
+  Settings,
+} from "lucide-react";
+import { useState } from "react";
 
+import { AddCustomBookDialog } from "@/components/Sidebar/add-custom-book-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -45,6 +54,8 @@ export function NavUser({
   const hasInitialUser = user.email !== "guest@example.com";
   const isSignedIn =
     status === "authenticated" || (status === "loading" && hasInitialUser);
+  const showMobileNavbarActions = Boolean(onlyAvatar && isMobile);
+  const [addBookOpen, setAddBookOpen] = useState(false);
 
   if (!isSignedIn) {
     return (
@@ -71,6 +82,12 @@ export function NavUser({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
+        <AddCustomBookDialog
+          hideTrigger
+          open={addBookOpen}
+          onOpenChange={setAddBookOpen}
+        />
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             {onlyAvatar ? (
@@ -140,6 +157,27 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem> */}
             </DropdownMenuGroup>
+
+            {showMobileNavbarActions && (
+              <>
+                <DropdownMenuSeparator />
+
+                <DropdownMenuGroup>
+                  <DropdownMenuItem onSelect={() => setAddBookOpen(true)}>
+                    <BookPlus />
+                    Add Custom Book
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link href="/settings">
+                      <Settings />
+                      Settings
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </>
+            )}
+
             <DropdownMenuSeparator />
 
             <DropdownMenuItem onClick={() => signOut()}>

@@ -21,7 +21,7 @@ export function ThemeToggle() {
       variant="outline"
       aria-pressed={isDark}
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="h-10 w-36 rounded-full bg-background p-1 text-sm"
+      className="h-10 w-44 rounded-full bg-background p-1 text-sm"
     >
       <span
         className={`flex h-8 w-full items-center justify-center gap-1 rounded-full transition-all duration-200 ${
