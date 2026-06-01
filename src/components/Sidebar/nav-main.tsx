@@ -59,7 +59,7 @@ export function NavMain({
                     {typeof item.count === "number" && (
                       <Badge
                         variant="secondary"
-                        className="  min-w-5 px-2 bg-background text-secondary text-[0.7rem]"
+                        className="min-w-5 px-2 bg-background text-secondary text-[0.7rem]"
                       >
                         {item.count}
                       </Badge>

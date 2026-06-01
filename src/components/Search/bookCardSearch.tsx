@@ -28,6 +28,7 @@ const BookCardSearch: FC<SearchResultCardProps> = ({ book, href, onClick }) => {
           width={48}
           height={64}
         />
+        
       </div>
       <div className="flex flex-col">
         <p>{book.title}</p>

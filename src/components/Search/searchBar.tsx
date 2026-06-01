@@ -141,7 +141,7 @@ export default function SearchBar() {
               variant="outline"
               size="sm"
               aria-label={`Search filter: ${activeFilterLabel}`}
-              className=" shrink-0 rounded-full text-xs sm:mr-0.5 mr-0"
+              className=" shrink-0 rounded-full text-xs sm:mr-0.5 mr-0 text-secondary"
             >
               <Funnel className="size-4" />
               <span className="hidden sm:inline">{activeFilterLabel}</span>

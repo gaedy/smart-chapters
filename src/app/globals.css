@@ -15,9 +15,9 @@
   --scrollbar-thumb: oklch(0.48 0.028 74 / 24%);
   --scrollbar-thumb-hover: oklch(0.48 0.028 74 / 42%);
 
-  --background: oklch(0.945 0.055 98);
+  --background: oklch(0.985 0.025 98);
 
-  --foreground: oklch(0.985 0.025 98);
+--foreground: oklch(0.945 0.055 98);
 
   --foreground-dark: oklch(0.958 0.039 96);
 

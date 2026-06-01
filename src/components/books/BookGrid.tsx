@@ -30,7 +30,7 @@ export function BookGrid({
   }
 
   return (
-    <div className="grid w-full grid-cols-2 justify-items-center gap-x-3 gap-y-7 sm:grid-cols-3 sm:gap-x-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+    <div className="grid w-full  grid-cols-2 justify-items-center gap-x-3 gap-y-7 sm:grid-cols-3 sm:gap-x-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {books.map((book) => (
         <Link
           href={`/book/${book.id}`}
