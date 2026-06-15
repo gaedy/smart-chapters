@@ -50,12 +50,11 @@ export default function BookCard({
     <div
       className={`group flex w-[min(10rem,42vw)] cursor-pointer flex-col gap-2 rounded-2xl sm:w-40 sm:rounded-3xl ${className}`}
     >
-      <div
-        className="relative flex aspect-[2/3] w-full overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl group-hover:scale-[1.02] sm:rounded-2xl sm:group-hover:scale-105"
-      >
+      <div className="relative flex aspect-2/3 w-full overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl group-hover:scale-[1.02] sm:rounded-2xl sm:group-hover:scale-105">
         <Image
           src={imageSrc}
           alt="Book Cover"
+          sizes="(max-width: 768px) 100px, 150px"
           fill
           className="rounded-2xl object-cover" // object-cover to cover entire or object-contain to respect ratio
         />
